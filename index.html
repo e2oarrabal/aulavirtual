@@ -15,7 +15,7 @@
 <title>Aula Virtual E2O</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Reenie+Beanie&display=swap" rel="stylesheet">
 <style>
 /* Layout: app móvil — barra superior con logos, contenido en una columna y menú inferior fijo; vistas por hash */
 :root{
@@ -245,7 +245,7 @@ body.con-visor{overflow:hidden}
 .creditos .lgs{display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;padding:6px 12px;border-radius:12px}
 .creditos .lgs img:first-child{width:36px;height:36px;border-radius:8px;object-fit:cover}
 .creditos .lgs img:last-child{height:30px;width:auto}
-.creditos p{margin:0;color:var(--on-bg);opacity:.9;font-size:11.5px;line-height:1.4;max-width:42ch}
+.creditos p{margin:0;color:var(--on-bg);opacity:.85;font-size:10.5px;font-weight:300;line-height:1.45;max-width:46ch;letter-spacing:.1px}
 @media (prefers-color-scheme: dark){}
 
 .appname{display:flex;flex-direction:column;min-width:0}
@@ -276,13 +276,13 @@ body.con-visor{overflow:hidden}
 .sem .tt i{font-style:normal;font-weight:700;color:var(--c)}
 .sem .go{margin-top:auto;padding-top:6px;color:var(--c);font-weight:700;font-size:14.5px}
 
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 6px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--line);text-decoration:none;text-align:center}
-.tile:active{transform:scale(.97)}
-.tile .ic{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:var(--c);color:#fff;box-shadow:0 6px 14px color-mix(in srgb,var(--c) 30%,transparent)}
-.tile .ic svg{width:28px;height:28px}
-.tile b{font-size:14.5px;line-height:1.2}
-.tile small{color:var(--muted);font-size:12px;line-height:1.2}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:start}
+.tile{display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 2px;text-decoration:none;text-align:center;color:var(--on-bg)}
+.tile:active .ic{transform:scale(.94)}
+.tile .ic{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#fff;border:4px solid #fff;box-shadow:0 8px 18px rgba(80,30,0,.22);transition:transform .15s}
+.tile .ic svg{width:38px;height:38px}
+.tile b{font-size:15px;line-height:1.2;margin-top:4px}
+.tile small{font-size:12px;line-height:1.3;opacity:.9}
 
 .rows{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
 .row{display:flex;align-items:center;gap:14px;padding:14px 16px;text-decoration:none;border-bottom:1px solid var(--line)}
@@ -424,6 +424,7 @@ body[data-amb="orientacion"]{--bg:#FFF2E3;--bg2:#FFE5C8;--on-bg:#5A2E00}
 .vid .chev{margin-left:auto;flex:none}
 footer{margin-top:32px;color:var(--on-bg);font-size:13px;text-align:center}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+@media (min-width:1024px){.tiles{max-width:780px;margin:0 auto;gap:24px}.tile .ic{width:108px;height:108px}.tile .ic svg{width:46px;height:46px}.tile b{font-size:17px}.tile small{font-size:13px}}
 </style>
 </head>
 <body>
@@ -2804,7 +2805,7 @@ function home(){
     const href = e.temas.length ? `#tema-${e.temas[0]}` : `#${a.id}`;
     return `<a class="sem" style="--c:var(${a.c})" href="${href}"><small>${a.nombre} · ${e.actual?'Esta semana':'Próxima clase'}</small><b>Clase ${e.f.n}</b>${tt}<span class="go">${e.temas.length?'Estudiar el tema →':'Ver el temario →'}</span></a>`;
   }).join('');
-  const tiles = AMBITOS.slice(0,3).map(a=>`<a class="tile" style="--c:var(${a.c})" href="#${a.id}"><span class="ic">${I[a.ico]}</span><b>${a.nombre}</b><small>${a.sub.replace(', ',' · ').replace(' y ',' · ')}</small></a>`).join('');
+  const tiles = AMBITOS.slice(0,3).map(a=>`<a class="tile" style="--c:var(${a.c})" href="#${a.id}"><span class="ic">${I[a.ico]}</span><b>${a.nombre}</b><small>${({comunicacion:'Lengua<br>Inglés', social:'Geografía<br>Historia', cientifico:'Matemáticas<br>Ciencias'})[a.id] || esc(a.sub)}</small></a>`).join('');
   const ori = AMBITOS[3];
   app.innerHTML = `
     <div class="hg"><div class="hg-a">

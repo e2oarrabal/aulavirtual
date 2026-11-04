@@ -9,10 +9,10 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Aula E2O">
+<meta name="apple-mobile-web-app-title" content="Aula Virtual">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="description" content="Aula abierta de la Escuela de Segunda Oportunidad de Arrabal AID (Málaga) para preparar la prueba libre de ESO.">
-<title>Aula Abierta E2O</title>
+<meta name="description" content="Aula virtual de la Escuela de Segunda Oportunidad de Arrabal AID (Málaga) para preparar la prueba libre de ESO.">
+<title>Aula Virtual E2O</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Reenie+Beanie&display=swap" rel="stylesheet">
@@ -397,9 +397,9 @@ footer{margin-top:32px;color:var(--on-bg);font-size:13px;text-align:center}
 </head>
 <body>
 <header class="appbar">
-  <a class="appbar-in" href="#inicio" aria-label="Aula Abierta E2O, inicio">
+  <a class="appbar-in" href="#inicio" aria-label="Aula Virtual E2O, inicio">
     <img class="lg-e2o" src="logos/e2o.jpg" alt="Escuelas de Segunda Oportunidad España" width="44" height="44">
-    <span class="appname"><b>Aula Abierta</b><small>E2O Málaga</small></span>
+    <span class="appname"><b>Aula Virtual</b><small>E2O Málaga</small></span>
     <img class="lg-arrabal" src="logos/arrabal.png" alt="Asociación Arrabal" width="115" height="42">
   </a>
 </header>
@@ -2714,7 +2714,7 @@ function ambito(a, sec=0){
   app.innerHTML = `
     <section class="head" style="--c:var(${a.c})"><a class="back-in" href="#inicio">${I.back} Inicio</a><h1>${a.nombre}</h1><p>${a.intro}</p></section>
     <div style="--c:var(${a.c})">${tabs}</div><div class="list" style="--c:var(${a.c})">${info}${items}</div>
-    <footer>Aula Abierta E2O</footer>`;
+    <footer>Aula Virtual E2O</footer>`;
   app.querySelectorAll('.tab').forEach(b => b.onclick = () => { ambito(a, +b.dataset.sec); });
   if (s.libro) prepararLibro(a);
 }
@@ -2760,7 +2760,7 @@ function tema(id){
         ${T.ficha ? `<button class="btn ghost" id="pdf">${I.print} Descargar ficha para imprimir (PDF)</button><p class="mini" id="pdfmsg">Incluye las soluciones en la última página.</p>` : ''}
       </section>
     </article>
-    <footer>Aula Abierta E2O</footer>`;
+    <footer>Aula Virtual E2O</footer>`;
   etiquetarTablas();
   app.querySelectorAll('.chip').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.go).scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
   const pb = document.getElementById('pdf'); if (pb) pb.onclick = () => descargarFicha(id, pb);
@@ -2934,7 +2934,7 @@ function fichaDoc(id){
   return { pageSize:'A4', pageMargins:[56,80,56,72], content,
     background:()=> fondo('interior'),
     pageBreakBefore:(node)=> node.headlineLevel===1 && node.startPosition.verticalRatio > 0.8,
-    footer:(p,n)=>({text:[{text:`${p}/${n}   `, bold:true, color:NAR, fontSize:9},{text:'Aula Abierta E2O · ' + T.titulo.split(' · ')[0], color:GRIS, fontSize:7.5}], margin:[56,34,0,0]}),
+    footer:(p,n)=>({text:[{text:`${p}/${n}   `, bold:true, color:NAR, fontSize:9},{text:'Aula Virtual E2O · ' + T.titulo.split(' · ')[0], color:GRIS, fontSize:7.5}], margin:[56,34,0,0]}),
     defaultStyle:{font:'Poppins', fontSize:10.5, lineHeight:1.3, color:TINTA} };
 }
 async function descargarFicha(id, btn){

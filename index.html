@@ -547,15 +547,39 @@ const AMBITOS = [
         items:[...LINKS_EXAMEN] }
     ]},
   { id:'cientifico', c:'--cie', ico:'cie', nombre:'Científico', sub:'Matemáticas y Ciencias',
-    intro:'Matemáticas, Biología, Física y Química, para preparar la prueba libre de ESO.',
+    intro:'Matemáticas, Biología y Geología, Física y Química, Tecnología y salud, para preparar la prueba libre de ESO.',
     secciones:[
       { nombre:'Libro', libro:true },
-      { nombre:'Temario', temario:{ filas:[] }},
+      { nombre:'Temario', temario:{ la:'Matemáticas', lb:'Ciencias', filas:[
+        {n:1, s:'2026-09-28', a:'', b:'Presentación del ámbito. Bloque 1 · Tema 1 El Universo y la Tierra: galaxias, estrellas y sistema solar'},
+        {n:2, s:'2026-10-05', a:'', b:'Bloque 1 · Tema 1 El Universo y la Tierra: la Tierra, la Luna y las condiciones para la vida'},
+        {n:3, s:'2026-10-12', a:'', b:'Bloque 1 · Tema 1: los elementos químicos I'},
+        {n:4, s:'2026-10-26', a:'', b:'Bloque 1 · Tema 1: los elementos químicos II'},
+        {n:5, s:'2026-11-02', a:'Bloque 1 · Tema 1: notación científica', b:''},
+        {n:6, s:'2026-11-09', a:'Bloque 2 · Tema 1 Números enteros', b:'Bloque 1 · Tema 2 La representación de la Tierra y Tema 3 Tierra, aire y agua'},
+        {n:7, s:'2026-11-16', a:'Bloque 2 · Tema 2 Números racionales y resolución de problemas', b:'Bloque 1 · Tema 4 Biodiversidad y Bloque 2 · Tema 3 Hardware y software'},
+        {n:8, s:'2026-11-23', a:'Bloque 4 · Tema 1 Sistema Internacional de Unidades', b:'Bloque 2 · Tema 4 Un aula en mi casa y Bloque 3 · Tema 1 El relieve terrestre'},
+        {n:9, s:'2026-11-30', a:'Bloque 4 · Tema 2 Unidades derivadas', b:'Bloque 3 · Tema 2 La energía interna de la Tierra y Tema 3 La célula y la genética'},
+        {n:10, s:'2026-12-07', a:'Bloque 5 · Tema 3 Álgebra básica I: expresiones y ecuaciones de primer grado', b:'Bloque 3 · Tema 4 La evolución y Bloque 4 · Tema 3 Estados de agregación, mezclas y disoluciones'},
+        {n:11, s:'2026-12-14', a:'Bloque 5 · Tema 3 Álgebra básica II: sistemas y problemas', b:'Bloque 4 · Tema 4 Materiales y Bloque 5 · Tema 1 El agua: composición y propiedades'},
+        {n:12, s:'2027-01-11', a:'Bloque 5 · Tema 4 Geometría I: Pitágoras, perímetros y áreas', b:'Bloque 5 · Tema 2 Usos del agua y Bloque 6 · Tema 1 Biosfera y ecosistemas'},
+        {n:13, s:'2027-01-18', a:'Bloque 5 · Tema 4 Geometría II: volúmenes y capacidad', b:'Bloque 6 · Tema 2 Recursos naturales y Tema 3 Impacto ambiental'},
+        {n:14, s:'2027-01-25', a:'Bloque 7 · Tema 3 Haciendo estudios estadísticos I: tablas y gráficos', b:'Bloque 6 · Tema 4 Contaminación y desarrollo sostenible y Bloque 7 · Tema 1 ¿Qué somos? ¿Somos lo que comemos?'},
+        {n:15, s:'2027-02-01', a:'Bloque 7 · Tema 3 Haciendo estudios estadísticos II: media, mediana y moda. Inscripción en la prueba', b:'Bloque 7 · Tema 2 ¿Sabemos lo que comemos? y Tema 4 La nutrición aún no ha terminado'},
+        {n:16, s:'2027-02-08', a:'Bloque 9 · Tema 1 Vectores y Tema 2 ¿Nos movemos?', b:'Bloque 8 · Tema 1 Sentimos, y por vías diferentes y Tema 2 La compleja tarea de coordinar'},
+        {n:17, s:'2027-02-15', a:'Bloque 9 · Tema 3 Los movimientos… más fáciles', b:'Bloque 8 · Tema 3 Nos movemos… ¿pero todo lo que deberíamos? y Tema 4 Más vale prevenir…'},
+        {n:18, s:'2027-02-22', a:'Problemas tipo examen: unidades, geometría y proporcionalidad', b:'Bloque 9 · Tema 4 ¿Fuerza? ¿Y eso qué es? y Bloque 10 · Tema 1 La materia, un componente del Universo'},
+        {n:19, s:'2027-03-01', a:'Bloque 12 · Tema 1 Instalaciones en la vivienda y Tema 2 Eficiencia energética', b:'Bloque 10 · Tema 2 La materia se transforma y Tema 3 La energía'},
+        {n:20, s:'2027-03-08', a:'Bloque 12 · Tema 3 Gestión de gastos y planificación y Tema 4 Productos financieros', b:'Bloque 10 · Tema 4 La energía se transforma y Bloque 11 · Tema 1 Circuitos neumáticos e hidráulicos'},
+        {n:21, s:'2027-03-15', a:'Repaso de problemas tipo examen', b:'Bloque 11 · Tema 2 Electricidad y electrónica, Tema 3 Telecomunicaciones y robótica y Tema 4 Servicios avanzados de las TIC'},
+        {n:22, s:'2027-03-29', a:'Simulacro completo (2 horas) con un examen oficial', b:''},
+        {n:23, s:'2027-04-05', a:'Corrección del simulacro, dudas y estrategia para el día del examen', b:''}
+      ]}},
       { nombre:'Matemáticas', items:[
         {tipo:'juego', titulo:'Reto: fracciones y porcentajes', desc:'Cálculo rápido con situaciones de la vida diaria'}
       ]},
       { nombre:'Ciencias', items:[] },
-      { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50.</b> En los exámenes de años anteriores puedes ver qué tipo de ejercicios entran.',
+      { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50 · con calculadora básica.</b> Tiene cinco partes: conceptos básicos (15 puntos), comprensión de un texto científico (20), gráficas, imágenes o esquemas (30), una redacción de 150 palabras (15) y un problema con cálculos (20). En los últimos exámenes han salido la dieta y los aparatos del cuerpo humano, la energía, el átomo y problemas de volúmenes y cambio de unidades.',
         items:[...LINKS_EXAMEN] }
     ]},
   { id:'orientacion', c:'--ori', ico:'ori', nombre:'Recursos', sub:'Prueba libre, empleo, digitalización y herramientas',

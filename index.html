@@ -2724,14 +2724,13 @@ function fichaOnline(id){
   app.innerHTML = `<a class="back" href="#tema-${id}">${I.back} Volver al tema</a>
     <article class="tema fo" style="--c:var(${a.c})">
       <header class="head"><p class="kicker">Ficha de actividades · ${T.area} · Clase ${T.clase}</p><h1>${esc(T.titulo)}</h1>
-      <p>Escribe las respuestas aquí. Se guardan solas en este móvil, así que puedes dejarla a medias y seguir otro día. Al terminar, descárgala o envíala.</p></header>
+      <p>Escribe las respuestas aquí. Se guardan solas en este móvil, así que puedes dejarla a medias y seguir otro día. Cuando termines, comprueba tus respuestas con «Ver la solución».</p></header>
       <div class="fo-datos"><label>Nombre<input id="fo-nombre" value="${esc(R.nombre||'')}" autocomplete="name"></label><label>Fecha<input id="fo-fecha" value="${esc(R.fecha)}"></label></div>
       ${bloques}
       <section class="fo-fin">
         <p class="fo-ok" id="fo-ok" aria-live="polite">Guardado en este móvil.</p>
-        <button class="btn" id="fo-enviar">${ICO_ENV} Enviar mi ficha</button>
-        <div class="pdfbtns"><button class="btn ghost" id="fo-ver">${ICO_OJO} Ver</button><button class="btn ghost" id="fo-dl">${ICO_BAJ} Descargar</button></div>
-        <p class="mini" id="fo-msg">Se crea un PDF con tus respuestas, sin las soluciones. Puedes mandarlo por WhatsApp o por correo.</p>
+        <div class="pdfbtns"><button class="btn" id="fo-ver">${ICO_OJO} Ver mi ficha</button><button class="btn ghost" id="fo-dl">${ICO_BAJ} Descargar</button></div>
+        <p class="mini" id="fo-msg">Puedes ver tu ficha terminada como PDF, con tus respuestas, o guardarla en el móvil.</p>
         <button class="fo-borrar" id="fo-borrar">Borrar mis respuestas</button>
       </section>
     </article><footer>Aula Virtual E2O</footer>`;
@@ -2748,11 +2747,6 @@ function fichaOnline(id){
   document.getElementById('fo-ver').onclick = e => verPDF(()=>fichaDoc(id, JSON.parse(JSON.stringify(R))), 'respuestas-'+id, 'Mi ficha · ' + T.titulo.split(' · ')[0], nombre(), e.currentTarget, msg);
   document.getElementById('fo-dl').onclick = async e => { const b = e.currentTarget; b.disabled = true; msg.textContent = 'Preparando…';
     try{ await guardar(nombre(), await hacer(), msg, 'Ficha descargada con tus respuestas.'); }catch(er){ console.error(er); msg.textContent = 'No se ha podido preparar. Comprueba la conexión.'; } b.disabled = false; };
-  document.getElementById('fo-enviar').onclick = async e => { const b = e.currentTarget; b.disabled = true; msg.textContent = 'Preparando…';
-    try{ const blob = await hacer(); const f = new File([blob], nombre(), {type:'application/pdf'});
-      if (navigator.canShare && navigator.canShare({files:[f]})){ try{ await navigator.share({files:[f], title:nombre()}); msg.textContent = 'Ficha enviada.'; }catch(er){ msg.textContent = er && er.name === 'AbortError' ? 'Envío cancelado.' : 'No se ha podido enviar. Prueba a descargarla.'; } }
-      else { await guardar(nombre(), blob, msg, 'Este dispositivo no permite enviarla directamente: se ha descargado. Ahora puedes adjuntarla en WhatsApp o en el correo.'); }
-    }catch(er){ console.error(er); msg.textContent = 'No se ha podido preparar. Comprueba la conexión.'; } b.disabled = false; };
   document.getElementById('fo-borrar').onclick = () => { if (!confirmarBorrado()) return; try{ localStorage.removeItem('ficha-'+id); }catch(e){} delete PDFS['respuestas-'+id]; fichaOnline(id); };
 }
 let borrarPulsado = 0;

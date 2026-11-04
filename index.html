@@ -551,12 +551,12 @@ const AMBITOS = [
     secciones:[
       { nombre:'Libro', libro:true },
       { nombre:'Temario', temario:{ la:'Matemáticas', lb:'Ciencias', filas:[
-        {n:1, s:'2026-09-28', a:'', b:'Presentación del ámbito. Bloque 1 · Tema 1 El Universo y la Tierra: galaxias, estrellas y sistema solar'},
-        {n:2, s:'2026-10-05', a:'', b:'Bloque 1 · Tema 1 El Universo y la Tierra: la Tierra, la Luna y las condiciones para la vida'},
-        {n:3, s:'2026-10-12', a:'', b:'Bloque 1 · Tema 1: los elementos químicos I'},
-        {n:4, s:'2026-10-26', a:'', b:'Bloque 1 · Tema 1: los elementos químicos II'},
-        {n:5, s:'2026-11-02', a:'Bloque 1 · Tema 1: notación científica', b:''},
-        {n:6, s:'2026-11-09', a:'Bloque 2 · Tema 1 Números enteros', b:'Bloque 1 · Tema 2 La representación de la Tierra y Tema 3 Tierra, aire y agua'},
+        {n:1, s:'2026-09-28', tb:'cie-universo', a:'', b:'Presentación del ámbito. Bloque 1 · Tema 1 El Universo y la Tierra: galaxias, estrellas y sistema solar'},
+        {n:2, s:'2026-10-05', tb:'cie-universo', a:'', b:'Bloque 1 · Tema 1 El Universo y la Tierra: la Tierra, la Luna y las condiciones para la vida'},
+        {n:3, s:'2026-10-12', tb:'cie-elementos', a:'', b:'Bloque 1 · Tema 1: los elementos químicos I'},
+        {n:4, s:'2026-10-26', tb:'cie-elementos', a:'', b:'Bloque 1 · Tema 1: los elementos químicos II'},
+        {n:5, s:'2026-11-02', ta:'mat-notacion', a:'Bloque 1 · Tema 1: notación científica', b:''},
+        {n:6, s:'2026-11-09', ta:'mat-enteros', tb:'cie-tierra', a:'Bloque 2 · Tema 1 Números enteros', b:'Bloque 1 · Tema 2 La representación de la Tierra y Tema 3 Tierra, aire y agua'},
         {n:7, s:'2026-11-16', a:'Bloque 2 · Tema 2 Números racionales y resolución de problemas', b:'Bloque 1 · Tema 4 Biodiversidad y Bloque 2 · Tema 3 Hardware y software'},
         {n:8, s:'2026-11-23', a:'Bloque 4 · Tema 1 Sistema Internacional de Unidades', b:'Bloque 2 · Tema 4 Un aula en mi casa y Bloque 3 · Tema 1 El relieve terrestre'},
         {n:9, s:'2026-11-30', a:'Bloque 4 · Tema 2 Unidades derivadas', b:'Bloque 3 · Tema 2 La energía interna de la Tierra y Tema 3 La célula y la genética'},
@@ -575,9 +575,7 @@ const AMBITOS = [
         {n:22, s:'2027-03-29', a:'Simulacro completo (2 horas) con un examen oficial', b:''},
         {n:23, s:'2027-04-05', a:'Corrección del simulacro, dudas y estrategia para el día del examen', b:''}
       ]}},
-      { nombre:'Matemáticas', items:[
-        {tipo:'juego', titulo:'Reto: fracciones y porcentajes', desc:'Cálculo rápido con situaciones de la vida diaria'}
-      ]},
+      { nombre:'Matemáticas', items:[] },
       { nombre:'Ciencias', items:[] },
       { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50 · con calculadora básica.</b> Tiene cinco partes: conceptos básicos (15 puntos), comprensión de un texto científico (20), gráficas, imágenes o esquemas (30), una redacción de 150 palabras (15) y un problema con cálculos (20). En los últimos exámenes han salido la dieta y los aparatos del cuerpo humano, la energía, el átomo y problemas de volúmenes y cambio de unidades.',
         items:[...LINKS_EXAMEN] }
@@ -1973,6 +1971,645 @@ TEMAS['social-clima'].ficha = { ejercicios:[
   {e:'Verdadero o falso. Corrige las falsas.', items:['a) El clima se calcula con datos de un solo año.','b) En un climograma las barras son la temperatura.','c) España está en la zona templada.','d) El sureste de España es de las zonas más afectadas por la desertificación.'], lineas:3,
     sol:'a) F: con al menos 30 años. · b) F: son las precipitaciones. · c) V · d) V'}
 ]};
+
+/* ===== ÁMBITO CIENTÍFICO-TECNOLÓGICO (orden CREA) ===== */
+TEMAS['cie-universo'] = { ambito:'cientifico', area:'Ciencias', clase:1, titulo:'El Universo y la Tierra',
+  intro:'Qué es el Universo, cómo son las galaxias, las estrellas y el sistema solar, cómo se mueven la Tierra y la Luna y por qué la Tierra es el único planeta conocido con vida.',
+  apartados:[
+    {h:'1. ¿Qué es el Universo?', html:`
+      <p>El <b>Universo</b> es todo lo que existe: la materia (planetas, estrellas, gas, polvo), la energía (como la luz) y el espacio que lo contiene. Es tan grande que todavía no sabemos dónde acaba.</p>
+      <p>La teoría más aceptada sobre su origen es el <b>Big Bang</b> (la gran explosión): hace unos <b>13.800 millones de años</b> toda la materia y la energía estaban concentradas en un punto muy pequeño y muy caliente que empezó a expandirse. El Universo <b>sigue expandiéndose hoy</b>: las galaxias se alejan unas de otras.</p>
+      <p>Para medir distancias tan enormes no sirven los kilómetros. Se usa el <b>año luz</b>: la distancia que recorre la luz en un año, unos <b>9,5 billones de km</b> (9,5 × 10¹² km). La luz viaja a <b>300.000 km por segundo</b>.</p>
+      <p class="ojo"><b>Ojo:</b> el año luz es una medida de <b>distancia</b>, no de tiempo, aunque lleve la palabra «año».</p>
+      <details><summary>Practica: la estrella más cercana al Sol, Próxima Centauri, está a 4,2 años luz. ¿Qué significa?</summary><p>Que su luz tarda 4,2 años en llegar hasta nosotros. Cuando la vemos, la estamos viendo como era hace 4,2 años.</p></details>`},
+    {h:'2. Galaxias y estrellas', html:`
+      <p>Una <b>galaxia</b> es un enorme conjunto de estrellas, gas y polvo que se mantienen unidos por la <b>gravedad</b>. En el Universo hay miles de millones de galaxias.</p>
+      <div class="tabla"><table>
+        <tr><th>Tipo de galaxia</th><th>Cómo es</th></tr>
+        <tr><td><b>Espiral</b></td><td>Un centro abultado con brazos que giran alrededor. Ejemplo: la <b>Vía Láctea</b>.</td></tr>
+        <tr><td><b>Elíptica</b></td><td>Forma de balón o de huevo, sin brazos.</td></tr>
+        <tr><td><b>Irregular</b></td><td>Sin una forma definida.</td></tr>
+      </table></div>
+      <p>Nuestra galaxia es la <b>Vía Láctea</b>: una galaxia espiral con más de 100.000 millones de estrellas. El Sol está en uno de sus brazos, lejos del centro.</p>
+      <p>Las <b>estrellas</b> son enormes bolas de gas (sobre todo <b>hidrógeno y helio</b>) que producen luz y calor por <b>reacciones nucleares</b> en su interior. Nacen en nubes de gas y polvo llamadas <b>nebulosas</b>. El <b>Sol</b> es una estrella mediana, la más cercana a nosotros. Las <b>constelaciones</b> son grupos de estrellas que vemos formando figuras en el cielo, como la Osa Mayor.</p>`},
+    {h:'3. El sistema solar', html:`
+      <p>El <b>sistema solar</b> está formado por el <b>Sol</b> y todo lo que gira a su alrededor atraído por su gravedad. El Sol tiene el 99,8 % de toda la masa del sistema solar.</p>
+      <div class="tabla"><table>
+        <tr><th>Componente</th><th>Qué es</th><th>Ejemplos</th></tr>
+        <tr><td><b>Planetas interiores o rocosos</b></td><td>Pequeños, sólidos y cercanos al Sol</td><td>Mercurio, Venus, Tierra, Marte</td></tr>
+        <tr><td><b>Planetas exteriores o gaseosos</b></td><td>Gigantes de gas, lejanos y con anillos</td><td>Júpiter (el más grande), Saturno, Urano, Neptuno</td></tr>
+        <tr><td><b>Planetas enanos</b></td><td>Redondos, pero no han «limpiado» su órbita</td><td>Plutón, Ceres</td></tr>
+        <tr><td><b>Satélites</b></td><td>Giran alrededor de un planeta</td><td>La Luna</td></tr>
+        <tr><td><b>Asteroides</b></td><td>Rocas que giran alrededor del Sol, muchas entre Marte y Júpiter (cinturón de asteroides)</td><td>Vesta</td></tr>
+        <tr><td><b>Cometas</b></td><td>Bolas de hielo y polvo; al acercarse al Sol forman una cola brillante</td><td>Cometa Halley</td></tr>
+      </table></div>
+      <p class="ojo"><b>Truco para el orden de los planetas:</b> «<b>M</b>i <b>V</b>ecino <b>T</b>iene <b>M</b>uchas <b>J</b>aulas <b>S</b>in <b>U</b>sar <b>N</b>unca»: Mercurio, Venus, Tierra, Marte, Júpiter, Saturno, Urano y Neptuno.</p>
+      <p>La Tierra está a unos <b>150 millones de km</b> del Sol. Su luz tarda unos <b>8 minutos</b> en llegarnos.</p>`},
+    {h:'4. Los movimientos de la Tierra y la Luna', html:`
+      <div class="tabla"><table>
+        <tr><th>Movimiento</th><th>Qué es</th><th>Cuánto dura</th><th>Consecuencia</th></tr>
+        <tr><td><b>Rotación</b></td><td>La Tierra gira sobre sí misma, alrededor de su eje</td><td>24 horas (un día)</td><td>El <b>día y la noche</b></td></tr>
+        <tr><td><b>Traslación</b></td><td>La Tierra da una vuelta alrededor del Sol</td><td>365 días y 6 horas (un año)</td><td>Las <b>estaciones</b>, junto con la inclinación del eje</td></tr>
+      </table></div>
+      <p>Las 6 horas que sobran cada año se juntan cada cuatro años en un día más: el 29 de febrero de los <b>años bisiestos</b>.</p>
+      <p><b>¿Por qué hay estaciones?</b> El eje de la Tierra está <b>inclinado unos 23,5°</b>. Mientras da la vuelta al Sol, unas veces el hemisferio norte recibe los rayos más directos (verano) y otras más inclinados (invierno). <b>No es porque estemos más cerca o más lejos del Sol.</b></p>
+      <ul>
+        <li><b>Solsticios</b> (21 de junio y 21 de diciembre): el día más largo y el más corto del año.</li>
+        <li><b>Equinoccios</b> (hacia el 21 de marzo y el 23 de septiembre): el día y la noche duran lo mismo.</li>
+      </ul>
+      <p>La <b>Luna</b> tarda unos <b>28 días</b> en dar la vuelta a la Tierra y siempre nos enseña la misma cara. Según cómo la ilumina el Sol vemos sus <b>fases</b>: luna nueva, cuarto creciente, luna llena y cuarto menguante. La Luna también provoca las <b>mareas</b> con su gravedad. Cuando el Sol, la Tierra y la Luna se alinean hay <b>eclipses</b>: de Sol, si la Luna tapa el Sol; de Luna, si la sombra de la Tierra cae sobre la Luna.</p>
+      <details><summary>Practica: en Málaga en julio hace calor y en Argentina hace frío. ¿Por qué, si es el mismo día?</summary><p>Porque están en hemisferios distintos. En julio el hemisferio norte (Málaga) recibe los rayos del Sol más directos y es verano; el hemisferio sur (Argentina) los recibe más inclinados y es invierno.</p></details>`},
+    {h:'5. La Tierra, un planeta con vida', html:`
+      <p>La Tierra es el único planeta conocido con vida. Lo es porque reúne varias condiciones a la vez:</p>
+      <div class="tabla"><table>
+        <tr><th>Condición</th><th>Por qué es importante</th></tr>
+        <tr><td><b>Distancia adecuada al Sol</b></td><td>Ni demasiado cerca ni demasiado lejos: la temperatura permite que haya <b>agua líquida</b>.</td></tr>
+        <tr><td><b>Agua líquida</b></td><td>Es imprescindible para todos los seres vivos.</td></tr>
+        <tr><td><b>Atmósfera</b></td><td>Contiene oxígeno, nos protege de la radiación ultravioleta (capa de ozono) y mantiene una temperatura suave (efecto invernadero natural).</td></tr>
+        <tr><td><b>Campo magnético</b></td><td>Funciona como un escudo frente a las partículas que lanza el Sol (viento solar).</td></tr>
+        <tr><td><b>Bioelementos</b></td><td>Los elementos que forman los seres vivos: <b>carbono (C), hidrógeno (H), oxígeno (O), nitrógeno (N)</b>, fósforo (P) y azufre (S).</td></tr>
+      </table></div>
+      <p><b>Comparación con la Luna:</b> la Luna está a la misma distancia del Sol, pero no tiene atmósfera ni agua líquida. Por eso pasa de unos 120 °C de día a −170 °C de noche y no tiene vida.</p>
+      <p class="ojo"><b>En el examen:</b> en abril de 2025 salió un verdadero o falso sobre las condiciones para la vida en la Tierra y su comparación con la Luna.</p>`}
+  ],
+  juego:'cie-universo'
+};
+
+TEMAS['cie-elementos'] = { ambito:'cientifico', area:'Ciencias', clase:3, titulo:'Los elementos químicos: el átomo y la tabla periódica',
+  intro:'De qué está hecha la materia: los átomos y sus partes, el número atómico y el másico, la tabla periódica y la diferencia entre elementos y compuestos.',
+  apartados:[
+    {h:'1. La materia está hecha de átomos', html:`
+      <p>Todo lo que nos rodea, nuestro cuerpo incluido, está formado por partículas diminutas llamadas <b>átomos</b>. Son tan pequeños que en la punta de un alfiler caben millones de millones.</p>
+      <p>Un <b>elemento químico</b> es una sustancia formada por un solo tipo de átomo. Se conocen <b>118 elementos</b>; unos 90 existen en la naturaleza y el resto se han fabricado en laboratorios. Cada elemento tiene un <b>símbolo</b> de una o dos letras; la primera siempre va en mayúscula.</p>
+      <div class="tabla"><table>
+        <tr><th>Elemento</th><th>Símbolo</th><th>Elemento</th><th>Símbolo</th></tr>
+        <tr><td>Hidrógeno</td><td><b>H</b></td><td>Sodio</td><td><b>Na</b></td></tr>
+        <tr><td>Helio</td><td><b>He</b></td><td>Hierro</td><td><b>Fe</b></td></tr>
+        <tr><td>Carbono</td><td><b>C</b></td><td>Cobre</td><td><b>Cu</b></td></tr>
+        <tr><td>Nitrógeno</td><td><b>N</b></td><td>Oro</td><td><b>Au</b></td></tr>
+        <tr><td>Oxígeno</td><td><b>O</b></td><td>Plata</td><td><b>Ag</b></td></tr>
+        <tr><td>Calcio</td><td><b>Ca</b></td><td>Cloro</td><td><b>Cl</b></td></tr>
+      </table></div>
+      <p>En el <b>Universo</b> los elementos más abundantes son el <b>hidrógeno y el helio</b>, que forman las estrellas. En la corteza terrestre abundan el <b>oxígeno y el silicio</b>. En los seres vivos, el <b>carbono, hidrógeno, oxígeno y nitrógeno</b>.</p>`},
+    {h:'2. Las partes del átomo', html:`
+      <p>El átomo tiene dos zonas: el <b>núcleo</b>, en el centro, y la <b>corteza</b>, alrededor, donde se mueven los electrones.</p>
+      <div class="tabla"><table>
+        <tr><th>Partícula</th><th>Dónde está</th><th>Carga</th></tr>
+        <tr><td><b>Protón</b></td><td>Núcleo</td><td>Positiva (+)</td></tr>
+        <tr><td><b>Neutrón</b></td><td>Núcleo</td><td>Sin carga (neutra)</td></tr>
+        <tr><td><b>Electrón</b></td><td>Corteza</td><td>Negativa (−)</td></tr>
+      </table></div>
+      <p>Casi toda la masa del átomo está en el núcleo. Los electrones pesan muchísimo menos que los protones y los neutrones.</p>
+      <p class="ojo"><b>Un átomo es neutro</b> (no tiene carga) cuando tiene el <b>mismo número de protones que de electrones</b>: las cargas + y − se compensan.</p>`},
+    {h:'3. Número atómico, número másico e iones', html:`
+      <div class="tabla"><table>
+        <tr><th>Concepto</th><th>Letra</th><th>Qué indica</th></tr>
+        <tr><td><b>Número atómico</b></td><td>Z</td><td>El número de <b>protones</b>. Es el «DNI» del elemento: todos los átomos de oxígeno tienen Z = 8.</td></tr>
+        <tr><td><b>Número másico</b></td><td>A</td><td>Protones + neutrones.</td></tr>
+        <tr><td><b>Neutrones</b></td><td>N</td><td>Se calculan restando: <b>N = A − Z</b>.</td></tr>
+      </table></div>
+      <p>Ejemplo: el sodio tiene <b>Z = 11</b> y <b>A = 23</b>. Tiene 11 protones, 23 − 11 = <b>12 neutrones</b> y, si es neutro, <b>11 electrones</b>.</p>
+      <p>Un <b>ion</b> es un átomo que ha ganado o perdido electrones y por eso tiene carga:</p>
+      <ul>
+        <li><b>Catión</b> (carga +): ha <b>perdido</b> electrones. Ejemplo: Na⁺ tiene 10 electrones.</li>
+        <li><b>Anión</b> (carga −): ha <b>ganado</b> electrones. Ejemplo: Cl⁻ tiene 18 electrones (el cloro tiene Z = 17).</li>
+      </ul>
+      <p>Los <b>isótopos</b> son átomos del mismo elemento (mismo Z) con distinto número de neutrones (distinto A). Ejemplo: el carbono-12 y el carbono-14.</p>
+      <details><summary>Practica: el oxígeno tiene Z = 8 y A = 16. ¿Cuántos protones, neutrones y electrones tiene?</summary><p>8 protones, 16 − 8 = <b>8 neutrones</b> y 8 electrones si es neutro.</p></details>
+      <details><summary>Practica: el calcio (Z = 20) forma el ion Ca²⁺. ¿Cuántos electrones tiene el ion?</summary><p>Ha perdido 2 electrones: 20 − 2 = <b>18 electrones</b>. Es un catión.</p></details>`},
+    {h:'4. La tabla periódica', html:`
+      <p>La <b>tabla periódica</b> ordena todos los elementos según su <b>número atómico</b>, de menor a mayor. La ideó el químico ruso <b>Mendeléyev</b> en 1869.</p>
+      <ul>
+        <li><b>Periodos:</b> las 7 filas horizontales.</li>
+        <li><b>Grupos:</b> las 18 columnas verticales. Los elementos de un mismo grupo se parecen en su comportamiento químico.</li>
+      </ul>
+      <div class="tabla"><table>
+        <tr><th>Tipo</th><th>Dónde están</th><th>Cómo son</th><th>Ejemplos</th></tr>
+        <tr><td><b>Metales</b></td><td>A la izquierda y en el centro (son la mayoría)</td><td>Brillan, conducen el calor y la electricidad, se pueden doblar y estirar. Casi todos son sólidos.</td><td>Hierro, cobre, aluminio, oro</td></tr>
+        <tr><td><b>No metales</b></td><td>A la derecha</td><td>No brillan y conducen mal. Pueden ser sólidos, líquidos o gases.</td><td>Oxígeno, carbono, azufre, cloro</td></tr>
+        <tr><td><b>Semimetales o metaloides</b></td><td>En la «escalera» entre unos y otros</td><td>Propiedades intermedias</td><td>Silicio (chips de los móviles)</td></tr>
+        <tr><td><b>Gases nobles</b></td><td>La última columna (grupo 18)</td><td>Casi no reaccionan con nada</td><td>Helio, neón, argón</td></tr>
+      </table></div>
+      <p class="ojo"><b>El hidrógeno</b> está arriba a la izquierda, pero <b>no es un metal</b>: es un gas.</p>`},
+    {h:'5. Elementos y compuestos', html:`
+      <p>Los átomos se unen entre sí formando <b>moléculas</b> o cristales.</p>
+      <ul>
+        <li><b>Elemento:</b> sustancia con un solo tipo de átomo. Ejemplo: el oxígeno que respiramos (O₂) son dos átomos de oxígeno unidos.</li>
+        <li><b>Compuesto:</b> sustancia formada por dos o más elementos distintos unidos en una proporción fija. Se representa con una <b>fórmula</b>.</li>
+      </ul>
+      <div class="tabla"><table>
+        <tr><th>Compuesto</th><th>Fórmula</th><th>Qué lleva</th></tr>
+        <tr><td>Agua</td><td><b>H₂O</b></td><td>2 átomos de hidrógeno y 1 de oxígeno</td></tr>
+        <tr><td>Dióxido de carbono</td><td><b>CO₂</b></td><td>1 de carbono y 2 de oxígeno</td></tr>
+        <tr><td>Sal común (cloruro de sodio)</td><td><b>NaCl</b></td><td>1 de sodio y 1 de cloro</td></tr>
+        <tr><td>Metano (gas natural)</td><td><b>CH₄</b></td><td>1 de carbono y 4 de hidrógeno</td></tr>
+      </table></div>
+      <p>Un compuesto tiene propiedades muy distintas de sus elementos: el sodio es un metal que reacciona con violencia en el agua y el cloro es un gas tóxico, pero juntos forman la sal que echamos a la comida.</p>
+      <details><summary>Practica: ¿cuántos átomos tiene en total una molécula de glucosa, C₆H₁₂O₆?</summary><p>6 de carbono + 12 de hidrógeno + 6 de oxígeno = <b>24 átomos</b>.</p></details>`}
+  ],
+  juego:'cie-elementos'
+};
+
+TEMAS['mat-notacion'] = { ambito:'cientifico', area:'Matemáticas', clase:5, titulo:'La notación científica',
+  intro:'Cómo escribir de forma corta números muy grandes, como las distancias del Universo, y muy pequeños, como el tamaño de un átomo.',
+  apartados:[
+    {h:'1. Las potencias de 10', html:`
+      <p>Una <b>potencia</b> es una multiplicación repetida: 10³ = 10 × 10 × 10 = 1.000. El número de abajo es la <b>base</b> y el pequeño de arriba, el <b>exponente</b>.</p>
+      <div class="tabla"><table>
+        <tr><th>Potencia</th><th>Número</th><th>Se lee</th></tr>
+        <tr><td>10⁶</td><td>1.000.000</td><td>un millón</td></tr>
+        <tr><td>10³</td><td>1.000</td><td>mil</td></tr>
+        <tr><td>10²</td><td>100</td><td>cien</td></tr>
+        <tr><td>10¹</td><td>10</td><td>diez</td></tr>
+        <tr><td>10⁰</td><td>1</td><td>uno</td></tr>
+        <tr><td>10⁻¹</td><td>0,1</td><td>una décima</td></tr>
+        <tr><td>10⁻²</td><td>0,01</td><td>una centésima</td></tr>
+        <tr><td>10⁻³</td><td>0,001</td><td>una milésima</td></tr>
+        <tr><td>10⁻⁶</td><td>0,000001</td><td>una millonésima</td></tr>
+      </table></div>
+      <p class="ojo"><b>Truco:</b> con exponente positivo, el exponente dice <b>cuántos ceros</b> lleva el número. Con exponente negativo, dice <b>cuántos decimales</b> tiene (contando el 1).</p>`},
+    {h:'2. ¿Qué es la notación científica?', html:`
+      <p>Es una forma de escribir un número como un número entre 1 y 10 multiplicado por una potencia de 10:</p>
+      <p style="text-align:center;font-size:1.25em"><b>a × 10ⁿ</b>, con 1 ≤ a &lt; 10</p>
+      <ul>
+        <li><b>a</b> tiene <b>una sola cifra entera</b>, que no puede ser 0: 3,5 sí; 35 o 0,35 no.</li>
+        <li><b>n</b> es un número entero: positivo para números grandes y negativo para números pequeños.</li>
+      </ul>
+      <div class="tabla"><table>
+        <tr><th>Dato</th><th>Número normal</th><th>Notación científica</th></tr>
+        <tr><td>Distancia de la Tierra al Sol</td><td>150.000.000 km</td><td><b>1,5 × 10⁸ km</b></td></tr>
+        <tr><td>Velocidad de la luz</td><td>300.000 km/s</td><td><b>3 × 10⁵ km/s</b></td></tr>
+        <tr><td>Edad del Universo</td><td>13.800.000.000 años</td><td><b>1,38 × 10¹⁰ años</b></td></tr>
+        <tr><td>Grosor de un pelo</td><td>0,00008 m</td><td><b>8 × 10⁻⁵ m</b></td></tr>
+        <tr><td>Tamaño de un átomo</td><td>0,0000000001 m</td><td><b>1 × 10⁻¹⁰ m</b></td></tr>
+      </table></div>`},
+    {h:'3. De número normal a notación científica', html:`
+      <p><b>Paso 1:</b> mueve la coma hasta que quede <b>una sola cifra entera</b> distinta de 0.</p>
+      <p><b>Paso 2:</b> cuenta cuántos lugares has movido la coma. Ese es el exponente.</p>
+      <p><b>Paso 3:</b> si el número era <b>grande</b> (la coma va a la izquierda), el exponente es <b>positivo</b>. Si era <b>pequeño</b>, menor que 1 (la coma va a la derecha), es <b>negativo</b>.</p>
+      <div class="tabla"><table>
+        <tr><th>Número</th><th>Movemos la coma</th><th>Resultado</th></tr>
+        <tr><td>45.000</td><td>4 lugares a la izquierda</td><td><b>4,5 × 10⁴</b></td></tr>
+        <tr><td>7.200.000</td><td>6 lugares a la izquierda</td><td><b>7,2 × 10⁶</b></td></tr>
+        <tr><td>0,003</td><td>3 lugares a la derecha</td><td><b>3 × 10⁻³</b></td></tr>
+        <tr><td>0,00056</td><td>4 lugares a la derecha</td><td><b>5,6 × 10⁻⁴</b></td></tr>
+      </table></div>
+      <details><summary>Practica: escribe en notación científica 380.000 km (distancia de la Tierra a la Luna).</summary><p>Movemos la coma 5 lugares a la izquierda: <b>3,8 × 10⁵ km</b>.</p></details>
+      <details><summary>Practica: escribe en notación científica 0,0072 g.</summary><p>Movemos la coma 3 lugares a la derecha: <b>7,2 × 10⁻³ g</b>.</p></details>`},
+    {h:'4. De notación científica a número normal', html:`
+      <p>Se hace al revés: el exponente te dice cuántos lugares mover la coma.</p>
+      <ul>
+        <li><b>Exponente positivo:</b> la coma va a la <b>derecha</b> (el número se hace grande). Se rellena con ceros. 2,3 × 10⁴ = <b>23.000</b>.</li>
+        <li><b>Exponente negativo:</b> la coma va a la <b>izquierda</b> (el número se hace pequeño). 6 × 10⁻³ = <b>0,006</b>.</li>
+      </ul>
+      <details><summary>Practica: escribe como número normal 5,07 × 10⁶ y 1,2 × 10⁻⁴.</summary><p>5,07 × 10⁶ = <b>5.070.000</b> · 1,2 × 10⁻⁴ = <b>0,00012</b>.</p></details>`},
+    {h:'5. Comparar y operar', html:`
+      <p><b>Comparar:</b> manda el exponente. El número con el exponente mayor es el más grande: 2 × 10⁸ es mayor que 9 × 10⁷. Si los exponentes son iguales, se compara el número de delante.</p>
+      <p><b>Multiplicar:</b> se multiplican los números de delante y se <b>suman</b> los exponentes.</p>
+      <p style="text-align:center">(3 × 10⁴) · (2 × 10³) = 6 × 10⁷</p>
+      <p><b>Dividir:</b> se dividen los números de delante y se <b>restan</b> los exponentes.</p>
+      <p style="text-align:center">(8 × 10⁹) : (2 × 10³) = 4 × 10⁶</p>
+      <p>Si el número de delante sale mayor que 10, se ajusta: 15 × 10⁵ = 1,5 × 10⁶.</p>
+      <p class="ojo"><b>Con la calculadora</b> (se puede llevar al examen): para escribir 3 × 10⁵ pulsa <b>3</b>, luego la tecla <b>EXP</b> o <b>×10ˣ</b> y luego <b>5</b>. Si el resultado sale como «4.5E12», significa 4,5 × 10¹².</p>
+      <details><summary>Practica: la luz recorre 3 × 10⁵ km cada segundo. ¿Cuántos km recorre en 500 segundos (5 × 10²)?</summary><p>(3 × 10⁵) · (5 × 10²) = 15 × 10⁷ = <b>1,5 × 10⁸ km</b>. ¡Es la distancia de la Tierra al Sol! La luz del Sol tarda unos 500 segundos (8 minutos) en llegar.</p></details>`}
+  ],
+  juego:'mat-notacion'
+};
+
+TEMAS['mat-enteros'] = { ambito:'cientifico', area:'Matemáticas', clase:6, titulo:'Los números enteros',
+  intro:'Los números positivos, negativos y el cero: cómo se ordenan, cómo se opera con ellos y en qué orden se hacen las operaciones combinadas.',
+  apartados:[
+    {h:'1. ¿Qué son los números enteros?', html:`
+      <p>Los <b>números enteros</b> son los números naturales (1, 2, 3…), sus <b>opuestos negativos</b> (−1, −2, −3…) y el <b>0</b>. Los usamos a diario:</p>
+      <ul>
+        <li>Temperaturas bajo cero: −4 °C.</li>
+        <li>Plantas de un edificio: el sótano −2.</li>
+        <li>Dinero: un saldo de −50 € es una deuda.</li>
+        <li>Altitud: el mar Muerto está a −430 m, por debajo del nivel del mar.</li>
+        <li>Historia: el año −218 es el 218 antes de Cristo.</li>
+      </ul>
+      <p>Se representan en la <b>recta numérica</b>: el 0 en el centro, los positivos a la derecha y los negativos a la izquierda. Cuanto más a la derecha, mayor es el número.</p>
+      <div class="tabla"><table>
+        <tr><th>Concepto</th><th>Qué es</th><th>Ejemplo</th></tr>
+        <tr><td><b>Valor absoluto</b></td><td>La distancia al 0, sin el signo</td><td>|−7| = 7 · |7| = 7</td></tr>
+        <tr><td><b>Opuesto</b></td><td>El mismo número con el signo cambiado</td><td>El opuesto de −3 es 3</td></tr>
+        <tr><td><b>Orden</b></td><td>Entre negativos, es mayor el que está más cerca del 0</td><td>−2 &gt; −8</td></tr>
+      </table></div>
+      <details><summary>Practica: ordena de menor a mayor: 3, −5, 0, −1, 7, −10.</summary><p><b>−10 &lt; −5 &lt; −1 &lt; 0 &lt; 3 &lt; 7</b></p></details>`},
+    {h:'2. Sumar y restar', html:`
+      <ul>
+        <li><b>Mismo signo:</b> se suman los números y se deja el signo. −3 − 5 = <b>−8</b> · 4 + 6 = <b>10</b>.</li>
+        <li><b>Distinto signo:</b> se restan (el grande menos el pequeño) y se pone el signo del que tiene mayor valor absoluto. −9 + 4 = <b>−5</b> · 12 − 7 = <b>5</b>.</li>
+      </ul>
+      <p><b>Quitar paréntesis:</b> un signo + delante deja el paréntesis igual; un signo − delante <b>cambia el signo</b> de lo de dentro.</p>
+      <p style="text-align:center">5 − (−3) = 5 + 3 = 8 · 5 + (−3) = 5 − 3 = 2</p>
+      <p class="ojo"><b>Piénsalo con dinero:</b> positivo es lo que tienes y negativo lo que debes. Si debes 9 € y te dan 4 €, sigues debiendo 5 €: −9 + 4 = −5.</p>
+      <details><summary>Practica: por la mañana había −3 °C y a mediodía la temperatura subió 11 grados. ¿Qué temperatura hacía?</summary><p>−3 + 11 = <b>8 °C</b>.</p></details>`},
+    {h:'3. Multiplicar y dividir: la regla de los signos', html:`
+      <p>Se multiplican o dividen los números y el signo del resultado sigue esta regla:</p>
+      <div class="tabla"><table>
+        <tr><th>Signos</th><th>Resultado</th><th>Ejemplo</th></tr>
+        <tr><td>+ por +</td><td><b>+</b></td><td>3 · 4 = 12</td></tr>
+        <tr><td>− por −</td><td><b>+</b></td><td>(−3) · (−4) = 12</td></tr>
+        <tr><td>+ por −</td><td><b>−</b></td><td>3 · (−4) = −12</td></tr>
+        <tr><td>− por +</td><td><b>−</b></td><td>(−12) : 4 = −3</td></tr>
+      </table></div>
+      <p class="ojo"><b>Resumen:</b> signos iguales dan <b>+</b>; signos distintos dan <b>−</b>. La regla es la misma para dividir.</p>`},
+    {h:'4. Potencias de números enteros', html:`
+      <p>Si la base es positiva, el resultado siempre es positivo. Si la base es <b>negativa</b>:</p>
+      <ul>
+        <li>Exponente <b>par</b> → resultado <b>positivo</b>: (−2)⁴ = 16.</li>
+        <li>Exponente <b>impar</b> → resultado <b>negativo</b>: (−2)³ = −8.</li>
+      </ul>
+      <p class="ojo"><b>Cuidado con el paréntesis:</b> (−3)² = (−3) · (−3) = <b>9</b>, pero −3² = −(3 · 3) = <b>−9</b>, porque sin paréntesis el exponente solo afecta al 3.</p>`},
+    {h:'5. Operaciones combinadas', html:`
+      <p>Cuando hay varias operaciones, se hacen siempre en este orden (<b>jerarquía de las operaciones</b>):</p>
+      <ol>
+        <li><b>Paréntesis</b> y corchetes, de dentro hacia fuera.</li>
+        <li><b>Potencias</b> y raíces.</li>
+        <li><b>Multiplicaciones y divisiones</b>, de izquierda a derecha.</li>
+        <li><b>Sumas y restas</b>, de izquierda a derecha.</li>
+      </ol>
+      <p><b>Ejemplo paso a paso:</b> 8 − 3 · (5 − 7)² : 6</p>
+      <ul>
+        <li>Paréntesis: 5 − 7 = −2 → 8 − 3 · (−2)² : 6</li>
+        <li>Potencia: (−2)² = 4 → 8 − 3 · 4 : 6</li>
+        <li>Multiplicación y división, de izquierda a derecha: 3 · 4 = 12; 12 : 6 = 2 → 8 − 2</li>
+        <li>Resta: <b>6</b></li>
+      </ul>
+      <details><summary>Practica: calcula −4 + 6 · (−2) − (3 − 8).</summary><p>Paréntesis: 3 − 8 = −5. Multiplicación: 6 · (−2) = −12. Queda −4 − 12 − (−5) = −4 − 12 + 5 = <b>−11</b>.</p></details>
+      <details><summary>Practica: Ana tiene 120 € en el banco. Paga 3 recibos de 45 € y le ingresan 60 €. ¿Cuánto tiene?</summary><p>120 − 3 · 45 + 60 = 120 − 135 + 60 = <b>45 €</b>.</p></details>`}
+  ],
+  juego:'mat-enteros'
+};
+
+TEMAS['cie-tierra'] = { ambito:'cientifico', area:'Ciencias', clase:6, titulo:'La representación de la Tierra · Tierra, aire y agua',
+  intro:'Cómo se representa la Tierra en globos y mapas, cómo se usa la escala, y cómo son sus capas: la geosfera, la atmósfera y la hidrosfera.',
+  apartados:[
+    {h:'1. Cómo se representa la Tierra', html:`
+      <p>La Tierra no es una esfera perfecta: está un poco <b>achatada por los polos</b>. Su forma se llama <b>geoide</b>.</p>
+      <ul>
+        <li>El <b>globo terráqueo</b> es la representación más fiel, porque es redondo como la Tierra, pero es poco práctico.</li>
+        <li>Los <b>mapas</b> son representaciones planas. Pasar una esfera a un plano siempre deforma algo: por eso hay distintas <b>proyecciones</b>. En la de Mercator, por ejemplo, Groenlandia parece casi tan grande como África, aunque es unas 14 veces más pequeña.</li>
+      </ul>
+      <p>Para localizar cualquier punto se usa una red de líneas imaginarias:</p>
+      <div class="tabla"><table>
+        <tr><th>Línea</th><th>Cómo es</th><th>La principal</th><th>Sirve para medir</th></tr>
+        <tr><td><b>Paralelos</b></td><td>Círculos horizontales, paralelos al ecuador</td><td>El <b>ecuador</b> (0°)</td><td>La <b>latitud</b>: de 0° a 90° norte o sur</td></tr>
+        <tr><td><b>Meridianos</b></td><td>Semicírculos de polo a polo</td><td>El de <b>Greenwich</b> (0°)</td><td>La <b>longitud</b>: de 0° a 180° este u oeste</td></tr>
+      </table></div>
+      <p>Ejemplo: Málaga está aproximadamente en <b>36,7° N y 4,4° O</b>.</p>`},
+    {h:'2. La escala', html:`
+      <p>La <b>escala</b> indica cuántas veces se ha reducido la realidad en un mapa.</p>
+      <ul>
+        <li><b>Escala numérica:</b> 1:50.000 significa que <b>1 cm del mapa son 50.000 cm reales</b>, es decir, 500 m.</li>
+        <li><b>Escala gráfica:</b> una barra dividida en tramos que indica la distancia real de cada uno.</li>
+      </ul>
+      <p><b>Cómo calcular una distancia real:</b> se multiplica la medida del mapa por el número de la escala y se pasan las unidades.</p>
+      <p style="text-align:center">4 cm en un mapa 1:200.000 → 4 × 200.000 = 800.000 cm = <b>8 km</b></p>
+      <p class="ojo"><b>Recuerda:</b> 1 km = 1.000 m = 100.000 cm. Para pasar de cm a km, quita cinco ceros o divide entre 100.000.</p>
+      <details><summary>Practica: en un mapa 1:25.000 dos pueblos están a 6 cm. ¿A qué distancia real están?</summary><p>6 × 25.000 = 150.000 cm = <b>1,5 km</b>.</p></details>
+      <p>Una escala <b>grande</b> (1:5.000) reduce poco y muestra mucho detalle, como el plano de una ciudad. Una escala <b>pequeña</b> (1:10.000.000) reduce mucho y sirve para mapas de países o del mundo.</p>`},
+    {h:'3. Las capas de la Tierra', html:`
+      <p>La Tierra está formada por varias capas que se relacionan entre sí:</p>
+      <div class="tabla"><table>
+        <tr><th>Capa</th><th>Qué es</th></tr>
+        <tr><td><b>Geosfera</b></td><td>La parte sólida o rocosa. Por dentro tiene la <b>corteza</b> (donde vivimos, de 5 a 70 km de grosor), el <b>manto</b> (rocas a altas temperaturas, parte fundidas) y el <b>núcleo</b> (hierro y níquel, a más de 5.000 °C).</td></tr>
+        <tr><td><b>Hidrosfera</b></td><td>Toda el agua: océanos, mares, ríos, lagos, aguas subterráneas y hielo.</td></tr>
+        <tr><td><b>Atmósfera</b></td><td>La capa de gases que envuelve la Tierra.</td></tr>
+        <tr><td><b>Biosfera</b></td><td>El conjunto de todos los seres vivos y los lugares donde viven.</td></tr>
+      </table></div>
+      <p class="ojo"><b>En el examen:</b> en 2019 salió una pregunta sobre las capas de la geosfera, la atmósfera y la hidrosfera a partir de un dibujo.</p>`},
+    {h:'4. La atmósfera: el aire', html:`
+      <p>El aire es una <b>mezcla de gases</b>:</p>
+      <div class="tabla"><table>
+        <tr><th>Gas</th><th>Cantidad</th><th>Para qué es importante</th></tr>
+        <tr><td><b>Nitrógeno</b></td><td>78 %</td><td>Lo usan las plantas para crecer</td></tr>
+        <tr><td><b>Oxígeno</b></td><td>21 %</td><td>Lo respiramos los seres vivos</td></tr>
+        <tr><td>Argón y otros</td><td>Casi 1 %</td><td></td></tr>
+        <tr><td><b>Dióxido de carbono</b></td><td>0,04 %</td><td>Lo usan las plantas en la fotosíntesis; retiene calor</td></tr>
+        <tr><td>Vapor de agua</td><td>Variable</td><td>Forma las nubes</td></tr>
+      </table></div>
+      <p><b>Las capas de la atmósfera</b>, de abajo arriba:</p>
+      <ul>
+        <li><b>Troposfera</b> (hasta unos 12 km): donde vivimos y donde se forman las nubes, la lluvia y el viento, es decir, el tiempo atmosférico.</li>
+        <li><b>Estratosfera</b> (hasta 50 km): contiene la <b>capa de ozono</b>, que filtra los rayos ultravioleta del Sol.</li>
+        <li><b>Mesosfera</b>: aquí se queman los meteoritos y forman las «estrellas fugaces».</li>
+        <li><b>Termosfera</b> y <b>exosfera</b>: las más altas, donde orbitan muchos satélites.</li>
+      </ul>
+      <p><b>Funciones:</b> nos da el oxígeno, nos protege de la radiación ultravioleta y de los meteoritos, y mantiene una temperatura suave gracias al <b>efecto invernadero natural</b>. Si aumentan mucho los gases como el CO₂ (al quemar petróleo, carbón o gas), se retiene demasiado calor y se produce el <b>cambio climático</b>.</p>`},
+    {h:'5. La hidrosfera: el agua', html:`
+      <p>El agua cubre más del <b>70 %</b> de la superficie de la Tierra, por eso se la llama «planeta azul». Pero casi toda es salada:</p>
+      <ul>
+        <li><b>97 %</b> agua salada (océanos y mares).</li>
+        <li><b>3 %</b> agua dulce, y la mayor parte está congelada en los polos y glaciares. El agua dulce que podemos usar es <b>menos del 1 %</b>.</li>
+      </ul>
+      <p>El agua no se gasta: se mueve sin parar en el <b>ciclo del agua</b>.</p>
+      <ol>
+        <li><b>Evaporación:</b> el Sol calienta el agua de mares y ríos y se convierte en vapor.</li>
+        <li><b>Condensación:</b> el vapor sube, se enfría y forma las nubes.</li>
+        <li><b>Precipitación:</b> el agua cae como lluvia, nieve o granizo.</li>
+        <li><b>Escorrentía e infiltración:</b> el agua corre por la superficie hasta ríos y mares, o se filtra en el suelo y forma aguas subterráneas.</li>
+      </ol>
+      <p class="ojo"><b>Andalucía y el agua:</b> en el sur de España llueve poco y hay sequías frecuentes, por eso es tan importante ahorrar agua y no contaminarla.</p>`}
+  ],
+  juego:'cie-tierra'
+};
+
+/* ---- Juegos ---- */
+JUEGOS['cie-universo'] = { ambito:'cientifico', titulo:'El Universo y la Tierra', preguntas:[
+  {q:'¿Qué teoría explica el origen del Universo?', op:['El Big Bang','La deriva continental','La evolución','La gravedad'], ok:0, ex:'Hace unos <b>13.800 millones de años</b>, todo empezó a expandirse desde un punto muy caliente.'},
+  {q:'¿Cuántos años tiene aproximadamente el Universo?', op:['13.800 millones','4.500 millones','2.000 años','1 millón'], ok:0, ex:'Unos <b>13.800 millones de años</b>. La Tierra tiene unos 4.500 millones.'},
+  {q:'El año luz es una medida de…', op:['Distancia','Tiempo','Velocidad','Temperatura'], ok:0, ex:'Es la <b>distancia</b> que recorre la luz en un año.'},
+  {q:'¿A qué velocidad viaja la luz?', op:['300.000 km/s','300 km/h','3.000 km/s','1.000 km/h'], ok:0, ex:'Unos <b>300.000 km por segundo</b>.'},
+  {q:'¿Cómo se llama nuestra galaxia?', op:['Vía Láctea','Andrómeda','Osa Mayor','Sistema solar'], ok:0, ex:'Es una galaxia <b>espiral</b>.'},
+  {q:'La Vía Láctea es una galaxia…', op:['Espiral','Elíptica','Irregular','Cuadrada'], ok:0, ex:'Tiene un centro abultado y brazos.'},
+  {q:'¿De qué están hechas sobre todo las estrellas?', op:['Hidrógeno y helio','Hierro y níquel','Agua y hielo','Oxígeno y nitrógeno'], ok:0, ex:'Producen luz por reacciones nucleares de <b>hidrógeno y helio</b>.'},
+  {q:'El Sol es…', op:['Una estrella','Un planeta','Un satélite','Una galaxia'], ok:0, ex:'Es una estrella mediana, la más cercana a la Tierra.'},
+  {q:'¿Cuál es el planeta más grande del sistema solar?', op:['Júpiter','Saturno','La Tierra','Neptuno'], ok:0, ex:'<b>Júpiter</b> es un gigante gaseoso.'},
+  {q:'¿Cuál de estos es un planeta rocoso?', op:['Marte','Júpiter','Saturno','Urano'], ok:0, ex:'Los rocosos son Mercurio, Venus, Tierra y Marte.'},
+  {q:'¿Qué planeta está más cerca del Sol?', op:['Mercurio','Venus','La Tierra','Marte'], ok:0, ex:'El orden: Mercurio, Venus, Tierra, Marte, Júpiter, Saturno, Urano, Neptuno.'},
+  {q:'Plutón es…', op:['Un planeta enano','El noveno planeta','Un satélite de la Tierra','Una estrella'], ok:0, ex:'Desde 2006 se considera <b>planeta enano</b>.'},
+  {q:'La Luna es…', op:['Un satélite','Un planeta','Una estrella','Un cometa'], ok:0, ex:'Gira alrededor de la Tierra.'},
+  {q:'Una bola de hielo y polvo que forma una cola al acercarse al Sol es…', op:['Un cometa','Un asteroide','Un satélite','Un planeta enano'], ok:0, ex:'Por ejemplo, el cometa Halley.'},
+  {q:'¿Dónde está el cinturón de asteroides?', op:['Entre Marte y Júpiter','Entre la Tierra y la Luna','Más allá de Neptuno','Dentro del Sol'], ok:0, ex:'Entre los planetas rocosos y los gaseosos.'},
+  {q:'La rotación de la Tierra provoca…', op:['El día y la noche','Las estaciones','Las mareas','Los eclipses'], ok:0, ex:'La Tierra gira sobre sí misma cada <b>24 horas</b>.'},
+  {q:'¿Cuánto tarda la Tierra en dar la vuelta al Sol?', op:['365 días y 6 horas','24 horas','28 días','12 meses justos'], ok:0, ex:'Las 6 horas sobrantes forman el 29 de febrero de los años bisiestos.'},
+  {q:'¿Por qué hay estaciones?', op:['Por la inclinación del eje de la Tierra','Porque la Tierra se acerca y se aleja del Sol','Por la Luna','Por las nubes'], ok:0, ex:'El eje está inclinado unos <b>23,5°</b>.'},
+  {q:'En los equinoccios…', op:['El día y la noche duran lo mismo','Es el día más largo','Es el día más corto','Hay eclipse'], ok:0, ex:'Hacia el 21 de marzo y el 23 de septiembre.'},
+  {q:'El 21 de junio, en España, es…', op:['El solsticio de verano, el día más largo','El equinoccio de primavera','El día más corto','Año nuevo'], ok:0, ex:'Es el <b>solsticio de verano</b>.'},
+  {q:'¿Cuánto tarda la Luna en dar la vuelta a la Tierra?', op:['Unos 28 días','24 horas','Un año','Una semana'], ok:0, ex:'Por eso cada fase dura más o menos una semana.'},
+  {q:'Si la Luna tapa el Sol, hay…', op:['Un eclipse de Sol','Un eclipse de Luna','Luna llena','Marea alta'], ok:0, ex:'La Luna se pone entre el Sol y la Tierra.'},
+  {q:'¿Qué provoca las mareas?', op:['La gravedad de la Luna','El viento','La rotación del Sol','Los terremotos'], ok:0, ex:'La Luna atrae el agua de los océanos.'},
+  {q:'¿Qué condición permite que haya agua líquida en la Tierra?', op:['Su distancia al Sol','Su tamaño pequeño','Tener anillos','Tener la Luna'], ok:0, ex:'Ni muy cerca ni muy lejos: temperatura adecuada.'},
+  {q:'¿Qué protege a la Tierra del viento solar?', op:['El campo magnético','La Luna','Los océanos','Los volcanes'], ok:0, ex:'Funciona como un escudo frente a las partículas del Sol.'},
+  {q:'La capa de ozono nos protege de…', op:['Los rayos ultravioleta','La lluvia','Los terremotos','El frío'], ok:0, ex:'Está en la estratosfera.'},
+  {q:'¿Cuáles son los principales bioelementos?', op:['C, H, O y N','Fe, Cu, Au y Ag','He, Ne, Ar y Kr','Na, Cl, K y Ca'], ok:0, ex:'Carbono, hidrógeno, oxígeno y nitrógeno.'},
+  {q:'¿Por qué en la Luna hay temperaturas extremas?', op:['Porque no tiene atmósfera','Porque está más lejos del Sol','Porque es de hielo','Porque gira muy rápido'], ok:0, ex:'Sin atmósfera, pasa de 120 °C de día a −170 °C de noche.'},
+  VF('La luz del Sol tarda unos 8 minutos en llegar a la Tierra.', true, 'El Sol está a 150 millones de km.'),
+  VF('En verano hace calor porque la Tierra está más cerca del Sol.', false, 'Es por la <b>inclinación del eje</b>: los rayos llegan más directos.'),
+  VF('El Universo sigue expandiéndose.', true, 'Las galaxias se alejan unas de otras.'),
+  VF('Las constelaciones son galaxias.', false, 'Son grupos de estrellas que vemos formando figuras en el cielo.')
+]};
+
+JUEGOS['cie-elementos'] = { ambito:'cientifico', titulo:'Los elementos químicos', preguntas:[
+  {q:'Un elemento químico es una sustancia formada por…', op:['Un solo tipo de átomo','Varios tipos de átomos','Solo electrones','Mezclas de gases'], ok:0, ex:'Por ejemplo, el hierro solo tiene átomos de hierro.'},
+  {q:'¿Cuántos elementos químicos se conocen?', op:['118','8','1.000','50'], ok:0, ex:'Unos 90 son naturales y el resto, artificiales.'},
+  {q:'¿Qué símbolo tiene el oxígeno?', op:['O','Ox','Og','X'], ok:0, ex:'O.'},
+  {q:'¿Qué símbolo tiene el hierro?', op:['Fe','Hi','H','Ir'], ok:0, ex:'Viene del latín <i>ferrum</i>.'},
+  {q:'¿Qué símbolo tiene el sodio?', op:['Na','So','S','Sd'], ok:0, ex:'Viene del latín <i>natrium</i>. S es el azufre.'},
+  {q:'«Au» es el símbolo del…', op:['Oro','Aluminio','Argón','Azufre'], ok:0, ex:'Del latín <i>aurum</i>. El aluminio es Al.'},
+  {q:'¿Qué partícula del átomo tiene carga negativa?', op:['El electrón','El protón','El neutrón','El núcleo'], ok:0, ex:'Los electrones están en la corteza.'},
+  {q:'¿Qué partícula no tiene carga?', op:['El neutrón','El protón','El electrón','El ion'], ok:0, ex:'Está en el núcleo, junto a los protones.'},
+  {q:'¿Dónde están los protones y los neutrones?', op:['En el núcleo','En la corteza','Fuera del átomo','En los electrones'], ok:0, ex:'El núcleo tiene casi toda la masa del átomo.'},
+  {q:'El número atómico (Z) indica el número de…', op:['Protones','Neutrones','Protones + neutrones','Moléculas'], ok:0, ex:'Es el «DNI» del elemento.'},
+  {q:'El número másico (A) es…', op:['Protones + neutrones','Solo protones','Solo electrones','Protones − electrones'], ok:0, ex:'Los neutrones se calculan con <b>A − Z</b>.'},
+  {q:'Un átomo con Z = 11 y A = 23 tiene…', op:['12 neutrones','11 neutrones','23 neutrones','34 neutrones'], ok:0, ex:'23 − 11 = <b>12</b>.'},
+  {q:'Un átomo neutro con Z = 8 tiene…', op:['8 electrones','16 electrones','0 electrones','4 electrones'], ok:0, ex:'Neutro: mismos electrones que protones.'},
+  {q:'Un catión es un átomo que ha…', op:['Perdido electrones','Ganado electrones','Ganado protones','Perdido neutrones'], ok:0, ex:'Queda con carga <b>positiva</b>.'},
+  {q:'Un anión tiene carga…', op:['Negativa','Positiva','Neutra','Doble positiva'], ok:0, ex:'Ha ganado electrones.'},
+  {q:'El Ca²⁺ (calcio, Z = 20) tiene…', op:['18 electrones','22 electrones','20 electrones','2 electrones'], ok:0, ex:'Ha perdido 2: 20 − 2 = <b>18</b>.'},
+  {q:'Los isótopos tienen igual número de protones pero distinto número de…', op:['Neutrones','Protones','Elementos','Grupos'], ok:0, ex:'Ejemplo: carbono-12 y carbono-14.'},
+  {q:'¿Quién ideó la tabla periódica?', op:['Mendeléyev','Einstein','Newton','Darwin'], ok:0, ex:'En 1869.'},
+  {q:'En la tabla periódica, los elementos se ordenan por…', op:['Su número atómico','Su color','Su nombre','Su precio'], ok:0, ex:'De menor a mayor número de protones.'},
+  {q:'Las filas de la tabla periódica se llaman…', op:['Periodos','Grupos','Familias','Columnas'], ok:0, ex:'Hay 7 periodos. Las columnas son los grupos.'},
+  {q:'¿Cuántos grupos (columnas) tiene la tabla periódica?', op:['18','7','10','118'], ok:0, ex:'18 grupos y 7 periodos.'},
+  {q:'¿Dónde están los metales en la tabla periódica?', op:['A la izquierda y en el centro','A la derecha','Solo arriba','En la última columna'], ok:0, ex:'Son la mayoría de los elementos.'},
+  {q:'¿Cuál de estos es un no metal?', op:['Oxígeno','Hierro','Cobre','Aluminio'], ok:0, ex:'Los no metales están a la derecha de la tabla.'},
+  {q:'Una propiedad de los metales es que…', op:['Conducen la electricidad','Son todos gases','No brillan','Se rompen al tocarlos'], ok:0, ex:'Por eso los cables son de cobre.'},
+  {q:'Los gases nobles…', op:['Casi no reaccionan con nada','Son metales','Explotan con el agua','Son líquidos'], ok:0, ex:'Están en el grupo 18: helio, neón, argón…'},
+  {q:'El silicio de los chips es un…', op:['Semimetal','Gas noble','Metal pesado','Compuesto'], ok:0, ex:'Tiene propiedades intermedias.'},
+  {q:'¿Cuál es un compuesto?', op:['El agua (H₂O)','El oxígeno (O₂)','El hierro (Fe)','El helio (He)'], ok:0, ex:'Tiene dos elementos distintos: hidrógeno y oxígeno.'},
+  {q:'La fórmula del dióxido de carbono es…', op:['CO₂','CO','C₂O','H₂O'], ok:0, ex:'1 átomo de carbono y 2 de oxígeno.'},
+  {q:'La sal común es…', op:['Cloruro de sodio (NaCl)','Carbonato de calcio','Dióxido de carbono','Agua oxigenada'], ok:0, ex:'Sodio + cloro.'},
+  {q:'¿Cuántos átomos de hidrógeno tiene una molécula de agua?', op:['2','1','3','0'], ok:0, ex:'H₂O: 2 de hidrógeno y 1 de oxígeno.'},
+  {q:'¿Cuáles son los elementos más abundantes en el Universo?', op:['Hidrógeno y helio','Oxígeno y silicio','Hierro y oro','Carbono y nitrógeno'], ok:0, ex:'Forman las estrellas.'},
+  VF('Un átomo neutro tiene los mismos protones que electrones.', true, 'Las cargas + y − se compensan.'),
+  VF('El hidrógeno es un metal porque está a la izquierda de la tabla.', false, 'Es un <b>gas</b>, aunque esté arriba a la izquierda.'),
+  VF('Un compuesto tiene las mismas propiedades que sus elementos.', false, 'El sodio y el cloro son peligrosos, pero la sal que forman no.')
+]};
+
+JUEGOS['mat-notacion'] = { ambito:'cientifico', titulo:'La notación científica', preguntas:[
+  {q:'10³ es igual a…', op:['1.000','30','100','10.000'], ok:0, ex:'10 · 10 · 10 = 1.000.'},
+  {q:'10⁰ es igual a…', op:['1','0','10','No existe'], ok:0, ex:'Cualquier número (salvo 0) elevado a 0 da 1.'},
+  {q:'10⁻² es igual a…', op:['0,01','−100','0,1','−20'], ok:0, ex:'Una centésima.'},
+  {q:'10⁶ es…', op:['Un millón','Mil','Cien mil','Un billón'], ok:0, ex:'Un 1 seguido de 6 ceros.'},
+  {q:'¿Cuál está bien escrito en notación científica?', op:['3,5 × 10⁴','35 × 10³','0,35 × 10⁵','350 × 10²'], ok:0, ex:'El número de delante debe estar entre 1 y 10.'},
+  {q:'45.000 en notación científica es…', op:['4,5 × 10⁴','45 × 10³','4,5 × 10³','4,5 × 10⁵'], ok:0, ex:'La coma se mueve 4 lugares.'},
+  {q:'150.000.000 km en notación científica es…', op:['1,5 × 10⁸ km','1,5 × 10⁷ km','15 × 10⁸ km','1,5 × 10⁹ km'], ok:0, ex:'8 lugares: distancia de la Tierra al Sol.'},
+  {q:'300.000 km/s en notación científica es…', op:['3 × 10⁵','3 × 10⁴','3 × 10⁶','30 × 10⁴'], ok:0, ex:'La velocidad de la luz.'},
+  {q:'0,003 en notación científica es…', op:['3 × 10⁻³','3 × 10³','0,3 × 10⁻²','3 × 10⁻²'], ok:0, ex:'La coma se mueve 3 lugares a la derecha → exponente negativo.'},
+  {q:'0,00056 en notación científica es…', op:['5,6 × 10⁻⁴','5,6 × 10⁴','56 × 10⁻⁵','5,6 × 10⁻³'], ok:0, ex:'4 lugares a la derecha.'},
+  {q:'2,3 × 10⁴ es…', op:['23.000','2.300','230.000','0,00023'], ok:0, ex:'La coma se mueve 4 lugares a la derecha.'},
+  {q:'6 × 10⁻³ es…', op:['0,006','6.000','0,06','−6.000'], ok:0, ex:'Exponente negativo: número pequeño.'},
+  {q:'5,07 × 10⁶ es…', op:['5.070.000','507.000','50.700.000','5.700.000'], ok:0, ex:'6 lugares a la derecha.'},
+  {q:'Un exponente negativo indica un número…', op:['Menor que 1','Negativo','Mayor que 1.000','Que no existe'], ok:0, ex:'Ojo: 10⁻³ es 0,001, que es positivo.'},
+  {q:'¿Cuál es mayor?', op:['2 × 10⁸','9 × 10⁷','9,9 × 10⁶','1 × 10⁵'], ok:0, ex:'Manda el exponente.'},
+  {q:'¿Cuál es menor?', op:['1 × 10⁻⁵','1 × 10⁻²','1 × 10⁰','1 × 10³'], ok:0, ex:'El exponente más negativo es el más pequeño.'},
+  {q:'(3 × 10⁴) · (2 × 10³) =', op:['6 × 10⁷','6 × 10¹²','5 × 10⁷','6 × 10¹'], ok:0, ex:'3 · 2 = 6 y los exponentes se suman: 4 + 3 = 7.'},
+  {q:'(8 × 10⁹) : (2 × 10³) =', op:['4 × 10⁶','4 × 10¹²','6 × 10⁶','4 × 10³'], ok:0, ex:'8 : 2 = 4 y los exponentes se restan: 9 − 3 = 6.'},
+  {q:'(5 × 10³) · (4 × 10²) =', op:['2 × 10⁶','20 × 10⁶','2 × 10⁵','9 × 10⁵'], ok:0, ex:'20 × 10⁵ = <b>2 × 10⁶</b>.'},
+  {q:'15 × 10⁵ bien escrito es…', op:['1,5 × 10⁶','1,5 × 10⁴','15 × 10⁵','0,15 × 10⁷'], ok:0, ex:'Se mueve la coma uno a la izquierda y se suma 1 al exponente.'},
+  {q:'En la calculadora sale «4.5E12». Significa…', op:['4,5 × 10¹²','4,5 + 12','45 · 12','4,5 elevado a 12'], ok:0, ex:'La E significa «× 10 elevado a».'},
+  {q:'El tamaño de un átomo, 0,0000000001 m, es…', op:['1 × 10⁻¹⁰ m','1 × 10¹⁰ m','1 × 10⁻⁹ m','10 × 10⁻¹⁰ m'], ok:0, ex:'10 lugares a la derecha.'},
+  {q:'380.000 km (Tierra-Luna) es…', op:['3,8 × 10⁵ km','3,8 × 10⁴ km','38 × 10⁴ km','3,8 × 10⁶ km'], ok:0, ex:'5 lugares.'},
+  {q:'¿Para qué sirve la notación científica?', op:['Para escribir números muy grandes o muy pequeños','Para sumar fracciones','Para medir ángulos','Para hacer porcentajes'], ok:0, ex:'Distancias del Universo, tamaño de las células o de los átomos…'},
+  VF('35 × 10³ está bien escrito en notación científica.', false, 'El número de delante debe estar entre 1 y 10: 3,5 × 10⁴.'),
+  VF('Al multiplicar en notación científica, los exponentes se suman.', true, 'Y al dividir, se restan.'),
+  VF('10⁻³ es un número negativo.', false, 'Es 0,001, un número positivo pero pequeño.')
+]};
+
+JUEGOS['mat-enteros'] = { ambito:'cientifico', titulo:'Los números enteros', preguntas:[
+  {q:'¿Cuál es mayor?', op:['−2','−8','−15','−100'], ok:0, ex:'Entre negativos, el más cercano al 0 es el mayor.'},
+  {q:'¿Cuál es menor?', op:['−10','−1','0','3'], ok:0, ex:'Es el que está más a la izquierda en la recta.'},
+  {q:'El valor absoluto de −7 es…', op:['7','−7','0','1/7'], ok:0, ex:'La distancia al 0, sin signo.'},
+  {q:'El opuesto de −3 es…', op:['3','−3','0','1/3'], ok:0, ex:'Se cambia el signo.'},
+  {q:'Un garaje en la segunda planta bajo tierra es la planta…', op:['−2','2','0','−20'], ok:0, ex:'Por debajo del 0 (planta baja).'},
+  {q:'−3 − 5 =', op:['−8','8','−2','2'], ok:0, ex:'Mismo signo: se suman y se deja el signo.'},
+  {q:'−9 + 4 =', op:['−5','5','−13','13'], ok:0, ex:'Distinto signo: se restan y gana el signo del 9.'},
+  {q:'12 − 20 =', op:['−8','8','32','−32'], ok:0, ex:'20 − 12 = 8 y gana el signo del 20.'},
+  {q:'5 − (−3) =', op:['8','2','−8','−2'], ok:0, ex:'Menos por menos: −(−3) = +3.'},
+  {q:'−4 + (−6) =', op:['−10','10','2','−2'], ok:0, ex:'+(−6) = −6. Luego −4 − 6 = −10.'},
+  {q:'Hacía −3 °C y la temperatura sube 11 grados. ¿Qué temperatura hace?', op:['8 °C','−14 °C','14 °C','−8 °C'], ok:0, ex:'−3 + 11 = 8.'},
+  {q:'Tengo 20 € y gasto 35 €. Mi saldo es…', op:['−15 €','15 €','55 €','−55 €'], ok:0, ex:'20 − 35 = −15: debo 15 €.'},
+  {q:'(−3) · (−4) =', op:['12','−12','7','−7'], ok:0, ex:'Signos iguales dan +.'},
+  {q:'3 · (−4) =', op:['−12','12','−1','7'], ok:0, ex:'Signos distintos dan −.'},
+  {q:'(−20) : 5 =', op:['−4','4','−15','100'], ok:0, ex:'Signos distintos: negativo.'},
+  {q:'(−18) : (−3) =', op:['6','−6','15','−15'], ok:0, ex:'Signos iguales: positivo.'},
+  {q:'(−2)³ =', op:['−8','8','−6','6'], ok:0, ex:'Exponente impar con base negativa: negativo.'},
+  {q:'(−2)⁴ =', op:['16','−16','−8','8'], ok:0, ex:'Exponente par: positivo.'},
+  {q:'(−3)² =', op:['9','−9','6','−6'], ok:0, ex:'(−3) · (−3) = 9.'},
+  {q:'−3² =', op:['−9','9','6','−6'], ok:0, ex:'Sin paréntesis, el exponente solo afecta al 3: −(3 · 3).'},
+  {q:'¿Qué se hace primero en una operación combinada?', op:['Los paréntesis','Las sumas','Las restas','Lo que esté a la izquierda'], ok:0, ex:'Paréntesis → potencias → × y : → + y −.'},
+  {q:'2 + 3 · 4 =', op:['14','20','24','9'], ok:0, ex:'Primero la multiplicación: 3 · 4 = 12; luego 2 + 12.'},
+  {q:'(2 + 3) · 4 =', op:['20','14','24','9'], ok:0, ex:'Primero el paréntesis: 5 · 4.'},
+  {q:'10 − 8 : 2 =', op:['6','1','4','9'], ok:0, ex:'Primero la división: 8 : 2 = 4.'},
+  {q:'8 − 3 · (5 − 7)² : 6 =', op:['6','−6','10','2'], ok:0, ex:'(−2)² = 4; 3 · 4 = 12; 12 : 6 = 2; 8 − 2 = 6.'},
+  {q:'−4 + 6 · (−2) − (3 − 8) =', op:['−11','−21','11','1'], ok:0, ex:'−4 − 12 + 5 = −11.'},
+  {q:'Tengo 120 €, pago 3 recibos de 45 € y me ingresan 60 €. Tengo…', op:['45 €','−15 €','225 €','105 €'], ok:0, ex:'120 − 135 + 60 = 45.'},
+  {q:'Un submarino está a −250 m y sube 80 m. ¿A qué profundidad está?', op:['−170 m','−330 m','170 m','330 m'], ok:0, ex:'−250 + 80 = −170.'},
+  VF('Todos los números naturales son enteros.', true, 'Los enteros son los naturales, sus opuestos y el 0.'),
+  VF('−5 es mayor que −1.', false, '−1 está más cerca del 0, así que es mayor.'),
+  VF('Menos por menos da más.', true, '(−) · (−) = (+).')
+]};
+
+JUEGOS['cie-tierra'] = { ambito:'cientifico', titulo:'La Tierra: mapas, aire y agua', preguntas:[
+  {q:'La forma real de la Tierra se llama…', op:['Geoide','Esfera perfecta','Cubo','Óvalo plano'], ok:0, ex:'Está algo achatada por los polos.'},
+  {q:'¿Cuál es la representación más fiel de la Tierra?', op:['El globo terráqueo','Un mapa','Un plano','Un croquis'], ok:0, ex:'Porque es redondo, como la Tierra.'},
+  {q:'¿Por qué los mapas siempre deforman algo?', op:['Porque pasan una esfera a un plano','Porque están mal hechos','Porque son antiguos','Porque usan colores'], ok:0, ex:'Por eso hay distintas proyecciones.'},
+  {q:'El paralelo principal es…', op:['El ecuador','El meridiano de Greenwich','El trópico de Cáncer','El polo norte'], ok:0, ex:'Es el paralelo 0°.'},
+  {q:'El meridiano principal es el de…', op:['Greenwich','El ecuador','Madrid','Málaga'], ok:0, ex:'Pasa por Londres.'},
+  {q:'La latitud mide la distancia al…', op:['Ecuador','Meridiano de Greenwich','Polo sur','Sol'], ok:0, ex:'De 0° a 90° norte o sur.'},
+  {q:'La longitud mide la distancia al…', op:['Meridiano de Greenwich','Ecuador','Polo norte','Mar'], ok:0, ex:'De 0° a 180° este u oeste.'},
+  {q:'En un mapa 1:50.000, 1 cm son…', op:['500 m','50 m','5 km','50 km'], ok:0, ex:'50.000 cm = 500 m.'},
+  {q:'En un mapa 1:200.000, 4 cm son…', op:['8 km','800 m','80 km','2 km'], ok:0, ex:'4 × 200.000 = 800.000 cm = 8 km.'},
+  {q:'En un mapa 1:25.000, 6 cm son…', op:['1,5 km','150 m','15 km','25 km'], ok:0, ex:'6 × 25.000 = 150.000 cm.'},
+  {q:'¿Cuántos centímetros tiene 1 km?', op:['100.000','1.000','10.000','1.000.000'], ok:0, ex:'1 km = 1.000 m = 100.000 cm.'},
+  {q:'¿Qué escala tiene más detalle?', op:['1:5.000','1:1.000.000','1:10.000.000','1:500.000'], ok:0, ex:'Cuanto menor es el número, menos se reduce la realidad.'},
+  {q:'La parte sólida o rocosa de la Tierra es la…', op:['Geosfera','Hidrosfera','Atmósfera','Biosfera'], ok:0, ex:'Tiene corteza, manto y núcleo.'},
+  {q:'La capa de la geosfera donde vivimos es…', op:['La corteza','El manto','El núcleo','La troposfera'], ok:0, ex:'Tiene de 5 a 70 km de grosor.'},
+  {q:'El núcleo de la Tierra está formado sobre todo por…', op:['Hierro y níquel','Agua','Oxígeno','Arena'], ok:0, ex:'A más de 5.000 °C.'},
+  {q:'El conjunto de todos los seres vivos es la…', op:['Biosfera','Geosfera','Hidrosfera','Estratosfera'], ok:0, ex:'Incluye los lugares donde viven.'},
+  {q:'¿Qué gas es el más abundante en el aire?', op:['Nitrógeno','Oxígeno','Dióxido de carbono','Hidrógeno'], ok:0, ex:'78 % de nitrógeno y 21 % de oxígeno.'},
+  {q:'¿Qué porcentaje de oxígeno tiene el aire?', op:['21 %','78 %','50 %','1 %'], ok:0, ex:'Lo respiramos los seres vivos.'},
+  {q:'¿En qué capa de la atmósfera se forman las nubes y la lluvia?', op:['Troposfera','Estratosfera','Mesosfera','Exosfera'], ok:0, ex:'Es la capa donde vivimos.'},
+  {q:'La capa de ozono está en la…', op:['Estratosfera','Troposfera','Hidrosfera','Corteza'], ok:0, ex:'Filtra los rayos ultravioleta.'},
+  {q:'Las «estrellas fugaces» son meteoritos que se queman en la…', op:['Mesosfera','Troposfera','Corteza','Hidrosfera'], ok:0, ex:'Al rozar con el aire se calientan y arden.'},
+  {q:'Si aumentan mucho los gases como el CO₂, se produce…', op:['El cambio climático','Más ozono','Más oxígeno','Terremotos'], ok:0, ex:'Se retiene demasiado calor.'},
+  {q:'¿Qué parte del agua de la Tierra es salada?', op:['El 97 %','El 50 %','El 3 %','El 70 %'], ok:0, ex:'Océanos y mares.'},
+  {q:'La mayor parte del agua dulce está…', op:['Congelada en polos y glaciares','En los ríos','En los embalses','En las nubes'], ok:0, ex:'El agua dulce que podemos usar es menos del 1 %.'},
+  {q:'Cuando el agua pasa a vapor por el calor del Sol hay…', op:['Evaporación','Condensación','Precipitación','Infiltración'], ok:0, ex:'Primer paso del ciclo del agua.'},
+  {q:'Cuando el vapor se enfría y forma nubes hay…', op:['Condensación','Evaporación','Escorrentía','Fusión'], ok:0, ex:'Las gotitas forman las nubes.'},
+  {q:'La lluvia, la nieve y el granizo son…', op:['Precipitación','Condensación','Evaporación','Infiltración'], ok:0, ex:'El agua cae de las nubes.'},
+  {q:'Cuando el agua se cuela en el suelo hay…', op:['Infiltración','Evaporación','Condensación','Precipitación'], ok:0, ex:'Forma las aguas subterráneas.'},
+  VF('El agua cubre más del 70 % de la superficie de la Tierra.', true, 'Por eso se la llama «planeta azul».'),
+  VF('El efecto invernadero natural es malo para la vida.', false, 'Sin él la Tierra sería helada. El problema es su <b>aumento</b>.'),
+  VF('Málaga está en el hemisferio norte.', true, 'Está a unos 36,7° de latitud norte.')
+]};
+
+/* ---- Fichas ---- */
+TEMAS['cie-universo'].ficha = { ejercicios:[
+  {e:'Define con tus palabras.', items:['a) Universo','b) Galaxia','c) Estrella','d) Año luz','e) Satélite'], lineas:5,
+    sol:'a) Todo lo que existe: materia, energía y espacio. · b) Conjunto enorme de estrellas, gas y polvo unidos por la gravedad. · c) Bola de gas (hidrógeno y helio) que produce luz y calor. · d) Distancia que recorre la luz en un año. · e) Cuerpo que gira alrededor de un planeta.'},
+  {e:'Escribe los ocho planetas en orden desde el Sol y marca cuáles son rocosos y cuáles gaseosos.', items:[], lineas:3,
+    sol:'Rocosos: Mercurio, Venus, Tierra, Marte. Gaseosos: Júpiter, Saturno, Urano, Neptuno.'},
+  {e:'Completa la tabla de los movimientos de la Tierra.', items:['Rotación → ¿qué es? ¿cuánto dura? ¿qué provoca?','Traslación → ¿qué es? ¿cuánto dura? ¿qué provoca?'], lineas:4,
+    sol:'Rotación: gira sobre sí misma, 24 horas, el día y la noche. · Traslación: vuelta alrededor del Sol, 365 días y 6 horas, las estaciones (junto con la inclinación del eje).'},
+  {e:'Une cada elemento del sistema solar con su descripción.', items:['Cometa','Asteroide','Planeta enano','Satélite','→ gira alrededor de un planeta','→ bola de hielo y polvo con cola','→ roca que gira alrededor del Sol','→ redondo pero no ha limpiado su órbita, como Plutón'], lineas:2,
+    sol:'Cometa → hielo y polvo con cola · Asteroide → roca que gira alrededor del Sol · Planeta enano → como Plutón · Satélite → gira alrededor de un planeta.'},
+  {e:'Verdadero (V) o falso (F). Corrige las falsas.', items:['a) El año luz mide tiempo.','b) La Vía Láctea es una galaxia espiral.','c) En verano estamos más cerca del Sol.','d) La Luna no tiene atmósfera.','e) El Sol es un planeta.','f) En los equinoccios el día y la noche duran lo mismo.'], lineas:4,
+    sol:'a) F: mide distancia. · b) V · c) F: es por la inclinación del eje. · d) V · e) F: es una estrella. · f) V'},
+  {e:'Explica tres condiciones que hacen posible la vida en la Tierra.', items:[], lineas:5,
+    sol:'Ejemplos: distancia adecuada al Sol (agua líquida), atmósfera con oxígeno que protege y regula la temperatura, campo magnético que protege del viento solar, presencia de bioelementos (C, H, O, N).'},
+  {e:'La Luna está a la misma distancia del Sol que la Tierra. ¿Por qué no tiene vida? Usa la palabra «atmósfera».', items:[], lineas:3,
+    sol:'Porque no tiene atmósfera ni agua líquida: no hay oxígeno, no se protege de la radiación y las temperaturas son extremas (de 120 °C a −170 °C).'},
+  {e:'Calcula: la luz recorre 300.000 km cada segundo. ¿Cuántos km recorre en un minuto?', items:[], lineas:2,
+    sol:'300.000 × 60 = 18.000.000 km.'},
+  {e:'Redacción (mínimo 80 palabras): ¿crees que podría haber vida en otros planetas? Explica qué necesitaría un planeta para tenerla.', items:[], lineas:8,
+    sol:'Respuesta libre. Debe mencionar: agua líquida, distancia adecuada a su estrella, atmósfera, protección frente a la radiación y bioelementos.'}
+]};
+
+TEMAS['cie-elementos'].ficha = { ejercicios:[
+  {e:'Escribe el símbolo de estos elementos.', items:['Hidrógeno','Oxígeno','Carbono','Nitrógeno','Hierro','Sodio','Calcio','Cobre','Oro','Cloro'], lineas:2,
+    sol:'H · O · C · N · Fe · Na · Ca · Cu · Au · Cl'},
+  {e:'Completa la tabla de las partículas del átomo.', items:['Protón → ¿dónde está? ¿qué carga tiene?','Neutrón → ¿dónde está? ¿qué carga tiene?','Electrón → ¿dónde está? ¿qué carga tiene?'], lineas:3,
+    sol:'Protón: núcleo, positiva. · Neutrón: núcleo, sin carga. · Electrón: corteza, negativa.'},
+  {e:'Calcula los protones, neutrones y electrones de estos átomos neutros.', items:['a) Carbono: Z = 6, A = 12','b) Aluminio: Z = 13, A = 27','c) Hierro: Z = 26, A = 56','d) Oro: Z = 79, A = 197'], lineas:4,
+    sol:'a) 6 p, 6 n, 6 e · b) 13 p, 14 n, 13 e · c) 26 p, 30 n, 26 e · d) 79 p, 118 n, 79 e'},
+  {e:'Calcula los electrones de estos iones y di si son cationes o aniones.', items:['a) Na⁺ (Z = 11)','b) Cl⁻ (Z = 17)','c) Mg²⁺ (Z = 12)','d) O²⁻ (Z = 8)'], lineas:3,
+    sol:'a) 10 electrones, catión · b) 18 electrones, anión · c) 10 electrones, catión · d) 10 electrones, anión'},
+  {e:'Clasifica en metales y no metales.', items:['hierro','oxígeno','cobre','azufre','aluminio','cloro','oro','carbono'], lineas:2,
+    sol:'Metales: hierro, cobre, aluminio, oro. No metales: oxígeno, azufre, cloro, carbono.'},
+  {e:'Responde sobre la tabla periódica.', items:['a) ¿Cómo se ordenan los elementos?','b) ¿Cómo se llaman las filas? ¿Cuántas hay?','c) ¿Y las columnas? ¿Cuántas hay?','d) ¿Qué tienen de especial los gases nobles?'], lineas:4,
+    sol:'a) Por su número atómico. · b) Periodos, 7. · c) Grupos, 18. · d) Casi no reaccionan con nada.'},
+  {e:'Di si es elemento o compuesto y cuántos átomos tiene cada molécula.', items:['a) O₂','b) H₂O','c) CO₂','d) CH₄','e) N₂','f) NaCl'], lineas:3,
+    sol:'a) Elemento, 2 · b) Compuesto, 3 · c) Compuesto, 3 · d) Compuesto, 5 · e) Elemento, 2 · f) Compuesto, 2'},
+  {e:'Verdadero (V) o falso (F). Corrige las falsas.', items:['a) El número másico es el número de protones.','b) Los isótopos tienen distinto número de protones.','c) Los metales conducen la electricidad.','d) El hidrógeno es un metal.'], lineas:4,
+    sol:'a) F: son protones + neutrones. · b) F: tienen distinto número de neutrones. · c) V · d) F: es un gas.'},
+  {e:'Los cables eléctricos de casa son de cobre y van forrados de plástico. Explica por qué se usan esos dos materiales.', items:[], lineas:3,
+    sol:'El cobre es un metal y conduce muy bien la electricidad. El plástico no conduce, así que aísla y evita descargas.'}
+]};
+
+TEMAS['mat-notacion'].ficha = { ejercicios:[
+  {e:'Escribe como número normal.', items:['a) 10⁴','b) 10⁷','c) 10⁻²','d) 10⁻⁵','e) 10⁰'], lineas:2,
+    sol:'a) 10.000 · b) 10.000.000 · c) 0,01 · d) 0,00001 · e) 1'},
+  {e:'Escribe en notación científica.', items:['a) 5.000','b) 72.000','c) 1.300.000','d) 450.000.000','e) 0,04','f) 0,0009','g) 0,000123','h) 6.020.000.000'], lineas:4,
+    sol:'a) 5 × 10³ · b) 7,2 × 10⁴ · c) 1,3 × 10⁶ · d) 4,5 × 10⁸ · e) 4 × 10⁻² · f) 9 × 10⁻⁴ · g) 1,23 × 10⁻⁴ · h) 6,02 × 10⁹'},
+  {e:'Escribe como número normal.', items:['a) 3 × 10⁵','b) 2,5 × 10³','c) 8,07 × 10⁶','d) 4 × 10⁻³','e) 1,6 × 10⁻⁴','f) 9,1 × 10⁻²'], lineas:3,
+    sol:'a) 300.000 · b) 2.500 · c) 8.070.000 · d) 0,004 · e) 0,00016 · f) 0,091'},
+  {e:'¿Están bien escritos en notación científica? Si no, corrígelos.', items:['a) 25 × 10⁴','b) 3,7 × 10²','c) 0,8 × 10⁵','d) 12,5 × 10⁻³'], lineas:3,
+    sol:'a) No: 2,5 × 10⁵ · b) Sí · c) No: 8 × 10⁴ · d) No: 1,25 × 10⁻²'},
+  {e:'Ordena de menor a mayor.', items:['4 × 10⁵   ·   9 × 10³   ·   1,2 × 10⁶   ·   5 × 10⁻²   ·   3 × 10⁰'], lineas:2,
+    sol:'5 × 10⁻² < 3 × 10⁰ < 9 × 10³ < 4 × 10⁵ < 1,2 × 10⁶'},
+  {e:'Calcula y da el resultado en notación científica.', items:['a) (2 × 10³) · (4 × 10⁵)','b) (6 × 10⁸) : (3 × 10²)','c) (5 × 10⁴) · (3 × 10²)','d) (9 × 10⁻³) : (3 × 10²)'], lineas:4,
+    sol:'a) 8 × 10⁸ · b) 2 × 10⁶ · c) 15 × 10⁶ = 1,5 × 10⁷ · d) 3 × 10⁻⁵'},
+  {e:'Expresa estos datos en notación científica.', items:['a) Distancia de la Tierra al Sol: 150.000.000 km','b) Habitantes del mundo: 8.000.000.000','c) Tamaño de un virus: 0,0000001 m','d) Masa de un grano de arena: 0,00006 kg'], lineas:4,
+    sol:'a) 1,5 × 10⁸ km · b) 8 × 10⁹ · c) 1 × 10⁻⁷ m · d) 6 × 10⁻⁵ kg'},
+  {e:'Problema: la luz recorre 3 × 10⁵ km por segundo. Un año tiene unos 3,2 × 10⁷ segundos. ¿Cuántos km recorre la luz en un año? Usa la calculadora.', items:[], lineas:3,
+    sol:'(3 × 10⁵) · (3,2 × 10⁷) = 9,6 × 10¹² km. Es aproximadamente un año luz (9,5 × 10¹² km).'}
+]};
+
+TEMAS['mat-enteros'].ficha = { ejercicios:[
+  {e:'Expresa con un número entero.', items:['a) Estoy en el tercer sótano.','b) Hace 5 grados bajo cero.','c) Debo 40 €.','d) Una montaña de 1.200 m de altura.','e) Un buzo a 15 m de profundidad.'], lineas:2,
+    sol:'a) −3 · b) −5 °C · c) −40 € · d) +1.200 m · e) −15 m'},
+  {e:'Ordena de menor a mayor.', items:['7   ·   −3   ·   0   ·   −12   ·   5   ·   −1   ·   −8'], lineas:2,
+    sol:'−12 < −8 < −3 < −1 < 0 < 5 < 7'},
+  {e:'Calcula.', items:['a) −7 + 3','b) −5 − 6','c) 9 − 14','d) −4 + 10','e) 8 − (−2)','f) −3 + (−9)','g) −6 − (−6)','h) 15 − 22 + 4'], lineas:4,
+    sol:'a) −4 · b) −11 · c) −5 · d) 6 · e) 10 · f) −12 · g) 0 · h) −3'},
+  {e:'Calcula.', items:['a) (−5) · 4','b) (−6) · (−3)','c) 36 : (−9)','d) (−42) : (−7)','e) (−2) · (−3) · (−4)','f) (−1) · 8 : (−2)'], lineas:3,
+    sol:'a) −20 · b) 18 · c) −4 · d) 6 · e) −24 · f) 4'},
+  {e:'Calcula estas potencias.', items:['a) (−3)²','b) (−3)³','c) −3²','d) (−1)¹⁰','e) (−5)²','f) −2⁴'], lineas:2,
+    sol:'a) 9 · b) −27 · c) −9 · d) 1 · e) 25 · f) −16'},
+  {e:'Resuelve estas operaciones combinadas paso a paso.', items:['a) 5 + 3 · (−2)','b) (5 + 3) · (−2)','c) 20 : (−4) − 3 · 2','d) −2 · (6 − 9) + 4²','e) 12 − [3 − (8 − 10)]','f) (−3)² − 4 · 5 + 10 : (−2)'], lineas:8,
+    sol:'a) −1 · b) −16 · c) −11 · d) 22 · e) 7 · f) −16'},
+  {e:'Problema: un congelador está a −18 °C. Se va la luz y la temperatura sube 3 °C cada hora. ¿A qué temperatura estará a las 4 horas?', items:[], lineas:3,
+    sol:'−18 + 4 · 3 = −18 + 12 = −6 °C.'},
+  {e:'Problema: Luis tiene 250 € en la cuenta. Paga el alquiler de una habitación (300 €) y dos facturas de 35 €. Después le ingresan 420 € de nómina. ¿Cuánto dinero tiene? ¿Estuvo en algún momento en números rojos?', items:[], lineas:4,
+    sol:'250 − 300 − 2 · 35 + 420 = 250 − 300 − 70 + 420 = 300 €. Sí: después de pagar estuvo en −120 € hasta cobrar la nómina.'},
+  {e:'Problema: Augusto nació en el año −63 (63 a. C.) y murió en el año 14. ¿Cuántos años vivió?', items:[], lineas:2,
+    sol:'14 − (−63) = 77 años (aproximadamente, porque no existe el año 0).'}
+]};
+
+TEMAS['cie-tierra'].ficha = { ejercicios:[
+  {e:'Define con tus palabras.', items:['a) Geoide','b) Paralelo','c) Meridiano','d) Latitud','e) Longitud'], lineas:5,
+    sol:'a) Forma real de la Tierra, achatada por los polos. · b) Círculo imaginario paralelo al ecuador. · c) Semicírculo imaginario de polo a polo. · d) Distancia en grados al ecuador. · e) Distancia en grados al meridiano de Greenwich.'},
+  {e:'Calcula la distancia real.', items:['a) 3 cm en un mapa 1:50.000','b) 7 cm en un mapa 1:100.000','c) 2,5 cm en un mapa 1:1.000.000','d) 12 cm en un plano 1:5.000'], lineas:4,
+    sol:'a) 150.000 cm = 1,5 km · b) 700.000 cm = 7 km · c) 2.500.000 cm = 25 km · d) 60.000 cm = 600 m'},
+  {e:'Málaga y Granada están a unos 90 km en línea recta. ¿A cuántos centímetros estarían en un mapa 1:1.000.000?', items:[], lineas:2,
+    sol:'90 km = 9.000.000 cm; 9.000.000 : 1.000.000 = 9 cm.'},
+  {e:'Une cada capa con su descripción.', items:['Geosfera','Hidrosfera','Atmósfera','Biosfera','→ los seres vivos','→ la capa de gases','→ la parte rocosa','→ toda el agua'], lineas:2,
+    sol:'Geosfera → parte rocosa · Hidrosfera → toda el agua · Atmósfera → capa de gases · Biosfera → los seres vivos.'},
+  {e:'Ordena las capas de la geosfera de fuera hacia dentro y di una característica de cada una.', items:['manto   ·   núcleo   ·   corteza'], lineas:3,
+    sol:'Corteza (donde vivimos, de 5 a 70 km) → manto (rocas calientes, parte fundidas) → núcleo (hierro y níquel, más de 5.000 °C).'},
+  {e:'Completa sobre la atmósfera.', items:['a) Gas más abundante y su porcentaje:','b) Gas que respiramos y su porcentaje:','c) Capa donde se forman las nubes:','d) Capa donde está el ozono:','e) ¿Para qué sirve la capa de ozono?'], lineas:4,
+    sol:'a) Nitrógeno, 78 % · b) Oxígeno, 21 % · c) Troposfera · d) Estratosfera · e) Filtra los rayos ultravioleta del Sol.'},
+  {e:'Explica el ciclo del agua usando estas palabras: evaporación, condensación, precipitación, infiltración.', items:[], lineas:5,
+    sol:'El Sol calienta el agua y se evapora; el vapor sube, se enfría y se condensa formando nubes; el agua cae en forma de precipitación (lluvia, nieve, granizo); una parte corre hacia ríos y mares y otra se infiltra en el suelo.'},
+  {e:'Verdadero (V) o falso (F). Corrige las falsas.', items:['a) La mayor parte del agua de la Tierra es dulce.','b) El efecto invernadero natural es necesario para la vida.','c) El globo terráqueo deforma los continentes.','d) Una escala 1:5.000 tiene más detalle que una 1:500.000.'], lineas:4,
+    sol:'a) F: el 97 % es salada. · b) V · c) F: es la representación más fiel; los que deforman son los mapas. · d) V'},
+  {e:'Redacción (mínimo 80 palabras): el agua dulce que podemos usar es menos del 1 %. Propón cinco medidas para ahorrar agua en casa y en Andalucía.', items:[], lineas:8,
+    sol:'Respuesta libre. Ejemplos: ducharse en vez de bañarse, cerrar el grifo al lavarse los dientes, arreglar fugas, usar la lavadora llena, regar por la noche y por goteo, reutilizar agua, no tirar aceites ni basura al desagüe.'}
+]};
+
+/* ---- Vídeos ---- */
+TEMAS['cie-universo'].apartados[0].video = V('El Universo explicado: cómo surgió, galaxias, sistemas solares y planetas','5wsqu7rI1PA');
+TEMAS['cie-universo'].apartados[1].video = V('Características y composición del Universo: estrellas y galaxias','WMcRjw8tKqc');
+TEMAS['cie-universo'].apartados[3].video = V('Movimientos de la Tierra, estaciones, equinoccios y solsticios (4.º ESO)','rTLFL3cn8G8');
+TEMAS['cie-elementos'].apartados[2].video = V('Número atómico y número másico. Estructura del átomo','CFvfOgYHCiI');
+TEMAS['cie-elementos'].apartados[3].video = V('¿Qué necesito saber sobre la tabla periódica?','60go-4haeXw');
+TEMAS['mat-notacion'].apartados[2].video = V('Notación científica fácil y rápido','phwsRFQwiho');
+TEMAS['mat-notacion'].apartados[4].video = V('Notación científica con dos ejemplos (3.º y 4.º de ESO)','pwRkZ_s0GiE');
+TEMAS['mat-enteros'].apartados[2].video = V('Criterio de signos y operaciones combinadas con números enteros','YmX7ZEw0C9s');
+TEMAS['mat-enteros'].apartados[4].video = V('Operaciones combinadas de números enteros: prioridad o jerarquía (ESO)','96E1z_Mj0QE');
+TEMAS['cie-tierra'].apartados[2].video = V('La estructura de la Tierra y el ciclo del agua','3TwfCk3MkSk');
+
+/* ---- Dibujos ---- */
+[['cie-universo',2,'cie-sistema-solar','El sistema solar (las distancias no están a escala)'],['cie-universo',3,'cie-estaciones','La inclinación del eje y las estaciones'],
+ ['cie-elementos',1,'cie-atomo','Las partes del átomo'],['cie-elementos',3,'cie-tabla','Cómo se organiza la tabla periódica'],
+ ['mat-notacion',1,'mat-potencias','Del átomo al Universo en potencias de 10'],
+ ['mat-enteros',0,'mat-recta','La recta de los números enteros'],
+ ['cie-tierra',0,'soc-coordenadas','Latitud y longitud'],['cie-tierra',1,'soc-escala','La escala numérica y la gráfica'],['cie-tierra',2,'cie-capas','Las capas de la Tierra']
+].forEach(([id,i,src,cap])=>{ const ap=TEMAS[id].apartados[i]; (ap.figs=ap.figs||[]).push({src:'fig/'+src+'.jpg',cap}); });
 
 /* ===== DIBUJOS DE LAS DIAPOSITIVAS ===== */
 const FIGS = {

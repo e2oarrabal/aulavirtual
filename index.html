@@ -2818,7 +2818,7 @@ function home(){
     <div class="sec-t"><h2>Ámbitos</h2></div>
     <nav class="tiles" aria-label="Ámbitos">${tiles}</nav>
     <section class="creditos"><div class="lgs"><img src="logos/e2o.jpg" alt="Escuelas de Segunda Oportunidad España" width="36" height="36"><img src="logos/arrabal.png" alt="Asociación Arrabal" width="82" height="30"></div>
-      <p>Escuela de Segunda Oportunidad de Málaga, de la red Escuelas de Segunda Oportunidad España, gestionada por Asociación Arrabal AID.</p></section>`;
+      <p>Escuela de Segunda Oportunidad de Málaga, de la red Escuelas de Segunda Oportunidad España, gestionada por Asociación Arrabal AID.<br><span style="opacity:.6">Versión 04/11 23:02</span></p></section>`;
   document.querySelectorAll('.dia').forEach(b=>b.onclick=()=>pintarDia(+b.dataset.d));
   pintarDia(+document.querySelector('.dia[aria-pressed="true"]').dataset.d);
 }
@@ -3203,6 +3203,6 @@ function route(){
 window.addEventListener('hashchange', route);
 route();
 </script>
-<script>if("serviceWorker" in navigator){addEventListener("load",()=>navigator.serviceWorker.register("sw.js"))}</script>
+<script>if("serviceWorker" in navigator){let r=0;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!r){r=1;location.reload()}});addEventListener("load",()=>navigator.serviceWorker.register("sw.js").then(g=>g.update()))}</script>
 </body>
 </html>

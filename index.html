@@ -173,6 +173,17 @@ details p{margin:0}
 .pasos li::marker{font-weight:800;color:var(--c)}
 .acts .btn svg{width:22px;height:22px}
 .btn:disabled{opacity:.6}
+.pdfbtns{display:flex;gap:10px;margin-top:14px}.pdfbtns .btn{margin-top:0;flex:1.4;white-space:nowrap;padding:14px 12px;font-size:16px}.pdfbtns .btn.ghost{flex:1}
+.visor{position:fixed;inset:0;z-index:200;background:#2B3240;display:flex;flex-direction:column}
+.visor-top{display:flex;align-items:center;gap:10px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));background:#14213D;color:#fff}
+.visor-top b{flex:1;min-width:0;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.visor-x{flex:none;width:44px;height:44px;border-radius:12px;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
+.visor-dl{flex:none;display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:12px;border:0;background:#F07800;color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer}.visor-dl svg{width:18px;height:18px}
+.visor-pags{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px 12px max(24px,env(safe-area-inset-bottom))}
+.visor-pags canvas{display:block;max-width:100%;height:auto;background:#fff;border-radius:4px;box-shadow:0 2px 12px rgba(0,0,0,.35)}
+.visor-carga,.visor-fin{color:#C9D2E0;font-size:14px;margin:18px 0}
+body.con-visor{overflow:hidden}
+
 .mini{margin:8px 0 0;color:var(--muted);font-size:14px;text-align:center}
 
 @media (max-width:560px){
@@ -2624,6 +2635,53 @@ const FIGS = {
 Object.entries(FIGS).forEach(([id,m])=>{ const T=TEMAS[id]; if(!T) return; Object.entries(m).forEach(([i,l])=>{ if(T.apartados[i]) T.apartados[i].figs=l.map(([src,cap])=>({src:'fig/'+src+'.jpg',cap})); }); });
 function figHTML(f){ return (f||[]).map(x=>`<figure class="fig"><img src="${x.src}" alt="${esc(x.cap)}" loading="lazy"><figcaption>${esc(x.cap)}</figcaption></figure>`).join(''); }
 
+
+/* ===== VISOR DE PDF (verlo sin descargar) ===== */
+const ICO_OJO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>', ICO_BAJ = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>';
+const nombreFicha = id => 'Ficha - ' + TEMAS[id].titulo.split(' · ')[0].replace(/[\\/:*?"<>|]/g,'') + '.pdf';
+const PDFS = {};
+async function pdfHecho(clave, hacerDoc){ if (!PDFS[clave]) PDFS[clave] = crearPDF(await hacerDoc()); try{ return await PDFS[clave]; }catch(e){ delete PDFS[clave]; throw e; } }
+async function pdfjs(){
+  if (!window.pdfjsLib){ await cargar('https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js');
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js'; }
+  return window.pdfjsLib;
+}
+let VISOR = null;
+async function verPDF(hacerDoc, clave, titulo, nombre, btn, msg){
+  btn.disabled = true; const antes = msg ? msg.textContent : ''; if (msg) msg.textContent = 'Abriendo… puede tardar unos segundos.';
+  try{
+    const [blob, lib] = await Promise.all([pdfHecho(clave, hacerDoc), pdfjs()]);
+    abrirVisor(blob, lib, titulo, nombre); if (msg) msg.textContent = antes;
+  }catch(e){ console.error(e); if (msg) msg.textContent = 'No se ha podido abrir. Comprueba la conexión y vuelve a intentarlo.'; }
+  btn.disabled = false;
+}
+async function abrirVisor(blob, lib, titulo, nombre){
+  cerrarVisor(true);
+  const v = document.createElement('div'); v.className = 'visor'; v.setAttribute('role','dialog'); v.setAttribute('aria-modal','true'); v.setAttribute('aria-label', titulo);
+  v.innerHTML = `<header class="visor-top"><button class="visor-x" aria-label="Cerrar">✕</button><b>${esc(titulo)}</b><button class="visor-dl">${ICO_BAJ}<span>Descargar</span></button></header>
+    <div class="visor-pags" tabindex="0"><p class="visor-carga">Cargando páginas…</p></div>`;
+  document.body.appendChild(v); document.body.classList.add('con-visor');
+  VISOR = {v, vivo:true}; history.pushState({visor:1}, '');
+  v.querySelector('.visor-x').onclick = () => history.back();
+  v.querySelector('.visor-dl').onclick = () => { const m = {set textContent(t){}}; guardar(nombre, blob, m, ''); };
+  v.querySelector('.visor-x').focus();
+  const doc = await lib.getDocument({data: new Uint8Array(await blob.arrayBuffer())}).promise;
+  const caja = v.querySelector('.visor-pags'); caja.innerHTML = '';
+  const ancho = Math.min(caja.clientWidth - 24, 900), dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+  for (let n = 1; n <= doc.numPages; n++){
+    if (!VISOR || VISOR.v !== v) return;
+    const pag = await doc.getPage(n); const vp0 = pag.getViewport({scale:1});
+    const vp = pag.getViewport({scale: ancho / vp0.width * dpr});
+    const c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height; c.style.width = ancho + 'px'; c.style.aspectRatio = vp.width + '/' + vp.height;
+    c.setAttribute('aria-label', 'Página ' + n + ' de ' + doc.numPages); caja.appendChild(c);
+    await pag.render({canvasContext: c.getContext('2d'), viewport: vp}).promise;
+  }
+  const fin = document.createElement('p'); fin.className = 'visor-fin'; fin.textContent = doc.numPages + (doc.numPages === 1 ? ' página' : ' páginas'); caja.appendChild(fin);
+}
+function cerrarVisor(sinHistoria){ if (!VISOR) return; VISOR.v.remove(); VISOR = null; document.body.classList.remove('con-visor'); }
+addEventListener('popstate', () => { if (VISOR) cerrarVisor(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && VISOR) history.back(); });
+
 /* ===== RENDER ===== */
 const app = document.getElementById('app');
 const byId = id => AMBITOS.find(a => a.id === id);
@@ -2757,13 +2815,14 @@ function tema(id){
         <h2>Actividades</h2>
         <p>Comprueba lo que has aprendido en el móvil o descarga la ficha para hacerla en papel.</p>
         ${T.juego && JUEGOS[T.juego] ? `<a class="btn" href="#juego-${T.juego}">${I.juego} Jugar (${JUEGOS[T.juego].preguntas.length} preguntas en el banco)</a>` : ''}
-        ${T.ficha ? `<button class="btn ghost" id="pdf">${I.print} Descargar ficha para imprimir (PDF)</button><p class="mini" id="pdfmsg">Incluye las soluciones en la última página.</p>` : ''}
+        ${T.ficha ? `<div class="pdfbtns"><button class="btn" id="pdf-ver">${ICO_OJO} Ver la ficha</button><button class="btn ghost" id="pdf">${ICO_BAJ} Descargar</button></div><p class="mini" id="pdfmsg">Para imprimir o hacerla en papel. Incluye las soluciones en la última página.</p>` : ''}
       </section>
     </article>
     <footer>Aula Virtual E2O</footer>`;
   etiquetarTablas();
   app.querySelectorAll('.chip').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.go).scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
   const pb = document.getElementById('pdf'); if (pb) pb.onclick = () => descargarFicha(id, pb);
+  const pv = document.getElementById('pdf-ver'); if (pv) pv.onclick = () => verPDF(()=>fichaDoc(id), 'ficha-'+id, 'Ficha · ' + TEMAS[id].titulo.split(' · ')[0], nombreFicha(id), pv, document.getElementById('pdfmsg'));
 }
 
 
@@ -2801,7 +2860,7 @@ function libro(a){
       <p class="kicker">Libro de contenidos</p>
       <h2>${nombreAmbito(a)}</h2>
       <p>Todo lo que vamos viendo en clase, ordenado como un libro de texto. Se amplía cada semana. Ahora tiene <b>${total} ${total===1?'tema':'temas'}</b>.</p>
-      <button class="btn" id="pdf-libro">${I.print} Descargar el libro completo (PDF)</button>
+      <div class="pdfbtns"><button class="btn" id="pdf-libro-ver">${ICO_OJO} Ver el libro</button><button class="btn ghost" id="pdf-libro">${ICO_BAJ} Descargar</button></div>
       <p class="mini" id="libromsg"></p>
     </section>
     <nav class="indice-libro" aria-label="Índice del libro"><h3>Índice</h3>${indice}</nav>
@@ -2811,6 +2870,7 @@ function prepararLibro(a){
   etiquetarTablas();
   app.querySelectorAll('.ind-tema').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.go).scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
   const b = document.getElementById('pdf-libro'); if (b) b.onclick = () => descargarLibro(a, b);
+  const v = document.getElementById('pdf-libro-ver'); if (v) v.onclick = () => verPDF(()=>libroDoc(a), 'libro-'+a.id, 'Libro · ' + nombreAmbito(a), 'Libro - ' + nombreAmbito(a) + '.pdf', v, document.getElementById('libromsg'));
 }
 function htmlLibro(html){
   return html
@@ -2886,7 +2946,7 @@ async function descargarLibro(a, btn){
   const msg = document.getElementById('libromsg');
   btn.disabled = true; msg.textContent = 'Preparando el libro, puede tardar unos segundos…';
   try{
-    const blob = await crearPDF(await libroDoc(a));
+    const blob = await pdfHecho('libro-'+a.id, ()=>libroDoc(a));
     await guardar('Libro - ' + nombreAmbito(a) + '.pdf', blob, msg, 'Libro descargado.');
   }catch(e){ console.error(e); msg.textContent = 'No se ha podido preparar el libro. Comprueba la conexión y vuelve a intentarlo.'; }
   btn.disabled = false;
@@ -2939,10 +2999,10 @@ function fichaDoc(id){
 }
 async function descargarFicha(id, btn){
   const msg = document.getElementById('pdfmsg');
-  const nombre = 'Ficha - ' + TEMAS[id].titulo.split(' · ')[0].replace(/[\\/:*?"<>|]/g,'') + '.pdf';
+  const nombre = nombreFicha(id);
   btn.disabled = true; msg.textContent = 'Preparando la ficha…';
   try{
-    const blob = await crearPDF(fichaDoc(id));
+    const blob = await pdfHecho('ficha-'+id, ()=>fichaDoc(id));
     await guardar(nombre, blob, msg, 'Ficha descargada.');
   }catch(e){ console.error(e); msg.textContent = 'No se ha podido preparar la ficha. Comprueba la conexión y vuelve a intentarlo.'; }
   btn.disabled = false;

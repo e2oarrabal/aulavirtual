@@ -307,6 +307,9 @@ body.con-visor{overflow:hidden}
 .head{box-shadow:0 8px 20px rgba(0,0,0,.15)}
 
 .agenda{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px}
+.list-h{display:flex;align-items:center;gap:8px;margin:14px 2px 2px;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--c)}.list-h svg{width:20px;height:20px}
+.list-h:first-child{margin-top:2px}
+.retos{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:20px;background:color-mix(in srgb,var(--c) 10%,transparent);border:2px dashed color-mix(in srgb,var(--c) 35%,transparent)}
 .ag-nota{margin:2px 4px 10px;font-size:14.5px;color:var(--muted)}
 .ag-nav{display:flex;align-items:center;gap:8px;margin:0 0 10px}.ag-nav span{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.25}
 .ag-nav span b{font-size:15px}.ag-nav span small{font-size:12px;color:var(--muted)}
@@ -586,10 +589,8 @@ const AMBITOS = [
         {n:23, s:'2027-04-05', a:'Corrección del simulacro y repaso de puntos débiles', b:''}
       ]}},
       { nombre:'Lengua', items:[
-        {tipo:'juego', juego:'lengua-categorias', titulo:'Reto: categorías gramaticales', desc:'8 preguntas. ¿Sustantivo, verbo, adjetivo…?'}
       ]},
       { nombre:'Inglés', items:[
-        {tipo:'juego', juego:'ingles-pronombres', titulo:'Challenge: subject pronouns', desc:'8 preguntas. I, you, he, she, it, we, they'}
       ]},
       { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50.</b> <b>Lengua castellana (60 puntos):</b> comprensión de un texto con cuatro preguntas y un escrito de al menos 200 palabras, como una carta, una reclamación, una solicitud o una opinión (30); cuatro preguntas sobre la lengua (20); y dos preguntas sobre un texto literario: tema, resumen, género o movimiento, recursos e intención (10). <b>Inglés (40 puntos):</b> comprensión de un texto con dos preguntas y una redacción de 50 a 70 palabras (20) y diez preguntas tipo test (20). Se suman las dos partes: no hace falta aprobar cada una por separado. Se puede usar diccionario bilingüe. Cada falta de ortografía o de gramática resta 0,1 puntos (hasta 2).',
         items:[{tipo:'enlace', url:JUNTA.com, titulo:'La prueba de Comunicación (Junta)', desc:'Estructura oficial y materiales de este ámbito'}, ...LINKS_EXAMEN] }
@@ -625,7 +626,7 @@ const AMBITOS = [
       { nombre:'Geografía', items:[
       ]},
       { nombre:'Historia', items:[
-        {tipo:'juego', titulo:'Juego: línea del tiempo', desc:'Ordena las grandes etapas de la Historia'}
+        {tipo:'juego', titulo:'Reto: línea del tiempo', desc:'Ordena las grandes etapas de la Historia'}
       ]},
       { nombre:'Economía', items:[] },
       { nombre:'Ciudadanía', items:[] },
@@ -2926,6 +2927,16 @@ Object.entries(TEMAS).sort((x,y)=>y[1].clase-x[1].clase).forEach(([k,t])=>{
   const sec = byId(t.ambito).secciones.find(x=>x.nombre===t.area);
   if (sec) sec.items.unshift({tipo:'tema', tema:k, titulo:'Tema: '+t.titulo, desc:'Clase '+t.clase+' · para estudiar, juego y ficha para imprimir'});
 });
+/* Grandes retos: juntan las preguntas de todos los temas de cada materia */
+AMBITOS.forEach(a => a.secciones.forEach(sec => {
+  const ts = Object.values(TEMAS).filter(t => t.ambito===a.id && t.area===sec.nombre && t.juego && JUEGOS[t.juego]);
+  if (ts.length < 2) return;
+  const id = 'reto-'+a.id+'-'+sec.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const preguntas = ts.flatMap(t => JUEGOS[t.juego].preguntas);
+  const ing = sec.nombre === 'Inglés';
+  JUEGOS[id] = { ambito:a.id, titulo: ing ? 'Big challenge: English' : 'Gran reto de '+sec.nombre, ronda:20, preguntas };
+  sec.items.push({tipo:'juego', juego:id, titulo: ing ? 'Big challenge: English' : 'Gran reto de '+sec.nombre, desc:`20 preguntas por partida de un banco de ${preguntas.length}, de los ${ts.length} temas dados`});
+}));
 const contar = a => a.secciones.reduce((n,s) => n + (s.items||[]).filter(listo).length, 0);
 const esc = s => String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
 
@@ -3014,7 +3025,7 @@ function ambito(a, sec=0){
     `<button class="tab" role="tab" id="tab-${i}" aria-selected="${i===sec}" data-sec="${i}">${x.nombre}</button>`).join('')}</div>` : '';
   const info = s.info ? `<div class="info">${s.info}</div>` : '';
   const its = s.items || [];
-  const items = s.libro ? libro(a) : s.temario ? temario(s.temario) : its.length ? its.map(it => {
+  const pintaItem = it => {
     const ok = listo(it);
     const body = `<span class="t">${I[it.tipo==='tema'?'libro':it.tipo==='guia'?'doc':it.tipo]}</span><span class="txt"><b>${esc(it.titulo)}</b><small>${esc(it.desc||'')}</small></span>
       <span class="badge">${ok ? TIPO[it.tipo] : 'Próximamente'}</span>`;
@@ -3023,7 +3034,12 @@ function ambito(a, sec=0){
     if (it.tipo === 'juego') return `<a class="item" href="#juego-${it.juego}">${body}</a>`;
     if (it.tipo === 'guia') return `<a class="item" href="#guia-${it.guia}">${body}</a>`;
     return `<a class="item" href="${esc(it.url)}" target="_blank" rel="noopener">${body}</a>`;
-  }).join('') : `<div class="empty">Todavía no hay materiales en esta sección.</div>`;
+  };
+  const retos = its.filter(it => it.tipo==='juego'), resto = its.filter(it => it.tipo!=='juego');
+  const items = s.libro ? libro(a) : s.temario ? temario(s.temario) : !its.length ? `<div class="empty">Todavía no hay materiales en esta sección.</div>`
+    : (retos.length && resto.length)
+      ? `<h3 class="list-h">${I.juego} Retos para practicar</h3><div class="retos">${retos.map(pintaItem).join('')}</div><h3 class="list-h">${I.libro} Temas</h3>${resto.map(pintaItem).join('')}`
+      : its.map(pintaItem).join('');
   app.innerHTML = `
     <section class="head" style="--c:var(${a.c})"><a class="back-in" href="#inicio">${I.back} Inicio</a><h1>${a.nombre}</h1><p>${a.intro}</p></section>
     <div style="--c:var(${a.c})">${tabs}</div><div class="list" style="--c:var(${a.c})">${info}${items}</div>
@@ -3286,7 +3302,7 @@ function shuffle(arr){ const r = arr.slice(); for(let i=r.length-1;i>0;i--){cons
 
 function juego(id){
   const J = JUEGOS[id], a = byId(J.ambito);
-  const N = Math.min(12, J.preguntas.length);
+  const N = Math.min(J.ronda || 12, J.preguntas.length);
   let record = 0; try { record = +localStorage.getItem('rec-'+id) || 0; } catch(e){}
   const volver = `<a class="back" href="#${a.id}">${I.back} ${a.nombre}</a>`;
   app.innerHTML = `${volver}

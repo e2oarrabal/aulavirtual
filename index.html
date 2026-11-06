@@ -308,6 +308,10 @@ body.con-visor{overflow:hidden}
 
 .agenda{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px}
 .ag-nota{margin:2px 4px 10px;font-size:14.5px;color:var(--muted)}
+.ag-nav{display:flex;align-items:center;gap:8px;margin:0 0 10px}.ag-nav span{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.25}
+.ag-nav span b{font-size:15px}.ag-nav span small{font-size:12px;color:var(--muted)}
+.ag-flecha{flex:none;width:40px;height:40px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-size:24px;line-height:1;color:var(--ink);cursor:pointer}
+.ag-hoy{display:block;margin:10px auto 0;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:700;text-decoration:underline;cursor:pointer}
 .dias{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .dia{display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 0 6px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg2);background:var(--surface);cursor:pointer}
 .dia small{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase}
@@ -509,13 +513,43 @@ const AGENDA = {
     4:[{h:'10:00 – 13:00', t:'Clases', tipo:'clase'}],
     5:[{h:'Mañana', t:'Tutorías, talleres y actividades', tipo:'tutoria'}]
   },
+  aviso:'La asistencia a todas las actividades es obligatoria. Si tienes un ámbito aprobado, no tienes que venir a la clase de ese ámbito.',
   semanas: {
+    '2026-10-05': { dias:{
+      1:[{h:'10:00', t:'Ámbito Científico', tipo:'clase'}],
+      3:[{h:'10:00', t:'Ámbito de Comunicación', tipo:'clase'}],
+      4:[{h:'10:00', t:'Ámbito Social', tipo:'clase'}]
+    }},
+    '2026-10-12': { dias:{
+      1:[{h:'Todo el día', t:'Festivo: no hay clase', tipo:'festivo'}],
+      3:[{h:'10:00 – 12:00', t:'Ámbito de Comunicación', tipo:'clase'}],
+      4:[{h:'10:00 – 11:15', t:'Ámbito Científico', tipo:'clase'},
+         {h:'11:30 – 12:45', t:'Ámbito Social', tipo:'clase'}]
+    }},
+    '2026-10-19': { dias:{
+      1:[{h:'09:30 – 13:30', t:'Evento Juventud y Tradición', tipo:'extra', lugar:'Puerta principal de la Diputación de Málaga · Nos dan desayuno'}],
+      2:[{h:'10:00 – 12:00', t:'Ámbito Social', tipo:'clase'}],
+      3:[{h:'10:00 – 12:00', t:'Ámbito de Comunicación', tipo:'clase'},
+         {h:'16:00', t:'Teatro por la Igualdad (empiezan los ensayos)', tipo:'extra', ...LUGAR_TEATRO}],
+      4:[{h:'Mañana', t:'Opportunity Morning', tipo:'extra', lugar:'Ciudad Jardín · Talleres y stands sobre empleo y recursos'},
+         {h:'17:00', t:'Taller intergeneracional (voluntario)', tipo:'extra'}]
+    }},
+    '2026-10-26': { dias:{
+      1:[{h:'10:00', t:'Ámbito Científico', tipo:'clase'}],
+      3:[{h:'Mañana', t:'Evento Somos Futuro (Cámara de Comercio)', tipo:'extra', lugar:'Polo Digital · Hay que inscribirse y estar dado de alta en Garantía Juvenil'}],
+      4:[{h:'10:00', t:'Ámbito de Comunicación (Inglés)', tipo:'clase'}]
+    }},
     '2026-11-02': { dias:{
       2:[{h:'10:00 – 12:00', t:'Formación de Competencias Digitales', tipo:'taller'}],
       3:[{h:'10:00 – 11:15', t:'Ámbito Científico', tipo:'clase'},
          {h:'11:30 – 12:45', t:'Ámbito Social', tipo:'clase'},
          {h:'16:00 – 19:00', t:'Teatro por la Igualdad', tipo:'extra', ...LUGAR_TEATRO}],
       4:[{h:'10:00 – 12:00', t:'Formación de Competencias Digitales', tipo:'taller'}]
+    }},
+    '2026-11-09': { dias:{
+      1:[{h:'10:00', t:'Ámbito Social', tipo:'clase'}],
+      3:[{h:'10:00', t:'Ámbito de Comunicación', tipo:'clase'}],
+      4:[{h:'10:00', t:'Ámbito Científico', tipo:'clase'}]
     }}
   }
 };
@@ -2905,20 +2939,39 @@ function estaSemana(a){
 }
 
 const DIAS = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
-const TIPOS = {clase:'Clase', taller:'Taller', tutoria:'Tutoría', extra:'Extra'};
+const TIPOS = {clase:'Clase', taller:'Taller', tutoria:'Tutoría', extra:'Extra', festivo:'Festivo'};
 function isoLunes(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+let AG_OFF = 0;
+function agLunes(){ const d = lunesHoy(); d.setDate(d.getDate() + 7*AG_OFF); return d; }
+function agSemana(){ return AGENDA.semanas[isoLunes(agLunes())]; }
 function agendaHTML(){
-  const lun = lunesHoy(); const sem = AGENDA.semanas[isoLunes(lun)];
-  const dias = sem ? sem.dias : AGENDA.habitual;
-  let hoy = (new Date().getDay()+6)%7 + 1; if (hoy>5) hoy = 1;
+  return `<div class="sec-t ag-cab"><h2>Agenda de la semana</h2></div><section class="agenda" id="agenda"></section>`;
+}
+function pintarAgenda(diaSel){
+  const lun = agLunes(), sem = agSemana(), dias = sem ? sem.dias : AGENDA.habitual;
+  let sel = diaSel;
+  if (!sel){ if (AG_OFF === 0){ sel = (new Date().getDay()+6)%7 + 1; if (sel>5) sel = 1; } else { sel = [1,2,3,4,5].find(n=>(dias[n]||[]).length) || 1; } }
+  const fin = new Date(lun); fin.setDate(lun.getDate()+4);
+  const rango = lun.getMonth()===fin.getMonth() ? `${lun.getDate()} al ${fin.getDate()} de ${MESES_L[fin.getMonth()]}` : `${lun.getDate()} de ${MESES_L[lun.getMonth()]} al ${fin.getDate()} de ${MESES_L[fin.getMonth()]}`;
   const chips = DIAS.map((n,i)=>{ const d = new Date(lun); d.setDate(lun.getDate()+i);
     const tiene = (dias[i+1]||[]).length; const extra = (dias[i+1]||[]).some(x=>x.tipo==='extra');
-    return `<button class="dia" data-d="${i+1}" aria-pressed="${i+1===hoy}"><small>${n.slice(0,3)}</small><b>${d.getDate()}</b><i class="${extra?'ex':tiene?'si':''}"></i></button>`; }).join('');
-  return `<div class="sec-t"><h2>${sem ? 'Agenda de la semana' : 'Horario habitual'}</h2></div>
-    <section class="agenda">${sem && sem.nota ? `<p class="ag-nota">${esc(sem.nota)}</p>` : ''}<div class="dias">${chips}</div><div class="ag-list" id="aglist"></div></section>`;
+    return `<button class="dia" data-d="${i+1}" aria-pressed="${i+1===sel}"><small>${n.slice(0,3)}</small><b>${d.getDate()}</b><i class="${extra?'ex':tiene?'si':''}"></i></button>`; }).join('');
+  const box = document.getElementById('agenda'); if (!box) return;
+  box.innerHTML = `<div class="ag-nav"><button class="ag-flecha" id="ag-ant" aria-label="Semana anterior">‹</button>
+      <span><b>Semana del ${rango}</b>${AG_OFF===0?'<small>Esta semana</small>':AG_OFF<0?'<small>Semana pasada</small>':'<small>Próximamente</small>'}${!sem?'<small>Horario habitual</small>':''}</span>
+      <button class="ag-flecha" id="ag-sig" aria-label="Semana siguiente">›</button></div>
+    ${AGENDA.aviso ? `<p class="ag-nota">${esc(AGENDA.aviso)}</p>` : ''}${sem && sem.nota ? `<p class="ag-nota">${esc(sem.nota)}</p>` : ''}
+    <div class="dias">${chips}</div><div class="ag-list" id="aglist"></div>
+    ${AG_OFF!==0?'<button class="ag-hoy" id="ag-hoy">Volver a esta semana</button>':''}`;
+  box.querySelectorAll('.dia').forEach(b=>b.onclick=()=>pintarDia(+b.dataset.d));
+  document.getElementById('ag-ant').onclick=()=>{ AG_OFF--; pintarAgenda(); };
+  document.getElementById('ag-sig').onclick=()=>{ AG_OFF++; pintarAgenda(); };
+  const h = document.getElementById('ag-hoy'); if (h) h.onclick=()=>{ AG_OFF=0; pintarAgenda(); };
+  pintarDia(sel);
 }
+const MESES_L = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 function pintarDia(n){
-  const lun = lunesHoy(); const sem = AGENDA.semanas[isoLunes(lun)];
+  const sem = agSemana();
   const its = (sem ? sem.dias : AGENDA.habitual)[n] || [];
   document.querySelectorAll('.dia').forEach(b=>b.setAttribute('aria-pressed', b.dataset.d==n));
   document.getElementById('aglist').innerHTML = its.length ? its.map(x=>`<div class="ag ${x.tipo||'clase'}"><span class="ag-h">${esc(x.h)}</span><span class="ag-t"><b>${esc(x.t)}</b>${x.lugar?`<small>${esc(x.lugar)}</small>`:''}${x.mapa?`<a class="ag-map" href="${esc(x.mapa)}" target="_blank" rel="noopener">Cómo llegar ↗</a>`:''}</span><span class="ag-tag">${TIPOS[x.tipo]||''}</span></div>`).join('')
@@ -2948,8 +3001,7 @@ function home(){
     <nav class="tiles" aria-label="Ámbitos">${tiles}</nav>
     <section class="creditos"><div class="lgs"><img src="logos/e2o.jpg" alt="Escuelas de Segunda Oportunidad España" width="36" height="36"><img src="logos/arrabal.png" alt="Asociación Arrabal" width="82" height="30"></div>
       <p>Escuela de Segunda Oportunidad de Málaga, de la red Escuelas de Segunda Oportunidad España, gestionada por Asociación Arrabal AID.</p></section>`;
-  document.querySelectorAll('.dia').forEach(b=>b.onclick=()=>pintarDia(+b.dataset.d));
-  pintarDia(+document.querySelector('.dia[aria-pressed="true"]').dataset.d);
+  AG_OFF = 0; pintarAgenda();
 }
 function tabbar(actual){
   const items = [['inicio','Inicio','casa','--brand'],['comunicacion','Comunicación','com','--com'],['social','Social','soc','--soc'],['cientifico','Científico','cie','--cie'],['orientacion','Recursos','ori','--ori']];

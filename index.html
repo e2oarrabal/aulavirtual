@@ -633,7 +633,7 @@ const AMBITOS = [
         items:[{tipo:'enlace', url:JUNTA.cie, titulo:'La prueba de Científico (Junta)', desc:'Estructura oficial y materiales de este ámbito'}, ...LINKS_EXAMEN] }
     ]},
   { id:'orientacion', c:'--ori', ico:'ori', nombre:'Recursos', sub:'Prueba libre, empleo, digitalización y herramientas',
-    intro:'Exámenes oficiales de la prueba libre, recursos para buscar empleo, talleres de digitalización y herramientas útiles.',
+    intro:'La prueba libre, trámites, empleo, qué hacer después de la ESO, digitalización y herramientas útiles.',
     secciones:[
       { nombre:'Prueba libre', info:'<b>Prueba para el título de Graduado en ESO (mayores de 18 años).</b> Aquí tienes la información oficial de la Junta de Andalucía: exámenes de años anteriores con soluciones, contenidos para preparar cada ámbito, fechas, inscripción y dudas frecuentes.', items:[
         {tipo:'guia', guia:'inscripcion', titulo:'Cómo inscribirte en la prueba', desc:'Paso a paso, qué necesitas y cuándo'},
@@ -647,6 +647,14 @@ const AMBITOS = [
         {tipo:'guia', guia:'agencia', titulo:'Agencia de Colocación de Arrabal', desc:'Ofertas de empleo para jóvenes y orientación laboral'},
         {tipo:'doc', titulo:'Cómo hacer tu currículum', desc:'Guía paso a paso y plantilla'},
         {tipo:'juego', titulo:'Simulador de entrevista', desc:'Preguntas típicas y cómo responderlas'}
+      ]},
+      { nombre:'Después de la ESO', info:'<b>Primero, el título.</b> La ESO es la llave para casi todo lo que viene después: FP, muchos cursos, oposiciones y mejores trabajos. Aquí tienes los caminos que se te abren y cómo te ayuda Arrabal.', items:[
+        {tipo:'guia', guia:'fp', titulo:'Formación Profesional de Grado Medio', desc:'El siguiente paso con el título: estudiar un oficio con prácticas'},
+        {tipo:'guia', guia:'garantia', titulo:'Garantía Juvenil', desc:'Prioridad en cursos, prácticas y empleo de 16 a 29 años'},
+        {tipo:'guia', guia:'orientacion', titulo:'Orientación laboral en Arrabal', desc:'Cita individual: currículum, entrevistas y trámites'},
+        {tipo:'guia', guia:'agencia', titulo:'Agencia de Colocación de Arrabal', desc:'Regístrate y recibe ofertas de empleo'},
+        {tipo:'guia', guia:'ces', titulo:'Cuerpo Europeo de Solidaridad', desc:'Voluntariado en Europa con gastos pagados'},
+        {tipo:'guia', guia:'cursos', titulo:'Cursos compatibles con la E2O', desc:'Cuáles sí, cuándo y la regla de oro'}
       ]},
       { nombre:'Digitalización', items:[
         {tipo:'doc', titulo:'Taller: tu correo electrónico profesional', desc:'Crear, ordenar y enviar con adjuntos'}
@@ -2813,10 +2821,58 @@ const GUIAS = {
     intro:'Arrabal tiene su propia agencia de colocación, especializada en gente joven. Recibe ofertas de empresas de Málaga y busca a las personas que encajan en cada puesto.',
     bloques:[
       {h:'Qué te ofrece', html:`<ul><li><b>Ofertas de empleo</b> de empresas de Málaga, que se publican cada semana.</li><li><b>Orientación laboral</b>: ayuda con el currículum, las entrevistas y cómo buscar trabajo.</li><li>Información sobre <b>formación</b> y otros recursos de empleo.</li></ul>`},
-      {h:'Cómo apuntarte', html:`<ol><li>Díselo a tu educador o educadora de la E2O: te ponemos en contacto con el equipo de empleo.</li><li>O escribe directamente a <a href="mailto:arrabal@arrabalempleo.org">arrabal@arrabalempleo.org</a>.</li><li>Ten tu <b>currículum</b> actualizado: si no lo tienes, lo hacemos en clase.</li></ol><p class="ojo"><b>Recuerda:</b> el título de la ESO te abre muchas más puertas. Trabajar y estudiar a la vez se puede, pero no dejes la prueba a medias.</p>`}
+      {h:'Cómo apuntarte', html:`<ol><li>Ten a mano tu <b>currículum</b> (si no lo tienes, lo hacemos en clase), tu DNI o NIE y un correo electrónico que uses.</li><li>Entra en el <b>registro de candidatos</b> de la agencia (botón de abajo) y crea tu cuenta.</li><li>Rellena tus datos y sube el currículum. Así las ofertas que encajen contigo te llegarán a ti.</li><li>Si tienes dudas, díselo a tu educador o educadora de la E2O o escribe a <a href="mailto:arrabal@arrabalempleo.org">arrabal@arrabalempleo.org</a>.</li></ol><a class="btn" style="background:var(--c);color:#fff" href="https://arrabalempleo.agenciascolocacion.com/candidatos/registro" target="_blank" rel="noopener">Registrarme en la agencia ↗</a><p class="ojo"><b>Recuerda:</b> el título de la ESO te abre muchas más puertas. Trabajar y estudiar a la vez se puede, pero no dejes la prueba a medias.</p>`}
     ],
     enlaces:[
+      {url:'https://arrabalempleo.agenciascolocacion.com/candidatos/registro', t:'Registro de candidatos de la Agencia de Colocación'},
       {url:'https://www.arrabalempleo.org', t:'Web de Arrabal Empleo'}
+    ]},
+  fp: { titulo:'Formación Profesional de Grado Medio', kicker:'Después de la ESO',
+    intro:'El título de la ESO te abre la puerta a la FP de Grado Medio: dos años de estudios prácticos, gratuitos en centros públicos, con prácticas en empresas y un título oficial de técnico. Es el siguiente paso natural después de la E2O.',
+    bloques:[
+      {h:'Qué es', html:`<ul><li>Ciclos de <b>dos cursos</b> sobre un oficio: electricidad, cocina, peluquería, cuidados auxiliares de enfermería, informática, mecánica, administración, comercio…</li><li>Una parte importante es <b>práctica</b> y se hace en <b>empresas</b>.</li><li>Al terminar tienes el título de <b>Técnico</b>, y con él puedes seguir a un Grado Superior.</li></ul>`},
+      {h:'Cómo se entra', html:`<ul><li><b>Con el título de la ESO</b> entras directamente: por eso es tan importante aprobar la prueba.</li><li><b>Sin el título</b> hay una prueba de acceso a Grado Medio, pero es otro examen más y no te da la ESO.</li><li>La <b>solicitud de plaza</b> se hace por internet en el plazo de la Junta, que suele abrirse en junio, con otro plazo en septiembre si quedan plazas.</li><li>Puedes pedir varios ciclos y centros por orden de preferencia.</li></ul><p class="ojo"><b>Consejo:</b> elige con tiempo. En clase os ayudamos a ver qué ciclos hay en Málaga y cuáles encajan con lo que te gusta.</p>`}
+    ],
+    enlaces:[
+      {url:'https://www.juntadeandalucia.es/educacion/portals/web/formacion-profesional-andaluza', t:'Portal de Formación Profesional Andaluza: ciclos, centros y admisión'}
+    ]},
+  garantia: { titulo:'Garantía Juvenil', kicker:'Después de la ESO',
+    intro:'Garantía Juvenil es un programa europeo para jóvenes de 16 a 29 años que no están estudiando ni trabajando. Estar inscrito te da prioridad en cursos, prácticas y ofertas de empleo, y muchas empresas reciben ayudas por contratarte.',
+    bloques:[
+      {h:'Requisitos', html:`<ul><li>Tener <b>entre 16 y 29 años</b>.</li><li>Estar <b>empadronado</b> en España.</li><li>No haber trabajado ni estudiado o hecho un curso el día anterior a apuntarte.</li></ul>`},
+      {h:'Cómo apuntarte', html:`<ol><li>La forma más fácil: <b>apuntarte como demandante de empleo</b> en el SAE (el «paro»). Si cumples los requisitos, quedas inscrito también en Garantía Juvenil.</li><li>O por internet, en la web del SEPE, con tu <b>certificado digital</b> o Cl@ve.</li><li>Si te atascas, lo hacemos en clase o en el área de empleo de Arrabal.</li></ol><p class="ojo"><b>Ojo:</b> estar en Garantía Juvenil es compatible con preparar la prueba de la ESO. De hecho, muchos programas piden el título.</p>`}
+    ],
+    enlaces:[
+      {url:'https://www.sepe.es/HomeSepe/Personas/encontrar-trabajo/Garantia-Juvenil.html', t:'SEPE: Garantía Juvenil'},
+      {url:'https://www.sepe.es/HomeSepe/preguntas-frecuentes/preguntas-frecuentes-garantia-juvenil.html', t:'Preguntas frecuentes de Garantía Juvenil'}
+    ]},
+  orientacion: { titulo:'Orientación laboral en Arrabal', kicker:'Después de la ESO',
+    intro:'En Arrabal no solo preparamos la ESO: también te acompañamos para buscar trabajo. Puedes pedir una cita individual para preparar tu camino.',
+    bloques:[
+      {h:'En qué te ayudamos', html:`<ul><li>Hacer o mejorar tu <b>currículum</b> y tu carta de presentación.</li><li>Preparar <b>entrevistas</b> de trabajo.</li><li>Pensar qué quieres hacer: <b>estudiar, trabajar o las dos cosas</b>.</li><li>Trámites: certificado digital, vida laboral, demanda de empleo, Garantía Juvenil.</li><li>Información sobre <b>autoempleo</b> si tienes una idea de negocio.</li></ul>`},
+      {h:'Cómo pedir cita', html:`<p>Díselo a tu educador o educadora de la E2O y te damos cita. También puedes registrarte en la Agencia de Colocación de Arrabal para recibir ofertas.</p>`}
+    ],
+    enlaces:[
+      {url:'https://arrabalempleo.agenciascolocacion.com/candidatos/registro', t:'Registro en la Agencia de Colocación de Arrabal'}
+    ]},
+  ces: { titulo:'Cuerpo Europeo de Solidaridad', kicker:'Después de la ESO',
+    intro:'Es un programa de la Unión Europea para jóvenes de 18 a 30 años: haces un voluntariado en otro país de Europa o en España, con viaje, alojamiento, comida y dinero de bolsillo pagados. Arrabal participa en él, así que te podemos orientar.',
+    bloques:[
+      {h:'Qué es', html:`<ul><li>Proyectos de <b>voluntariado</b> de unas semanas hasta un año: con niños, medio ambiente, cultura, deporte, inclusión…</li><li>Están <b>pagados</b> los gastos principales y tienes seguro.</li><li>No necesitas un nivel alto de idiomas: muchos proyectos incluyen clases.</li><li>Es una experiencia que <b>queda genial en el currículum</b>.</li></ul>`},
+      {h:'Cómo empezar', html:`<ol><li>Crea tu perfil en el portal europeo (enlace abajo).</li><li>Busca proyectos que te interesen y apúntate.</li><li>Habla con tu educador o educadora: Arrabal te puede ayudar a elegir y a preparar la solicitud.</li></ol><p class="ojo"><b>Mejor después de la prueba:</b> el voluntariado puede esperar a que tengas el título; la ESO es la prioridad.</p>`}
+    ],
+    enlaces:[
+      {url:'https://youth.europa.eu/solidarity_es', t:'Portal Europeo de la Juventud: Cuerpo Europeo de Solidaridad'}
+    ]},
+  cursos: { titulo:'Cursos compatibles con la E2O', kicker:'Después de la ESO',
+    intro:'Hay muchos cursos gratuitos para el empleo. Pueden ser un buen complemento, pero con una regla clara: primero el título de la ESO.',
+    bloques:[
+      {h:'La regla de oro', html:`<p class="ojo"><b>Un curso no sustituye a la ESO.</b> Muchos cursos, certificados profesionales y casi toda la FP piden el título. Si un curso choca con tus clases o con la prueba, déjalo para después: habrá más convocatorias.</p>`},
+      {h:'Cuándo sí', html:`<ul><li>Si es <b>por la tarde</b> o a distancia y no te quita tiempo de estudio.</li><li>Si lo empiezas <b>después de la prueba</b> (de abril a septiembre hay muchas convocatorias).</li><li>Si es corto y te da algo útil para trabajar: manipulador de alimentos, prevención de riesgos, carné de carretillero, informática básica…</li></ul>`},
+      {h:'Dónde enterarte', html:`<ul><li>En la <b>Agencia de Colocación de Arrabal</b> y en el área de empleo de la entidad.</li><li>Si estás en <b>Garantía Juvenil</b>, tienes prioridad en muchos cursos gratuitos.</li><li>Antes de apuntarte a cualquier curso, coméntalo con tu educador o educadora y lo vemos juntos.</li></ul>`}
+    ],
+    enlaces:[
+      {url:'https://arrabalempleo.agenciascolocacion.com/candidatos/registro', t:'Registro en la Agencia de Colocación de Arrabal'}
     ]}
 };
 function guia(id){

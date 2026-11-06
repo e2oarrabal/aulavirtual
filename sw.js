@@ -1,6 +1,6 @@
 // Aula E2O: la página se pide siempre a internet (para que lleguen las novedades);
 // si no hay conexión, se usa la última copia guardada.
-const CACHE='aula-e2o-202611061203';
+const CACHE='aula-e2o-202611061206';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./','index.html','manifest.json','icons/icon-192.png','logos/e2o.jpg','logos/arrabal.png'])));});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CACHE).map(n=>caches.delete(n)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',e=>{

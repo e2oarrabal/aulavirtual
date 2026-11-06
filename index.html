@@ -308,6 +308,12 @@ body.con-visor{overflow:hidden}
 
 .agenda{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:12px}
 .item.pres{width:100%;text-align:left;font:inherit;cursor:pointer}
+.rt-h{font-size:17px;font-weight:800;margin:22px 0 8px}
+.rt-lista{display:flex;flex-direction:column;gap:8px;text-align:left}
+.rt-tema{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);cursor:pointer}
+.rt-tema input{width:22px;height:22px;flex:none;accent-color:var(--c)}
+.rt-tema span{display:flex;flex-direction:column;gap:2px}.rt-tema b{font-size:15px;line-height:1.3}.rt-tema small{font-size:13px;color:var(--muted)}
+.rt-tema:has(input:checked){border-color:var(--c);background:color-mix(in srgb,var(--c) 8%,var(--surface))}
 .list-h{display:flex;align-items:center;gap:8px;margin:14px 2px 2px;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--c)}.list-h svg{width:20px;height:20px}
 .list-h:first-child{margin-top:2px}
 .retos{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:20px;background:color-mix(in srgb,var(--c) 10%,transparent);border:2px dashed color-mix(in srgb,var(--c) 35%,transparent)}
@@ -3271,7 +3277,7 @@ const PRES = {
 };
 function presentaciones(a){
   const T = a.secciones.find(x=>x.temario).temario;
-  const hoy = new Date(); const filas = T.filas.filter(f => fecha(f.s) <= hoy).slice().reverse();
+  const hoy = new Date(); const filas = T.filas.filter(f => fecha(f.s) <= hoy);
   if (!filas.length) return `<div class="empty">Todavía no hay clases.</div>`;
   const info = `<div class="info">Aquí están las presentaciones que vemos en clase. Se suben <b>después de cada clase</b>, para repasar o por si faltaste. Se ven directamente, sin descargar.</div>`;
   return info + filas.map(f => {
@@ -3291,6 +3297,32 @@ async function verPDFurl(url, titulo, btn, msg){
 }
 document.addEventListener('click', e => { const b = e.target.closest('[data-pdf]'); if (!b) return; verPDFurl(b.dataset.pdf, b.dataset.tit, b, document.getElementById('presmsg')); });
 
+
+/* ===== ELEGIR RETO: general o por temas ===== */
+function elegirReto(id){
+  const J = JUEGOS[id], a = byId(J.ambito);
+  const filas = J.temas.map(k => { const T = TEMAS[k]; const n = JUEGOS[T.juego].preguntas.length;
+    return `<label class="rt-tema"><input type="checkbox" value="${k}"><span><b>Clase ${T.clase} · ${esc(T.titulo)}</b><small>${n} preguntas</small></span></label>`; }).join('');
+  app.innerHTML = `<a class="back" href="#${a.id}">${I.back} ${a.nombre}</a>
+    <section class="q start" style="--c:var(${a.c})">
+      <p class="kicker-j">Retos de ${esc(J.materia)}</p><h2>¿Qué quieres practicar?</h2>
+      <a class="btn" href="#juego-${id}">${I.juego} Reto general: todos los temas</a>
+      <p class="mini">20 preguntas al azar de un banco de ${J.preguntas.length}.</p>
+      <h3 class="rt-h">O elige los temas que más te cuestan</h3>
+      <div class="rt-lista">${filas}</div>
+      <button class="btn ghost" id="rt-go" disabled>Elige al menos un tema</button>
+    </section>`;
+  const go = document.getElementById('rt-go');
+  const sel = () => [...app.querySelectorAll('.rt-tema input:checked')].map(x=>x.value);
+  app.querySelectorAll('.rt-tema input').forEach(x => x.onchange = () => { const n = sel().length;
+    go.disabled = !n; go.classList.toggle('ghost', !n); go.textContent = n ? `Empezar con ${n} ${n===1?'tema':'temas'}` : 'Elige al menos un tema'; });
+  go.onclick = () => { const ks = sel(); if (!ks.length) return;
+    const preguntas = ks.flatMap(k => JUEGOS[TEMAS[k].juego].preguntas);
+    const cid = 'mi-reto-' + id;
+    JUEGOS[cid] = { ambito:J.ambito, titulo: ks.length===1 ? TEMAS[ks[0]].titulo : 'Mi reto de '+J.materia+' ('+ks.length+' temas)', ronda: Math.min(20, preguntas.length), preguntas };
+    location.hash = '#juego-' + cid; };
+}
+
 /* ===== RENDER ===== */
 const app = document.getElementById('app');
 const byId = id => AMBITOS.find(a => a.id === id);
@@ -3306,8 +3338,8 @@ AMBITOS.forEach(a => a.secciones.forEach(sec => {
   const id = 'reto-'+a.id+'-'+sec.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const preguntas = ts.flatMap(t => JUEGOS[t.juego].preguntas);
   const ing = sec.nombre === 'Inglés';
-  JUEGOS[id] = { ambito:a.id, titulo: ing ? 'Big challenge: English' : 'Gran reto de '+sec.nombre, ronda:20, preguntas };
-  sec.items.push({tipo:'juego', juego:id, titulo: ing ? 'Big challenge: English' : 'Gran reto de '+sec.nombre, desc:`20 preguntas por partida de un banco de ${preguntas.length}, de los ${ts.length} temas dados`});
+  JUEGOS[id] = { ambito:a.id, materia:sec.nombre, titulo: ing ? 'Big challenge: English' : 'Gran reto de '+sec.nombre, ronda:20, preguntas, temas: ts.sort((x,y)=>x.clase-y.clase).map(t=>Object.keys(TEMAS).find(k=>TEMAS[k]===t)) };
+  sec.items.push({tipo:'juego', juego:id, elegir:true, titulo: ing ? 'Challenges: English' : 'Retos de '+sec.nombre, desc:`Elige: todos los temas a la vez o solo los que quieras repasar (${preguntas.length} preguntas)`});
 }));
 const contar = a => a.secciones.reduce((n,s) => n + (s.items||[]).filter(listo).length, 0);
 const esc = s => String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
@@ -3403,7 +3435,7 @@ function ambito(a, sec=0){
       <span class="badge">${ok ? TIPO[it.tipo] : 'Próximamente'}</span>`;
     if (!ok) return `<div class="item soon" aria-disabled="true">${body}</div>`;
     if (it.tipo === 'tema') return `<a class="item" href="#tema-${it.tema}">${body}</a>`;
-    if (it.tipo === 'juego') return `<a class="item" href="#juego-${it.juego}">${body}</a>`;
+    if (it.tipo === 'juego') return `<a class="item" href="#${it.elegir?'retos':'juego'}-${it.juego}">${body}</a>`;
     if (it.tipo === 'guia') return `<a class="item" href="#guia-${it.guia}">${body}</a>`;
     return `<a class="item" href="${esc(it.url)}" target="_blank" rel="noopener">${body}</a>`;
   };
@@ -3765,6 +3797,7 @@ function route(){
   window.scrollTo(0,0);
   let sec = 'inicio';
   if (h.startsWith('guia-') && GUIAS[h.slice(5)]) { sec = 'orientacion'; guia(h.slice(5)); }
+  else if (h.startsWith('retos-') && JUEGOS[h.slice(6)]) { sec = JUEGOS[h.slice(6)].ambito; elegirReto(h.slice(6)); }
   else if (h.startsWith('juego-') && JUEGOS[h.slice(6)]) { sec = JUEGOS[h.slice(6)].ambito; juego(h.slice(6)); }
   else if (h.startsWith('ficha-') && TEMAS[h.slice(6)] && TEMAS[h.slice(6)].ficha) { sec = TEMAS[h.slice(6)].ambito; fichaOnline(h.slice(6)); }
   else if (h.startsWith('tema-') && TEMAS[h.slice(5)]) { sec = TEMAS[h.slice(5)].ambito; tema(h.slice(5)); }

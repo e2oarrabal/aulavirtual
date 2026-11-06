@@ -468,20 +468,28 @@ const I = {
   video:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>',
   back:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>'
 };
-const TIPO = {tema:'Tema', juego:'Juego', doc:'Documento', video:'Vídeo', enlace:'Web ↗'};
+const TIPO = {tema:'Tema', juego:'Juego', doc:'Documento', video:'Vídeo', enlace:'Web ↗', guia:'Guía'};
 
 /* ===== CONTENIDO =====
    Para añadir material: un objeto más en la lista "items" de la sección.
    tipo: "juego" (id de un juego de JUEGOS), "doc" / "video" / "enlace" (url que se abre fuera).
    Sin url ni juego, aparece como "Próximamente". */
 const JUNTA = {
-  modelos:'https://www.juntadeandalucia.es/educacion/portales/es/web/educacion-permanente/servicios/pruebas/obtencion-titulo-eso/sobre-las-pruebas',
   info:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/servicios/pruebas/obtencion-titulo-eso',
-  faq:'https://www.juntadeandalucia.es/educacion/portales/es/web/educacion-permanente/servicios/pruebas/obtencion-titulo-eso/preguntas-frecuentes',
-  com:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/ambito-comunicacion'
+  modelos:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/servicios/pruebas/obtencion-titulo-eso/sobre-las-pruebas/modelos-de-convocatorias-anteriores',
+  materiales:'https://www.juntadeandalucia.es/educacion/permanente/materiales',
+  estructura:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/contenidos-estructura-pruebas-eso',
+  faq:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/servicios/pruebas/obtencion-titulo-eso/preguntas-frecuentes',
+  inscripcion:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/inscripcion-pruebas-eso',
+  calendario:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/plazos-calendario-pruebas-eso',
+  com:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/prueba-del-ambito-de-comunicacion',
+  soc:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/prueba-de-ambito-social',
+  cie:'https://www.juntadeandalucia.es/educacion/portales/web/educacion-permanente/w/prueba-del-ambito-cientifico-tecnologico'
 };
 const LINKS_EXAMEN = [
-  {tipo:'enlace', url:JUNTA.modelos, titulo:'Exámenes de años anteriores', desc:'Junta de Andalucía: modelos de convocatorias anteriores y estructura de cada prueba'},
+  {tipo:'enlace', url:JUNTA.modelos, titulo:'Exámenes de años anteriores', desc:'Junta de Andalucía: exámenes oficiales de otras convocatorias, con soluciones'},
+  {tipo:'enlace', url:JUNTA.materiales, titulo:'Contenidos de la Junta para preparar la prueba', desc:'Materiales oficiales (portal CREA) de los tres ámbitos'},
+  {tipo:'enlace', url:JUNTA.estructura, titulo:'Cómo es cada prueba', desc:'Estructura y contenidos oficiales de cada ámbito'},
   {tipo:'enlace', url:JUNTA.info, titulo:'Información oficial de la prueba', desc:'Fechas, inscripción, exenciones y resultados'},
   {tipo:'enlace', url:JUNTA.faq, titulo:'Preguntas frecuentes', desc:'Las dudas más habituales sobre la prueba'}
 ];
@@ -549,8 +557,8 @@ const AMBITOS = [
       { nombre:'Inglés', items:[
         {tipo:'juego', juego:'ingles-pronombres', titulo:'Challenge: subject pronouns', desc:'8 preguntas. I, you, he, she, it, we, they'}
       ]},
-      { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50.</b> Lengua castellana vale 60 puntos (comprensión y redacción, conocimiento de la lengua y literatura) e Inglés 40 (reading + writing y use of English). Se suman las dos partes: no hace falta aprobar cada una por separado.',
-        items:[...LINKS_EXAMEN, {tipo:'enlace', url:JUNTA.com, titulo:'Contenidos de apoyo del ámbito', desc:'Material oficial de la Junta para preparar Comunicación'}] }
+      { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50.</b> <b>Lengua castellana (60 puntos):</b> comprensión de un texto con cuatro preguntas y un escrito de al menos 200 palabras, como una carta, una reclamación, una solicitud o una opinión (30); cuatro preguntas sobre la lengua (20); y dos preguntas sobre un texto literario: tema, resumen, género o movimiento, recursos e intención (10). <b>Inglés (40 puntos):</b> comprensión de un texto con dos preguntas y una redacción de 50 a 70 palabras (20) y diez preguntas tipo test (20). Se suman las dos partes: no hace falta aprobar cada una por separado. Se puede usar diccionario bilingüe. Cada falta de ortografía o de gramática resta 0,1 puntos (hasta 2).',
+        items:[{tipo:'enlace', url:JUNTA.com, titulo:'La prueba de Comunicación (Junta)', desc:'Estructura oficial y materiales de este ámbito'}, ...LINKS_EXAMEN] }
     ]},
   { id:'social', c:'--soc', ico:'soc', nombre:'Social', sub:'Geografía, Historia y Economía',
     intro:'Geografía, Historia, Economía y ciudadanía, para preparar la prueba libre de ESO.',
@@ -587,8 +595,8 @@ const AMBITOS = [
       ]},
       { nombre:'Economía', items:[] },
       { nombre:'Ciudadanía', items:[] },
-      { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50.</b> Es un único ejercicio en el que se pide interpretar más que memorizar: conceptos clave, mapas, gráficos y tablas (climogramas, pirámides de población), ejes cronológicos y textos o imágenes cortas. La última parte es un texto propio de al menos 150 palabras sobre un tema de actualidad (15 puntos): conviene practicarlo cada dos o tres semanas.',
-        items:[...LINKS_EXAMEN] }
+      { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50.</b> Tiene cuatro partes: <b>conceptos básicos</b> (25 puntos: definir y relacionar conceptos); <b>análisis de textos</b> (30: dos textos con tres preguntas cada uno); <b>análisis de gráficos, mapas o imágenes</b> (30: dos fuentes con tres preguntas cada una, como climogramas, pirámides de población, mapas o una obra de arte); y un <b>texto propio de al menos 150 palabras</b> sobre un tema de actualidad (15). Se pide interpretar más que memorizar. Cada falta de ortografía o de gramática resta 0,1 puntos (hasta 2): conviene practicar la redacción cada dos o tres semanas.',
+        items:[{tipo:'enlace', url:JUNTA.soc, titulo:'La prueba de Social (Junta)', desc:'Estructura oficial y materiales de este ámbito'}, ...LINKS_EXAMEN] }
     ]},
   { id:'cientifico', c:'--cie', ico:'cie', nombre:'Científico', sub:'Matemáticas y Ciencias',
     intro:'Matemáticas, Biología y Geología, Física y Química, Tecnología y salud, para preparar la prueba libre de ESO.',
@@ -622,13 +630,21 @@ const AMBITOS = [
       { nombre:'Matemáticas', items:[] },
       { nombre:'Ciencias', items:[] },
       { nombre:'El examen', info:'<b>2 horas · 100 puntos · se aprueba con 50 · con calculadora básica.</b> Tiene cinco partes: conceptos básicos (15 puntos), comprensión de un texto científico (20), gráficas, imágenes o esquemas (30), una redacción de 150 palabras (15) y un problema con cálculos (20). En los últimos exámenes han salido la dieta y los aparatos del cuerpo humano, la energía, el átomo y problemas de volúmenes y cambio de unidades.',
-        items:[...LINKS_EXAMEN] }
+        items:[{tipo:'enlace', url:JUNTA.cie, titulo:'La prueba de Científico (Junta)', desc:'Estructura oficial y materiales de este ámbito'}, ...LINKS_EXAMEN] }
     ]},
   { id:'orientacion', c:'--ori', ico:'ori', nombre:'Recursos', sub:'Prueba libre, empleo, digitalización y herramientas',
     intro:'Exámenes oficiales de la prueba libre, recursos para buscar empleo, talleres de digitalización y herramientas útiles.',
     secciones:[
-      { nombre:'Prueba libre', info:'<b>Prueba para el título de Graduado en ESO (mayores de 18 años).</b> Aquí tienes la información oficial de la Junta de Andalucía: exámenes de años anteriores con soluciones, fechas, inscripción y dudas frecuentes.', items:[...LINKS_EXAMEN] },
+      { nombre:'Prueba libre', info:'<b>Prueba para el título de Graduado en ESO (mayores de 18 años).</b> Aquí tienes la información oficial de la Junta de Andalucía: exámenes de años anteriores con soluciones, contenidos para preparar cada ámbito, fechas, inscripción y dudas frecuentes.', items:[
+        {tipo:'guia', guia:'inscripcion', titulo:'Cómo inscribirte en la prueba', desc:'Paso a paso, qué necesitas y cuándo'},
+        ...LINKS_EXAMEN,
+        {tipo:'enlace', url:JUNTA.calendario, titulo:'Plazos y calendario', desc:'Cuándo es la inscripción y cuándo los exámenes'}
+      ]},
+      { nombre:'Trámites', info:'<b>Gestiones que tienes que saber hacer.</b> Con el certificado digital puedes inscribirte en la prueba, pedir tu vida laboral o apuntarte en Garantía Juvenil desde el móvil, sin colas.', items:[
+        {tipo:'guia', guia:'certificado', titulo:'Cómo sacar el certificado digital', desc:'Gratis, desde el móvil o en una oficina. Obligatorio en la E2O'}
+      ]},
       { nombre:'Empleo', items:[
+        {tipo:'guia', guia:'agencia', titulo:'Agencia de Colocación de Arrabal', desc:'Ofertas de empleo para jóvenes y orientación laboral'},
         {tipo:'doc', titulo:'Cómo hacer tu currículum', desc:'Guía paso a paso y plantilla'},
         {tipo:'juego', titulo:'Simulador de entrevista', desc:'Preguntas típicas y cómo responderlas'}
       ]},
@@ -2767,10 +2783,55 @@ function confirmarBorrado(){ const b = document.getElementById('fo-borrar'); if 
 const ICO_LAPIZ = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>';
 const ICO_ENV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>';
 
+
+/* ===== GUÍAS (Recursos) ===== */
+const GUIAS = {
+  certificado: { titulo:'Cómo sacar el certificado digital', kicker:'Trámites',
+    intro:'El certificado digital es tu firma y tu DNI en internet. Con él haces trámites con la Junta, la Seguridad Social, Hacienda o el SEPE desde el móvil, sin ir a ninguna oficina. En la E2O es obligatorio tenerlo, y te ayudamos a sacarlo.',
+    bloques:[
+      {h:'Antes de empezar', html:`<ul><li>Es <b>gratis</b> y dura <b>4 años</b>.</li><li>Necesitas tu <b>DNI o NIE en vigor</b>, un <b>correo electrónico</b> que uses y tu <b>móvil</b>.</li><li>Lo da la <b>FNMT</b> (Fábrica Nacional de Moneda y Timbre). Desconfía de webs que te cobren por «tramitarlo».</li></ul>`},
+      {h:'Opción 1 · Desde el móvil, con la app', html:`<ol><li>Descarga la app oficial <b>«Certificado Digital FNMT»</b> (Google Play o App Store).</li><li>Pulsa <b>Solicitar certificado</b> y rellena tus datos (DNI o NIE, primer apellido y correo).</li><li>Acredita tu identidad con <b>vídeo identificación</b>: te pide fotografiar tu documento y grabarte la cara. Este servicio de vídeo cuesta unos 3 €; si no quieres pagar, usa la opción 2.</li><li>Cuando lo aprueben, el certificado se instala en la propia app.</li></ol><p class="ojo"><b>Ojo:</b> la vídeo identificación es solo para mayores de 18 años y puede no admitir todos los documentos. Si te da problemas, hazlo de forma presencial.</p>`},
+      {h:'Opción 2 · Gratis, pasando por una oficina', html:`<ol><li>En un <b>ordenador</b>, entra en la web de la FNMT (enlace abajo) y pide el certificado de <b>persona física</b>. Te llega un <b>código de solicitud</b> por correo: guárdalo.</li><li>Pide <b>cita previa</b> en una oficina de acreditación (Seguridad Social, Hacienda, muchos ayuntamientos y juntas de distrito) y ve con tu <b>DNI o NIE</b> y el código.</li><li>Más o menos una hora después, desde el <b>mismo ordenador y el mismo navegador</b> con el que lo pediste, descárgalo con tu código.</li><li>Haz una <b>copia de seguridad</b> (un archivo .pfx con contraseña) y guárdala bien: así puedes pasarlo al móvil.</li></ol>`},
+      {h:'Consejos', html:`<ul><li>No compartas nunca tu certificado ni su contraseña: es como prestar tu DNI firmado.</li><li>Apunta cuándo caduca: se puede renovar en los 60 días anteriores.</li><li>Si te atascas, tráelo a clase: lo hacemos juntos.</li></ul>`}
+    ],
+    enlaces:[
+      {url:'https://www.sede.fnmt.gob.es/certificados/persona-fisica', t:'Web oficial de la FNMT: certificado de persona física'}
+    ]},
+  inscripcion: { titulo:'Cómo inscribirte en la prueba libre', kicker:'Prueba libre',
+    intro:'Para presentarte a la prueba del título de la ESO hay que inscribirse en un plazo concreto. Si se pasa, hay que esperar a la siguiente convocatoria, así que apúntate la fecha.',
+    bloques:[
+      {h:'Cuándo', html:`<p>La Junta convoca la prueba <b>una vez al año</b>. El plazo de inscripción suele abrirse a principios de año y los exámenes son en primavera. En la E2O os avisaremos de las fechas exactas, y siempre puedes mirarlas en el enlace oficial de plazos.</p>`},
+      {h:'Qué necesitas', html:`<ul><li>Tener <b>18 años</b> o cumplirlos en el año del examen, y no tener ya el título de la ESO.</li><li>Tu <b>DNI o NIE</b>.</li><li>Para hacerlo por internet: el <b>certificado digital</b> o la <b>clave iANDE</b> que da la Junta. Por eso es tan importante sacar el certificado antes.</li><li>Si ya aprobaste algún ámbito, materia o módulo en otros estudios, su <b>certificado</b>: así no tienes que examinarte de esa parte.</li></ul>`},
+      {h:'Cómo, paso a paso', html:`<ol><li>Entra en la <b>Secretaría Virtual</b> de la Junta, en el trámite de inscripción (enlace abajo).</li><li>Identifícate con tu certificado digital o tu clave iANDE.</li><li>Rellena tus datos, elige el <b>idioma</b> (inglés) y marca los <b>ámbitos</b> de los que te vas a examinar.</li><li>Elige la <b>sede</b>: en Málaga hay varias.</li><li>Envía la solicitud y <b>guarda el justificante</b>.</li><li>Después, consulta las <b>listas de admitidos</b> para comprobar que todo está bien.</li></ol><p class="ojo"><b>Ojo:</b> los ámbitos que apruebes te valen para siempre. Si un año no apruebas los tres, al siguiente solo te examinas de los que te falten.</p>`}
+    ],
+    enlaces:[
+      {url:JUNTA.inscripcion, t:'Junta de Andalucía: cómo inscribirse'},
+      {url:JUNTA.calendario, t:'Plazos y calendario de la prueba'},
+      {url:JUNTA.faq, t:'Preguntas frecuentes'}
+    ]},
+  agencia: { titulo:'Agencia de Colocación de Arrabal', kicker:'Empleo',
+    intro:'Arrabal tiene su propia agencia de colocación, especializada en gente joven. Recibe ofertas de empresas de Málaga y busca a las personas que encajan en cada puesto.',
+    bloques:[
+      {h:'Qué te ofrece', html:`<ul><li><b>Ofertas de empleo</b> de empresas de Málaga, que se publican cada semana.</li><li><b>Orientación laboral</b>: ayuda con el currículum, las entrevistas y cómo buscar trabajo.</li><li>Información sobre <b>formación</b> y otros recursos de empleo.</li></ul>`},
+      {h:'Cómo apuntarte', html:`<ol><li>Díselo a tu educador o educadora de la E2O: te ponemos en contacto con el equipo de empleo.</li><li>O escribe directamente a <a href="mailto:arrabal@arrabalempleo.org">arrabal@arrabalempleo.org</a>.</li><li>Ten tu <b>currículum</b> actualizado: si no lo tienes, lo hacemos en clase.</li></ol><p class="ojo"><b>Recuerda:</b> el título de la ESO te abre muchas más puertas. Trabajar y estudiar a la vez se puede, pero no dejes la prueba a medias.</p>`}
+    ],
+    enlaces:[
+      {url:'https://www.arrabalempleo.org', t:'Web de Arrabal Empleo'}
+    ]}
+};
+function guia(id){
+  const G = GUIAS[id], a = byId('orientacion');
+  app.innerHTML = `<a class="back" href="#orientacion">${I.back} Recursos</a>
+    <article class="tema" style="--c:var(${a.c})">
+      <header class="head"><p class="kicker">${esc(G.kicker)}</p><h1>${esc(G.titulo)}</h1><p>${esc(G.intro)}</p></header>
+      ${G.bloques.map(b=>`<section class="ap"><h2>${esc(b.h)}</h2>${b.html}</section>`).join('')}
+      ${G.enlaces.length ? `<section class="ap"><h2>Enlaces oficiales</h2>${G.enlaces.map(e=>`<a class="item" href="${esc(e.url)}" target="_blank" rel="noopener"><span class="t">${I.enlace}</span><span class="txt"><b>${esc(e.t)}</b></span><span class="badge">Web ↗</span></a>`).join('')}</section>` : ''}
+    </article><footer>Aula Virtual E2O</footer>`;
+}
 /* ===== RENDER ===== */
 const app = document.getElementById('app');
 const byId = id => AMBITOS.find(a => a.id === id);
-const listo = it => (it.tipo === 'tema' && TEMAS[it.tema]) || (it.tipo === 'juego' && it.juego && JUEGOS[it.juego]) || (it.tipo !== 'juego' && it.tipo !== 'tema' && it.url);
+const listo = it => (it.tipo === 'guia' && GUIAS[it.guia]) || (it.tipo === 'tema' && TEMAS[it.tema]) || (it.tipo === 'juego' && it.juego && JUEGOS[it.juego]) || (it.tipo !== 'juego' && it.tipo !== 'tema' && it.tipo !== 'guia' && it.url);
 Object.entries(TEMAS).sort((x,y)=>y[1].clase-x[1].clase).forEach(([k,t])=>{
   const sec = byId(t.ambito).secciones.find(x=>x.nombre===t.area);
   if (sec) sec.items.unshift({tipo:'tema', tema:k, titulo:'Tema: '+t.titulo, desc:'Clase '+t.clase+' · para estudiar, juego y ficha para imprimir'});
@@ -2847,11 +2908,12 @@ function ambito(a, sec=0){
   const its = s.items || [];
   const items = s.libro ? libro(a) : s.temario ? temario(s.temario) : its.length ? its.map(it => {
     const ok = listo(it);
-    const body = `<span class="t">${I[it.tipo==='tema'?'libro':it.tipo]}</span><span class="txt"><b>${esc(it.titulo)}</b><small>${esc(it.desc||'')}</small></span>
+    const body = `<span class="t">${I[it.tipo==='tema'?'libro':it.tipo==='guia'?'doc':it.tipo]}</span><span class="txt"><b>${esc(it.titulo)}</b><small>${esc(it.desc||'')}</small></span>
       <span class="badge">${ok ? TIPO[it.tipo] : 'Próximamente'}</span>`;
     if (!ok) return `<div class="item soon" aria-disabled="true">${body}</div>`;
     if (it.tipo === 'tema') return `<a class="item" href="#tema-${it.tema}">${body}</a>`;
     if (it.tipo === 'juego') return `<a class="item" href="#juego-${it.juego}">${body}</a>`;
+    if (it.tipo === 'guia') return `<a class="item" href="#guia-${it.guia}">${body}</a>`;
     return `<a class="item" href="${esc(it.url)}" target="_blank" rel="noopener">${body}</a>`;
   }).join('') : `<div class="empty">Todavía no hay materiales en esta sección.</div>`;
   app.innerHTML = `
@@ -3205,7 +3267,8 @@ function route(){
   const h = (location.hash || '').slice(1);
   window.scrollTo(0,0);
   let sec = 'inicio';
-  if (h.startsWith('juego-') && JUEGOS[h.slice(6)]) { sec = JUEGOS[h.slice(6)].ambito; juego(h.slice(6)); }
+  if (h.startsWith('guia-') && GUIAS[h.slice(5)]) { sec = 'orientacion'; guia(h.slice(5)); }
+  else if (h.startsWith('juego-') && JUEGOS[h.slice(6)]) { sec = JUEGOS[h.slice(6)].ambito; juego(h.slice(6)); }
   else if (h.startsWith('ficha-') && TEMAS[h.slice(6)] && TEMAS[h.slice(6)].ficha) { sec = TEMAS[h.slice(6)].ambito; fichaOnline(h.slice(6)); }
   else if (h.startsWith('tema-') && TEMAS[h.slice(5)]) { sec = TEMAS[h.slice(5)].ambito; tema(h.slice(5)); }
   else { const a = byId(h); if (a) { sec = a.id; ambito(a); } else home(); }

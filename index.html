@@ -569,7 +569,7 @@ const AMBITOS = [
         {n:3, s:'2026-10-19', ta:'lengua-palabras-1', a:'Repaso de las clases 1 y 2. Clases de palabras I: sustantivo, adjetivo, determinante', b:''},
         {n:4, s:'2026-10-26', tb:'ingles-present-simple', a:'', b:'Present simple completo, adverbios de frecuencia; rutinas, días y horas'},
         {n:5, s:'2026-11-02', ta:'lengua-tilde', tb:'ingles-there-is', a:'Ortografía I: la tilde (agudas, llanas, esdrújulas, diptongos, hiatos, diacrítica)', b:'There is / there are, some / any; preposiciones de lugar; la casa y la ciudad'},
-        {n:6, s:'2026-11-09', a:'Tipos de texto I: narración y descripción', b:'Can (habilidad); las profesiones; preguntas con wh- (what, where, when, who, how)'},
+        {n:6, s:'2026-11-09', ta:'lengua-narracion', tb:'ingles-can', a:'Tipos de texto I: narración y descripción', b:'Can (habilidad); las profesiones; preguntas con wh- (what, where, when, who, how)'},
         {n:7, s:'2026-11-16', a:'Clases de palabras II: pronombre, verbo, adverbio, preposición y conjunción', b:'Present continuous; la ropa y describir personas; pronombres objeto (me, him, them…) y genitivo ’s'},
         {n:8, s:'2026-11-23', a:'Literatura I: géneros literarios y figuras retóricas; verso y rima', b:'Past simple de to be (was / were) y verbos regulares; preposiciones de tiempo (in, on, at)'},
         {n:9, s:'2026-11-30', a:'Textos de la vida práctica: oferta de empleo, CV, carta de presentación, correo formal, solicitud y reclamación', b:'Past simple: verbos irregulares; past continuous; expresiones de tiempo'},
@@ -604,7 +604,7 @@ const AMBITOS = [
         {n:2, s:'2026-10-19', tt:'social-relieve', t:'Geografía', a:'Relieve y ríos del mundo, Europa, España y Andalucía'},
         {n:3, s:'2026-10-26', tt:'social-clima', t:'Geografía', a:'Climas y paisajes; problemas medioambientales y desarrollo sostenible'},
         {n:4, s:'2026-11-02', tt:'social-poblacion', t:'Geografía', a:'Población: natalidad, mortalidad, densidad, envejecimiento'},
-        {n:5, s:'2026-11-09', t:'Geografía', a:'Migraciones: causas y consecuencias; desigualdad entre países'},
+        {n:5, s:'2026-11-09', tt:'social-migraciones', t:'Geografía', a:'Migraciones: causas y consecuencias; desigualdad entre países'},
         {n:6, s:'2026-11-16', t:'Geografía', a:'Organización territorial de España: comunidades, provincias, instituciones básicas'},
         {n:7, s:'2026-11-23', t:'Geografía', a:'Sectores económicos; espacio rural y urbano; turismo en la costa andaluza'},
         {n:8, s:'2026-11-30', t:'Repaso', a:'Repaso de Geografía jugado. Cómo escribir el texto de 150 palabras sobre un tema actual'},
@@ -2713,6 +2713,344 @@ TEMAS['cie-tierra'].apartados[2].video = V('La estructura de la Tierra y el cicl
  ['mat-enteros',0,'mat-recta','La recta de los números enteros'],
  ['cie-tierra',0,'soc-coordenadas','Latitud y longitud'],['cie-tierra',1,'soc-escala','La escala numérica y la gráfica'],['cie-tierra',2,'cie-capas','Las capas de la Tierra']
 ].forEach(([id,i,src,cap])=>{ const ap=TEMAS[id].apartados[i]; (ap.figs=ap.figs||[]).push({src:'fig/'+src+'.jpg',cap}); });
+
+/* ===== TEMAS DE LA SEMANA DEL 9 DE NOVIEMBRE ===== */
+TEMAS['lengua-narracion'] = { ambito:'comunicacion', area:'Lengua', clase:6, titulo:'Narración y descripción',
+  intro:'Contar algo que pasa y explicar cómo es alguien o algo: las dos cosas que más hacemos al hablar y al escribir. En el examen te pueden pedir reconocerlas en un texto o escribir una.',
+  apartados:[
+    {h:'1. ¿Qué es narrar?', html:`
+      <p><b>Narrar</b> es contar unos <b>hechos</b> (reales o inventados) que les pasan a unos <b>personajes</b> en un <b>lugar</b> y un <b>tiempo</b>. Narramos cuando contamos qué hicimos el fin de semana, cuando leemos una noticia o una novela, o cuando vemos una serie.</p>
+      <div class="tabla"><table>
+        <tr><th>Elemento</th><th>Qué es</th><th>Pregunta</th></tr>
+        <tr><td><b>Narrador</b></td><td>La voz que cuenta la historia</td><td>¿Quién lo cuenta?</td></tr>
+        <tr><td><b>Personajes</b></td><td>Quienes viven los hechos. El principal es el <b>protagonista</b>; el que se le opone, el <b>antagonista</b>.</td><td>¿A quién le pasa?</td></tr>
+        <tr><td><b>Acción</b></td><td>Lo que ocurre</td><td>¿Qué pasa?</td></tr>
+        <tr><td><b>Espacio</b></td><td>El lugar donde ocurre</td><td>¿Dónde?</td></tr>
+        <tr><td><b>Tiempo</b></td><td>Cuándo ocurre y cuánto dura</td><td>¿Cuándo?</td></tr>
+      </table></div>`},
+    {h:'2. El narrador', html:`
+      <div class="tabla"><table>
+        <tr><th>Tipo</th><th>Cómo es</th><th>Ejemplo</th></tr>
+        <tr><td><b>En 1.ª persona (protagonista)</b></td><td>Cuenta su propia historia: «yo», «nosotros».</td><td>«Ese día <b>llegué</b> tarde a la entrevista.»</td></tr>
+        <tr><td><b>En 1.ª persona (testigo)</b></td><td>Es un personaje secundario que cuenta lo que ve.</td><td>«<b>Vi</b> cómo mi hermano salía corriendo.»</td></tr>
+        <tr><td><b>En 3.ª persona (omnisciente)</b></td><td>Está fuera de la historia y lo sabe todo, incluso lo que piensan los personajes.</td><td>«Lucía <b>sonrió</b>, aunque por dentro estaba muerta de miedo.»</td></tr>
+        <tr><td><b>En 3.ª persona (observador)</b></td><td>Solo cuenta lo que se ve, como una cámara.</td><td>«El hombre <b>entró</b>, pidió un café y se sentó.»</td></tr>
+      </table></div>
+      <details><summary>Practica: «Me desperté con el ruido del camión de la basura». ¿Qué narrador es?</summary><p>En <b>1.ª persona</b>, protagonista: cuenta lo que le pasa a él («me desperté»).</p></details>`},
+    {h:'3. La estructura y el lenguaje de la narración', html:`
+      <p>Casi todas las narraciones siguen tres partes:</p>
+      <ul><li><b>Planteamiento:</b> presenta a los personajes, el lugar y el tiempo.</li>
+      <li><b>Nudo:</b> aparece un problema o conflicto y se complica.</li>
+      <li><b>Desenlace:</b> el problema se resuelve (bien o mal).</li></ul>
+      <p>Rasgos del lenguaje narrativo:</p>
+      <ul><li>Muchos <b>verbos de acción</b>, sobre todo en <b>pasado</b>: llegó, abrió, gritó.</li>
+      <li><b>Marcadores de tiempo</b> que ordenan los hechos: primero, después, de repente, al final, al día siguiente.</li>
+      <li>A veces, <b>diálogos</b> con raya (—) para que hablen los personajes.</li></ul>
+      <p class="ojo"><b>Ojo:</b> la historia no siempre se cuenta en orden. Puede empezar por el final o volver al pasado (eso se llama <b>flashback</b> o <b>retrospección</b>).</p>`},
+    {h:'4. ¿Qué es describir?', html:`
+      <p><b>Describir</b> es explicar <b>cómo es</b> algo o alguien: una persona, un lugar, un objeto o un animal. Es como hacer una foto con palabras.</p>
+      <div class="tabla"><table>
+        <tr><th>Tipo</th><th>Cómo es</th><th>Ejemplo</th></tr>
+        <tr><td><b>Objetiva</b></td><td>Dice cómo es la realidad, sin opiniones. Usa palabras exactas.</td><td>«La sala mide 20 m² y tiene dos ventanas.»</td></tr>
+        <tr><td><b>Subjetiva</b></td><td>Muestra lo que siente o piensa quien describe.</td><td>«Una sala pequeña y agobiante, sin apenas luz.»</td></tr>
+      </table></div>
+      <p>Según lo que se describe:</p>
+      <ul><li><b>Prosopografía:</b> el físico de una persona (alta, pelo rizado, ojos oscuros).</li>
+      <li><b>Etopeya:</b> el carácter (simpática, tímida, trabajadora).</li>
+      <li><b>Retrato:</b> físico y carácter a la vez.</li>
+      <li><b>Topografía:</b> un lugar o paisaje.</li></ul>`},
+    {h:'5. Cómo escribir una buena descripción', html:`
+      <ol><li><b>Observa</b> y elige un orden: de lo general a lo particular, de arriba abajo, de lejos a cerca o de fuera a dentro.</li>
+      <li>Usa muchos <b>adjetivos</b> y <b>comparaciones</b> («tenía los ojos verdes <b>como</b> el mar»).</li>
+      <li>Los verbos suelen ir en <b>presente</b> o en <b>pretérito imperfecto</b>: es, tiene, había, llevaba.</li>
+      <li>Usa los <b>sentidos</b>: lo que se ve, se oye, se huele, se toca.</li></ol>
+      <div class="ej"><b>Ejemplo de retrato:</b> «Mi abuela es bajita y tiene el pelo blanco y corto. Siempre lleva un delantal de flores. Es muy cariñosa, pero cuando se enfada, mejor no estar cerca.»</div>
+      <p class="ojo"><b>Narración y descripción van juntas:</b> en un cuento se narra lo que pasa y se describe a los personajes y los lugares. En el examen te pueden preguntar qué parte del texto es narración y cuál descripción.</p>
+      <details><summary>Practica: «El pueblo estaba en lo alto de una colina, rodeado de olivos». ¿Narración o descripción?</summary><p><b>Descripción</b> (topografía): dice cómo es un lugar, no cuenta hechos.</p></details>`}
+  ],
+  juego:'lengua-narracion',
+  ficha:{ ejercicios:[
+    {lectura:true, e:'Lee el texto.', items:['«Aquella mañana, Samir llegó al taller antes que nadie. El local era estrecho y olía a aceite; las herramientas colgaban ordenadas de la pared. Se puso el mono azul y, de repente, escuchó un golpe en la puerta. Era el jefe, que traía malas noticias: el taller iba a cerrar. Samir se quedó callado. Al día siguiente, empezó a buscar otro trabajo.»'], lineas:0},
+    {e:'Responde sobre el texto.', items:['a) ¿Quién es el protagonista?','b) ¿Dónde ocurre la historia?','c) ¿Qué tipo de narrador tiene? Justifícalo.','d) Copia dos marcadores de tiempo.'], lineas:5,
+      sol:'a) Samir. · b) En un taller. · c) En 3.ª persona: cuenta lo que le pasa a Samir desde fuera («llegó», «se puso»). · d) «Aquella mañana», «de repente», «al día siguiente».'},
+    {e:'Divide el texto en planteamiento, nudo y desenlace.', items:[], lineas:4,
+      sol:'Planteamiento: Samir llega al taller (y se describe el local). Nudo: llega el jefe con la noticia de que el taller cierra. Desenlace: al día siguiente Samir busca otro trabajo.'},
+    {e:'Copia la frase del texto que es una descripción. ¿Qué describe?', items:[], lineas:3,
+      sol:'«El local era estrecho y olía a aceite; las herramientas colgaban ordenadas de la pared.» Describe un lugar (topografía).'},
+    {e:'¿Qué tipo de narrador hay en cada frase?', items:['a) «Abrí la carta con las manos temblando.»','b) «Ana pensaba que nadie la entendía.»','c) «Vi a mi amigo salir del bar sin pagar.»','d) «El coche se detuvo. Bajaron dos hombres.»'], lineas:4,
+      sol:'a) 1.ª persona protagonista. · b) 3.ª persona omnisciente (sabe lo que piensa). · c) 1.ª persona testigo. · d) 3.ª persona observador.'},
+    {e:'¿Objetiva o subjetiva?', items:['a) «El piso tiene tres habitaciones y un baño.»','b) «Es un piso precioso, lleno de luz y de alegría.»','c) «El autobús 11 sale cada 15 minutos.»','d) «Aquella calle oscura me daba escalofríos.»'], lineas:2,
+      sol:'a) Objetiva. · b) Subjetiva. · c) Objetiva. · d) Subjetiva.'},
+    {e:'Une cada palabra con su significado.', items:['Prosopografía','Etopeya','Retrato','Topografía','→ descripción del carácter','→ descripción de un lugar','→ descripción del físico','→ físico y carácter'], lineas:2,
+      sol:'Prosopografía → físico · Etopeya → carácter · Retrato → físico y carácter · Topografía → lugar.'},
+    {e:'Ordena estas frases para formar una pequeña historia.', items:['a) Al final, encontró la cartera en el bolsillo de la chaqueta.','b) Una tarde, Leo no encontraba su cartera.','c) Buscó por toda la casa, nervioso.'], lineas:2,
+      sol:'b) → c) → a).'},
+    {e:'Describe a una persona que admires (retrato) en unas 60 palabras. Incluye su físico y su carácter.', items:[], lineas:7,
+      sol:'Respuesta libre. Debe incluir rasgos físicos (altura, pelo, ojos, ropa) y de carácter (cómo es, cómo se comporta), con adjetivos y algún ejemplo o comparación.'},
+    {e:'Escribe una narración de unas 100 palabras: «El primer día que…». Usa planteamiento, nudo y desenlace y al menos tres marcadores de tiempo.', items:[], lineas:10,
+      sol:'Respuesta libre. Comprueba: personajes, lugar y tiempo al principio; un problema en el medio; un final; verbos en pasado; marcadores como «primero», «después», «al final».'}
+  ]}
+};
+TEMAS['lengua-narracion'].apartados[0].video = V('La narración: elementos y estructura','88uRxPxz83k');
+TEMAS['lengua-narracion'].apartados[1].video = V('La narración: tipos de narrador','zNm1jqirKnQ');
+TEMAS['lengua-narracion'].apartados[3].video = V('La descripción (1.º ESO)','CKZHEFeo7V0');
+TEMAS['lengua-narracion'].apartados[4].video = V('La prosopografía, la etopeya y el retrato','mLAFEpDly_I');
+
+JUEGOS['lengua-narracion'] = { ambito:'comunicacion', titulo:'Narración y descripción', preguntas:[
+  {q:'Narrar es…', op:['Contar unos hechos que les pasan a unos personajes','Explicar cómo es algo','Dar una opinión','Dar instrucciones'], ok:0, ex:'Se cuentan hechos en un lugar y un tiempo.'},
+  {q:'Describir es…', op:['Explicar cómo es algo o alguien','Contar lo que pasó','Convencer a alguien','Hacer una pregunta'], ok:0, ex:'Es como hacer una foto con palabras.'},
+  {q:'La voz que cuenta la historia es el…', op:['Narrador','Autor','Protagonista','Lector'], ok:0, ex:'Ojo: el narrador no es lo mismo que el autor.'},
+  {q:'El personaje principal de una historia es el…', op:['Protagonista','Antagonista','Narrador','Testigo'], ok:0, ex:'El antagonista es el que se le opone.'},
+  {q:'El personaje que se opone al protagonista es el…', op:['Antagonista','Secundario','Narrador','Héroe'], ok:0, ex:'Por ejemplo, el villano.'},
+  {q:'«Abrí la puerta y me encontré la casa vacía.» ¿Qué narrador?', op:['1.ª persona protagonista','3.ª persona omnisciente','3.ª persona observador','1.ª persona testigo'], ok:0, ex:'Cuenta lo que le pasa a él: «abrí», «me encontré».'},
+  {q:'El narrador que lo sabe todo, incluso lo que piensan los personajes, es…', op:['Omnisciente','Observador','Testigo','Protagonista'], ok:0, ex:'Está fuera de la historia y lo sabe todo.'},
+  {q:'«Vi cómo mi vecino se llevaba la bici.» ¿Qué narrador?', op:['1.ª persona testigo','1.ª persona protagonista','3.ª persona omnisciente','3.ª persona observador'], ok:0, ex:'Cuenta lo que ve, pero la historia es de otro.'},
+  {q:'El narrador que solo cuenta lo que se ve, como una cámara, es…', op:['Observador','Omnisciente','Protagonista','Testigo'], ok:0, ex:'No entra en lo que piensan los personajes.'},
+  {q:'Las tres partes de una narración son…', op:['Planteamiento, nudo y desenlace','Introducción, desarrollo y conclusión de opinión','Tema, idea y resumen','Emisor, mensaje y receptor'], ok:0, ex:'Presentación, conflicto y solución.'},
+  {q:'En el nudo de una historia…', op:['Aparece el problema o conflicto','Se presenta a los personajes','Se resuelve todo','Se describe el lugar'], ok:0, ex:'Es la parte central, donde se complica la historia.'},
+  {q:'En el desenlace…', op:['Se resuelve el conflicto','Aparece el conflicto','Se presenta a los personajes','Se describe el físico'], ok:0, ex:'Es el final de la historia.'},
+  {q:'¿Qué tipo de palabras abundan en una narración?', op:['Verbos de acción en pasado','Adjetivos sin verbos','Preguntas','Números'], ok:0, ex:'Llegó, abrió, gritó…'},
+  {q:'¿Cuál es un marcador de tiempo?', op:['De repente','Sin embargo','Porque','Aunque'], ok:0, ex:'Ordena los hechos en el tiempo.'},
+  {q:'Volver al pasado en mitad de una historia se llama…', op:['Flashback o retrospección','Desenlace','Etopeya','Diálogo'], ok:0, ex:'La historia salta hacia atrás.'},
+  {q:'En los diálogos de una narración se usa…', op:['La raya (—)','El paréntesis','El asterisco','La barra (/)'], ok:0, ex:'—¿Vienes? —preguntó Ana.'},
+  {q:'«El salón mide 20 m² y tiene dos ventanas.» Es una descripción…', op:['Objetiva','Subjetiva','Literaria','Narrativa'], ok:0, ex:'Da datos exactos, sin opinión.'},
+  {q:'«Un salón diminuto y triste, sin apenas luz.» Es una descripción…', op:['Subjetiva','Objetiva','Técnica','Científica'], ok:0, ex:'Muestra lo que siente quien describe.'},
+  {q:'Describir el físico de una persona se llama…', op:['Prosopografía','Etopeya','Topografía','Retrato'], ok:0, ex:'Altura, pelo, ojos, ropa…'},
+  {q:'Describir el carácter de una persona se llama…', op:['Etopeya','Prosopografía','Topografía','Caricatura'], ok:0, ex:'Simpática, tímida, generosa…'},
+  {q:'Describir el físico y el carácter a la vez es un…', op:['Retrato','Paisaje','Diálogo','Resumen'], ok:0, ex:'Junta prosopografía y etopeya.'},
+  {q:'Describir un lugar o un paisaje se llama…', op:['Topografía','Etopeya','Prosopografía','Narración'], ok:0, ex:'Una calle, un pueblo, una habitación…'},
+  {q:'En las descripciones abundan los…', op:['Adjetivos','Marcadores de tiempo','Signos de interrogación','Números romanos'], ok:0, ex:'Dicen cómo es algo: alto, oscuro, ruidoso…'},
+  {q:'«Tenía los ojos verdes como el mar» usa una…', op:['Comparación','Pregunta retórica','Narración','Onomatopeya'], ok:0, ex:'Compara dos cosas con «como».'},
+  {q:'¿Qué tiempo verbal se usa mucho para describir en pasado?', op:['Pretérito imperfecto (tenía, era)','Futuro (tendrá)','Imperativo (ten)','Condicional (tendría)'], ok:0, ex:'«La casa era grande y tenía jardín».'},
+  VF('Una noticia es un texto narrativo.', true, 'Cuenta unos hechos reales: qué pasó, a quién, dónde y cuándo.'),
+  VF('El narrador y el autor siempre son la misma persona.', false, 'El autor escribe; el narrador es la voz que cuenta, y puede ser un personaje inventado.'),
+  VF('Una descripción subjetiva incluye opiniones y sentimientos.', true, 'Por eso usa adjetivos valorativos: precioso, horrible, agobiante.'),
+  VF('Una historia siempre tiene que contarse en orden cronológico.', false, 'Puede empezar por el final o volver al pasado.'),
+  VF('«Era alta, con el pelo rizado y muy simpática» es un retrato.', true, 'Mezcla físico (alta, pelo rizado) y carácter (simpática).')
+]};
+
+TEMAS['ingles-can'] = { ambito:'comunicacion', area:'Inglés', clase:6, titulo:'Can · jobs · wh- questions',
+  intro:'Say what you can and can’t do, talk about jobs and ask questions with what, where, when, who and how. Very useful for the reading, the writing and the multiple choice of the exam.',
+  apartados:[
+    {h:'1. Can / can’t: abilities', html:`
+      <p><b>Can</b> = poder / saber hacer algo. <b>Can’t</b> (cannot) = no poder / no saber.</p>
+      <div class="tabla"><table>
+        <tr><th>Afirmativa</th><th>Negativa</th><th>Pregunta</th><th>Respuesta corta</th></tr>
+        <tr><td>I <b>can</b> swim.</td><td>I <b>can’t</b> swim.</td><td><b>Can</b> you swim?</td><td>Yes, I can. / No, I can’t.</td></tr>
+        <tr><td>She <b>can</b> drive.</td><td>She <b>can’t</b> drive.</td><td><b>Can</b> she drive?</td><td>Yes, she can. / No, she can’t.</td></tr>
+      </table></div>
+      <p class="ojo"><b>Tres reglas de oro:</b> 1) <b>can</b> es igual para todas las personas (nunca «she cans»). 2) El verbo que va detrás va <b>sin «to»</b> y <b>sin «-s»</b>: she can <b>speak</b> (no «can to speak», no «can speaks»). 3) Para preguntar y negar <b>no se usa do/does</b>.</p>
+      <details><summary>Practica: ¿qué está mal en «He can to cooks»?</summary><p>Sobran el «to» y la «-s»: <b>He can cook.</b></p></details>`},
+    {h:'2. Other uses of can', html:`
+      <ul><li><b>Permiso:</b> <i>Can I open the window?</i> (¿Puedo abrir la ventana?)</li>
+      <li><b>Pedir algo:</b> <i>Can you help me, please?</i> (¿Me puedes ayudar?)</li>
+      <li><b>Posibilidad:</b> <i>You can take the bus to the centre.</i></li>
+      <li><b>Prohibición</b> con can’t: <i>You can’t smoke here.</i></li></ul>
+      <p>Para hablar del <b>pasado</b> se usa <b>could / couldn’t</b>: <i>When I was ten, I <b>could</b> swim, but I <b>couldn’t</b> ride a bike.</i></p>`},
+    {h:'3. Jobs', html:`
+      <div class="tabla"><table>
+        <tr><th>Job</th><th>Trabajo</th><th>Job</th><th>Trabajo</th></tr>
+        <tr><td>waiter / waitress</td><td>camarero / camarera</td><td>cook / chef</td><td>cocinero</td></tr>
+        <tr><td>shop assistant</td><td>dependiente</td><td>cashier</td><td>cajero</td></tr>
+        <tr><td>mechanic</td><td>mecánico</td><td>electrician</td><td>electricista</td></tr>
+        <tr><td>plumber</td><td>fontanero</td><td>builder</td><td>albañil</td></tr>
+        <tr><td>hairdresser</td><td>peluquero</td><td>cleaner</td><td>limpiador</td></tr>
+        <tr><td>nurse</td><td>enfermero</td><td>doctor</td><td>médico</td></tr>
+        <tr><td>driver</td><td>conductor</td><td>farmer</td><td>agricultor</td></tr>
+        <tr><td>teacher</td><td>profesor</td><td>police officer</td><td>policía</td></tr>
+      </table></div>
+      <p>Con las profesiones se usa <b>a / an</b>: <i>She is <b>a</b> nurse. He is <b>an</b> electrician.</i> (an delante de sonido vocal).</p>
+      <div class="ej"><i>What do you do?</i> — <i>I’m a waiter. I work in a restaurant. I can speak English and Arabic.</i></div>`},
+    {h:'4. Wh- questions', html:`
+      <div class="tabla"><table>
+        <tr><th>Word</th><th>Significa</th><th>Ejemplo</th></tr>
+        <tr><td><b>What</b></td><td>qué / cuál</td><td>What is your name?</td></tr>
+        <tr><td><b>Where</b></td><td>dónde</td><td>Where do you live?</td></tr>
+        <tr><td><b>When</b></td><td>cuándo</td><td>When is your birthday?</td></tr>
+        <tr><td><b>Who</b></td><td>quién</td><td>Who is your teacher?</td></tr>
+        <tr><td><b>Why</b></td><td>por qué</td><td>Why are you late? — <b>Because</b> the bus was late.</td></tr>
+        <tr><td><b>How</b></td><td>cómo</td><td>How are you?</td></tr>
+        <tr><td><b>How old / How much / How many</b></td><td>cuántos años / cuánto / cuántos</td><td>How old are you? How much is it? How many brothers have you got?</td></tr>
+        <tr><td><b>What time</b></td><td>a qué hora</td><td>What time do you start work?</td></tr>
+        <tr><td><b>Which</b></td><td>cuál (entre opciones)</td><td>Which bus goes to the centre?</td></tr>
+      </table></div>`},
+    {h:'5. How to make a question', html:`
+      <p>El orden es: <b>Wh- + auxiliar + sujeto + verbo</b>.</p>
+      <ul><li>Con <b>to be</b>: Where <b>are</b> you from? What <b>is</b> his job?</li>
+      <li>Con <b>can</b>: What languages <b>can</b> you speak?</li>
+      <li>Con otros verbos, en presente, se usa <b>do / does</b>: Where <b>do</b> you work? What time <b>does</b> she finish?</li></ul>
+      <p class="ojo"><b>Ojo:</b> con <b>does</b>, el verbo pierde la -s: <i>Where does he <b>work</b>?</i> (no «works»).</p>
+      <details><summary>Practica: ordena «you / where / work / do»</summary><p><b>Where do you work?</b></p></details>`}
+  ],
+  juego:'ingles-can',
+  ficha:{ ejercicios:[
+    {e:'Completa con can o can’t.', items:['a) Fish ______ swim.','b) A baby ______ drive a car.','c) I ______ speak English a little.','d) Penguins ______ fly.','e) ______ you help me, please?'], lineas:2,
+      sol:'a) can · b) can’t · c) can · d) can’t · e) Can'},
+    {e:'Corrige los errores.', items:['a) She cans dance very well.','b) I can to play the guitar.','c) Do you can swim?','d) He can speaks French.'], lineas:4,
+      sol:'a) She can dance very well. · b) I can play the guitar. · c) Can you swim? · d) He can speak French.'},
+    {e:'Escribe tres cosas que puedes hacer y tres que no puedes hacer (I can… / I can’t…).', items:[], lineas:6,
+      sol:'Respuesta libre. Ejemplo: I can cook. I can speak Spanish. I can play football. I can’t drive. I can’t swim. I can’t play the piano.'},
+    {e:'¿Qué trabajo es?', items:['a) He repairs cars.','b) She works in a hospital and helps the doctors.','c) He serves food and drinks in a bar.','d) She cuts and washes hair.','e) He fixes water pipes.','f) She sells things in a shop.'], lineas:3,
+      sol:'a) mechanic · b) nurse · c) waiter · d) hairdresser · e) plumber · f) shop assistant'},
+    {e:'Completa con a o an.', items:['a) She is ___ teacher.','b) He is ___ electrician.','c) I want to be ___ cook.','d) My uncle is ___ engineer.'], lineas:2,
+      sol:'a) a · b) an · c) a · d) an'},
+    {e:'Completa con la palabra interrogativa: what, where, when, who, how old, how many, why.', items:['a) ______ do you live? — In Málaga.','b) ______ is your name? — Omar.','c) ______ are you? — I’m 19.','d) ______ is your best friend? — Lucía.','e) ______ is the exam? — In April.','f) ______ brothers have you got? — Two.','g) ______ are you happy? — Because I passed!'], lineas:3,
+      sol:'a) Where · b) What · c) How old · d) Who · e) When · f) How many · g) Why'},
+    {e:'Ordena las palabras para hacer preguntas.', items:['a) you / do / where / work / ?','b) can / languages / what / speak / you / ?','c) does / what time / start / she / ?','d) from / you / are / where / ?'], lineas:4,
+      sol:'a) Where do you work? · b) What languages can you speak? · c) What time does she start? · d) Where are you from?'},
+    {lectura:true, e:'Lee el texto.', items:['«My name is Karim and I’m 22. I’m a cook in a hotel in Marbella. I work from Tuesday to Saturday. I can cook Spanish and Moroccan food, and I can speak three languages: Arabic, Spanish and a little English. I can’t drive, so I go to work by bus. In the future I want to have my own restaurant.»'], lineas:0},
+    {e:'Responde en inglés.', items:['a) What does Karim do?','b) Where does he work?','c) How many languages can he speak?','d) Can he drive?','e) How does he go to work?'], lineas:5,
+      sol:'a) He is a cook. · b) In a hotel in Marbella. · c) Three. · d) No, he can’t. · e) By bus.'},
+    {e:'Writing (50-70 words): escribe un email a un amigo sobre el trabajo que te gustaría tener. Di qué es, dónde trabajarías y qué cosas sabes hacer (can).', items:[], lineas:8,
+      sol:'Respuesta libre. Ejemplo: «Hi Sara! I want to be an electrician. I can fix lights and I can work with my hands. I want to work in a company in Málaga. I can’t drive now, but I want to get my licence. What about you? What job do you want? Write soon! Love, Adam.»'}
+  ]}
+};
+TEMAS['ingles-can'].apartados[0].video = V('Cómo usar el verbo can / can’t (A1-A2)','Wb3djmLTx2o');
+TEMAS['ingles-can'].apartados[4].video = V('Preguntas con who, what, where, when, why y how','XL72zwSuzq0');
+
+JUEGOS['ingles-can'] = { ambito:'comunicacion', titulo:'Can, jobs and questions', preguntas:[
+  {q:'She ___ speak three languages.', op:['can','cans','can to','is can'], ok:0, ex:'Can es igual para todas las personas.'},
+  {q:'I ___ swim. I’m afraid of water.', op:['can’t','can','don’t can','not can'], ok:0, ex:'Negativa: can’t.'},
+  {q:'___ you drive?', op:['Can','Do','Does','Are'], ok:0, ex:'Con can no se usa do/does para preguntar.'},
+  {q:'He can ___ the guitar.', op:['play','plays','to play','playing'], ok:0, ex:'Después de can, verbo sin to y sin -s.'},
+  {q:'Can you cook? — Yes, I ___.', op:['can','do','am','cook'], ok:0, ex:'Respuesta corta: Yes, I can.'},
+  {q:'Can she ride a bike? — No, she ___.', op:['can’t','doesn’t','isn’t','not'], ok:0, ex:'No, she can’t.'},
+  {q:'«Can I open the window?» expresa…', op:['Pedir permiso','Habilidad','Pasado','Obligación'], ok:0, ex:'¿Puedo…? = permiso.'},
+  {q:'When I was a child, I ___ climb trees.', op:['could','can','cans','can to'], ok:0, ex:'Pasado de can: could.'},
+  {q:'You ___ smoke in the hospital.', op:['can’t','can','could','do'], ok:0, ex:'Can’t también expresa prohibición.'},
+  {q:'A person who repairs cars is a…', op:['mechanic','plumber','nurse','cashier'], ok:0, ex:'Mechanic = mecánico.'},
+  {q:'A person who serves food in a restaurant is a…', op:['waiter','cook','builder','farmer'], ok:0, ex:'Waiter / waitress.'},
+  {q:'«Fontanero» en inglés es…', op:['plumber','builder','electrician','cleaner'], ok:0, ex:'Plumber: arregla tuberías.'},
+  {q:'«Peluquera» en inglés es…', op:['hairdresser','shop assistant','nurse','driver'], ok:0, ex:'Hairdresser.'},
+  {q:'«Dependiente» en inglés es…', op:['shop assistant','waiter','teacher','cashier'], ok:0, ex:'Shop assistant.'},
+  {q:'«Albañil» en inglés es…', op:['builder','farmer','mechanic','cook'], ok:0, ex:'Builder.'},
+  {q:'He is ___ electrician.', op:['an','a','the','–'], ok:0, ex:'An delante de sonido vocal.'},
+  {q:'She is ___ nurse.', op:['a','an','–','the'], ok:0, ex:'Con profesiones se usa a / an.'},
+  {q:'«What do you do?» pregunta por…', op:['Tu trabajo','Lo que haces ahora mismo','Tu nombre','Tu edad'], ok:0, ex:'— I’m a waiter.'},
+  {q:'___ do you live? — In Málaga.', op:['Where','When','Who','What'], ok:0, ex:'Where = dónde.'},
+  {q:'___ is your birthday? — In May.', op:['When','Where','Who','How'], ok:0, ex:'When = cuándo.'},
+  {q:'___ is that man? — He’s my uncle.', op:['Who','What','Where','Why'], ok:0, ex:'Who = quién.'},
+  {q:'___ are you? — I’m 20.', op:['How old','How many','How much','What'], ok:0, ex:'How old = cuántos años.'},
+  {q:'___ is this T-shirt? — Ten euros.', op:['How much','How many','How old','What time'], ok:0, ex:'How much = cuánto (precio).'},
+  {q:'___ sisters have you got? — Two.', op:['How many','How much','How old','Which'], ok:0, ex:'How many = cuántos (contables).'},
+  {q:'___ are you late? — Because I missed the bus.', op:['Why','Where','How','When'], ok:0, ex:'Why = por qué; se responde con because.'},
+  {q:'___ time do you start work? — At 8.', op:['What','Which','How','When'], ok:0, ex:'What time = a qué hora.'},
+  {q:'Where ___ you work?', op:['do','does','are','can'], ok:0, ex:'Con I / you / we / they: do.'},
+  {q:'What time ___ she finish work?', op:['does','do','is','can'], ok:0, ex:'Con he / she / it: does.'},
+  {q:'Where does he ___?', op:['work','works','working','to work'], ok:0, ex:'Con does, el verbo va sin -s.'},
+  {q:'What languages ___ you speak?', op:['can','are','does','is'], ok:0, ex:'What languages can you speak?'},
+  {q:'Where ___ you from?', op:['are','do','does','can'], ok:0, ex:'Con to be: Where are you from?'},
+  VF('«She cans dance» es correcto.', false, 'Can nunca lleva -s: She can dance.'),
+  VF('Para preguntar con can no hace falta do ni does.', true, 'Can you…? Can she…?')
+]};
+
+TEMAS['social-migraciones'] = { ambito:'social', area:'Geografía', clase:5, titulo:'Las migraciones y la desigualdad',
+  intro:'Por qué la gente se va de su país, qué pasa en los lugares de donde salen y a donde llegan, y por qué unos países son mucho más ricos que otros.',
+  apartados:[
+    {h:'1. ¿Qué es una migración?', html:`
+      <p>Una <b>migración</b> es el desplazamiento de personas de un lugar a otro para vivir allí, durante un tiempo o para siempre.</p>
+      <div class="tabla"><table>
+        <tr><th>Concepto</th><th>Qué es</th></tr>
+        <tr><td><b>Emigración</b></td><td>Salir del propio país o lugar. Quien se va es un <b>emigrante</b>.</td></tr>
+        <tr><td><b>Inmigración</b></td><td>Llegar a otro país o lugar. Quien llega es un <b>inmigrante</b>.</td></tr>
+        <tr><td><b>Saldo migratorio</b></td><td>Inmigrantes − emigrantes. Si es positivo, llegan más de los que se van.</td></tr>
+        <tr><td><b>Migración interior</b></td><td>Dentro del mismo país (del pueblo a la ciudad, de Andalucía a Madrid).</td></tr>
+        <tr><td><b>Migración exterior o internacional</b></td><td>De un país a otro.</td></tr>
+        <tr><td><b>Éxodo rural</b></td><td>Salida masiva del campo a la ciudad.</td></tr>
+        <tr><td><b>Refugiado</b></td><td>Persona que huye de su país por guerra o persecución y pide protección (<b>asilo</b>) en otro.</td></tr>
+      </table></div>
+      <p class="ojo"><b>Truco:</b> <b>E</b>migrar = <b>e</b>xit (salir). <b>I</b>nmigrar = <b>i</b>n (entrar). Una misma persona es emigrante para su país y inmigrante para el país al que llega.</p>`},
+    {h:'2. Causas de las migraciones', html:`
+      <p>Hay factores que <b>empujan</b> a irse del lugar de origen y otros que <b>atraen</b> hacia el de destino.</p>
+      <ul><li><b>Económicas</b> (las más frecuentes): falta de trabajo, salarios bajos, pobreza.</li>
+      <li><b>Políticas:</b> guerras, dictaduras, persecución por ideas, religión u orientación.</li>
+      <li><b>Ambientales:</b> sequías, inundaciones, terremotos, efectos del cambio climático.</li>
+      <li><b>Sociales y familiares:</b> reunirse con la familia, estudiar, buscar mejor sanidad o educación.</li></ul>
+      <p>Según la voluntad, pueden ser <b>voluntarias</b> (se elige irse) o <b>forzosas</b> (no queda otra opción, como los refugiados).</p>`},
+    {h:'3. Consecuencias', html:`
+      <div class="tabla"><table>
+        <tr><th></th><th>En el lugar de origen</th><th>En el lugar de destino</th></tr>
+        <tr><td><b>Población</b></td><td>Pierde población joven; envejece.</td><td>Gana población joven; rejuvenece y aumenta la natalidad.</td></tr>
+        <tr><td><b>Economía</b></td><td>Recibe <b>remesas</b>: el dinero que los emigrantes envían a sus familias.</td><td>Más trabajadores para sectores que los necesitan (campo, cuidados, hostelería, construcción) y más cotizaciones.</td></tr>
+        <tr><td><b>Sociedad</b></td><td>Familias separadas; se pierden personas formadas.</td><td>Sociedad más diversa y multicultural; a veces, rechazo y racismo.</td></tr>
+      </table></div>`},
+    {h:'4. España: de país de emigrantes a país de inmigrantes', html:`
+      <ul><li><b>Hasta los años 70:</b> muchos españoles emigraron a América (a principios del siglo XX) y a Europa (Alemania, Francia, Suiza, en los años 50-70). Dentro de España, millones de andaluces se fueron a Cataluña, Madrid y el País Vasco.</li>
+      <li><b>Desde finales de los 90:</b> España se convierte en país de <b>inmigración</b>. Llegan personas de Marruecos, Rumanía, América Latina, Ucrania, África subsahariana…</li>
+      <li><b>Hoy</b>, alrededor de una de cada cinco personas que viven en España ha nacido en otro país, y la inmigración es lo que hace crecer la población.</li></ul>
+      <p class="ojo"><b>Andalucía</b> es frontera sur de Europa: por el Estrecho y por las costas llegan migrantes, a veces en pateras y arriesgando su vida. También es tierra de acogida de muchos trabajadores del campo y del turismo.</p>`},
+    {h:'5. Un mundo desigual', html:`
+      <p>No todos los países tienen el mismo nivel de vida. Para medirlo se usan:</p>
+      <ul><li><b>PIB por habitante:</b> la riqueza que produce un país dividida entre su población.</li>
+      <li><b>IDH (Índice de Desarrollo Humano):</b> mide la <b>esperanza de vida</b>, la <b>educación</b> y los <b>ingresos</b>. Va de 0 a 1: cuanto más cerca de 1, mejor.</li></ul>
+      <div class="tabla"><table>
+        <tr><th>Países desarrollados</th><th>Países en desarrollo</th></tr>
+        <tr><td>IDH alto, esperanza de vida larga, casi todo el mundo estudia, mucho empleo en servicios.</td><td>IDH bajo, más mortalidad infantil, menos acceso a la escuela y a la sanidad, mucho empleo en la agricultura.</td></tr>
+        <tr><td>Natalidad baja; población envejecida (pirámide regresiva).</td><td>Natalidad alta; población joven (pirámide progresiva).</td></tr>
+        <tr><td>Ej.: España, Noruega, Japón, Canadá.</td><td>Ej.: muchos países de África subsahariana.</td></tr>
+      </table></div>
+      <p>Esta desigualdad es una de las grandes <b>causas de las migraciones</b>: la gente se mueve de los países pobres a los ricos. Para reducirla existen la <b>cooperación al desarrollo</b>, el <b>comercio justo</b> y los <b>Objetivos de Desarrollo Sostenible</b> (Agenda 2030).</p>`}
+  ],
+  juego:'social-migraciones',
+  ficha:{ ejercicios:[
+    {e:'Define con tus palabras.', items:['a) Emigración','b) Inmigración','c) Saldo migratorio','d) Remesas','e) Refugiado','f) IDH'], lineas:6,
+      sol:'a) Salir del propio país o lugar para vivir en otro. · b) Llegar a otro país o lugar para vivir allí. · c) Inmigrantes menos emigrantes. · d) Dinero que los emigrantes envían a sus familias. · e) Persona que huye de su país por guerra o persecución y pide protección en otro. · f) Índice de Desarrollo Humano: mide esperanza de vida, educación e ingresos (de 0 a 1).'},
+    {e:'Calcula el saldo migratorio y di si es positivo o negativo.', items:['a) Un pueblo: llegan 300 personas y se van 500.','b) Una ciudad: llegan 12.000 personas y se van 4.000.'], lineas:3,
+      sol:'a) 300 − 500 = −200: negativo, pierde población. · b) 12.000 − 4.000 = 8.000: positivo, gana población.'},
+    {e:'Clasifica cada causa: económica, política o ambiental.', items:['a) Una guerra civil','b) No encontrar trabajo','c) Una sequía de varios años','d) Persecución por las ideas','e) Salarios muy bajos','f) Un terremoto'], lineas:3,
+      sol:'a) Política · b) Económica · c) Ambiental · d) Política · e) Económica · f) Ambiental'},
+    {e:'Escribe una consecuencia positiva y una negativa de la emigración para el país de origen.', items:[], lineas:3,
+      sol:'Positiva: recibe remesas; baja el paro. Negativa: pierde población joven y formada; envejece; familias separadas.'},
+    {e:'Escribe dos consecuencias positivas de la inmigración para el país que la recibe.', items:[], lineas:3,
+      sol:'Ejemplos: rejuvenece la población; aumenta la natalidad; hay trabajadores para sectores que los necesitan; más cotizaciones a la Seguridad Social; diversidad cultural.'},
+    {lectura:true, e:'Lee el texto.', items:['«Mi abuelo Antonio se fue de su pueblo de Jaén a Alemania en 1964. Trabajó doce años en una fábrica de coches y cada mes mandaba dinero a casa. Hoy, en ese mismo pueblo, la mitad de los trabajadores del olivar han llegado de Marruecos, Senegal y Rumanía.»'], lineas:0},
+    {e:'Responde sobre el texto.', items:['a) ¿Antonio era emigrante o inmigrante para España? ¿Y para Alemania?','b) ¿Qué causa crees que tuvo para irse?','c) ¿Cómo se llama el dinero que mandaba a casa?','d) ¿Qué cambio ha vivido España desde entonces?'], lineas:5,
+      sol:'a) Emigrante para España e inmigrante para Alemania. · b) Económica: buscar trabajo y un sueldo mejor. · c) Remesas. · d) Ha pasado de ser un país de emigrantes a un país que recibe inmigrantes.'},
+    {e:'Compara un país desarrollado y uno en desarrollo: escribe dos diferencias.', items:[], lineas:4,
+      sol:'Ejemplos: el desarrollado tiene IDH alto, más esperanza de vida, más acceso a educación y sanidad, natalidad baja y población envejecida; el que está en desarrollo, IDH bajo, más mortalidad infantil, natalidad alta y población joven, más empleo en agricultura.'},
+    {e:'Verdadero o falso. Corrige las falsas.', items:['a) Un emigrante es la persona que llega a un país.','b) Los refugiados se van de su país porque quieren.','c) España fue un país de emigrantes en los años 60.','d) El IDH solo mide el dinero de un país.'], lineas:4,
+      sol:'a) Falso: es la persona que se va. · b) Falso: huyen por guerra o persecución (migración forzosa). · c) Verdadero. · d) Falso: mide esperanza de vida, educación e ingresos.'},
+    {e:'Texto de opinión (unas 150 palabras): ¿Qué puede hacer una ciudad como Málaga para que las personas que llegan de otros países se integren bien? Da al menos dos propuestas y explica por qué.', items:[], lineas:12,
+      sol:'Respuesta libre. Debe tener introducción (tema y opinión), desarrollo con dos o más propuestas argumentadas (clases de español, acceso a vivienda y empleo, actividades en los barrios, lucha contra el racismo…) y conclusión. Cuida la ortografía: cada falta resta en el examen.'}
+  ]}
+};
+TEMAS['social-migraciones'].apartados[1].video = V('Factores que incitan las migraciones','d1L2_Sbpg8w');
+TEMAS['social-migraciones'].apartados[2].video = V('La migración: causas y consecuencias','UMt6MfdRYKo');
+TEMAS['social-migraciones'].apartados[4].video = V('Un mundo desigual (3.º ESO)','Fl1WxI42tuU');
+
+JUEGOS['social-migraciones'] = { ambito:'social', titulo:'Migraciones y desigualdad', preguntas:[
+  {q:'Una migración es…', op:['Un desplazamiento de personas para vivir en otro lugar','Un viaje de vacaciones','El crecimiento natural','Una frontera'], ok:0, ex:'Para vivir allí, por un tiempo o para siempre.'},
+  {q:'La persona que sale de su país es un…', op:['Emigrante','Inmigrante','Turista','Refugiado siempre'], ok:0, ex:'Emigrar = salir.'},
+  {q:'La persona que llega a otro país para vivir es un…', op:['Inmigrante','Emigrante','Nativo','Turista'], ok:0, ex:'Inmigrar = entrar.'},
+  {q:'El saldo migratorio es…', op:['Inmigrantes − emigrantes','Nacimientos − defunciones','Habitantes ÷ km²','Emigrantes + inmigrantes'], ok:0, ex:'Si es positivo, llegan más de los que se van.'},
+  {q:'Llegan 200 personas y se van 350. El saldo migratorio es…', op:['−150','+150','550','−550'], ok:0, ex:'200 − 350 = −150.'},
+  {q:'Ir de un pueblo de Jaén a vivir a Madrid es una migración…', op:['Interior','Exterior','Internacional','Forzosa siempre'], ok:0, ex:'Dentro del mismo país.'},
+  {q:'La salida masiva de gente del campo a la ciudad se llama…', op:['Éxodo rural','Remesa','Asilo','Saldo'], ok:0, ex:'Muy importante en España en los años 50-70.'},
+  {q:'Quien huye de su país por una guerra y pide protección es un…', op:['Refugiado','Turista','Emigrante económico','Temporero'], ok:0, ex:'Pide asilo en otro país.'},
+  {q:'La causa más frecuente de las migraciones es…', op:['Económica','Ambiental','Deportiva','Turística'], ok:0, ex:'Buscar trabajo y un sueldo mejor.'},
+  {q:'Huir de una sequía de varios años es una causa…', op:['Ambiental','Política','Económica','Familiar'], ok:0, ex:'Los desastres naturales y el cambio climático también obligan a migrar.'},
+  {q:'Huir de una dictadura es una causa…', op:['Política','Ambiental','Económica','Turística'], ok:0, ex:'Guerras, dictaduras, persecución.'},
+  {q:'Una migración en la que no queda otra opción que irse es…', op:['Forzosa','Voluntaria','Interior','Temporal'], ok:0, ex:'Como la de los refugiados.'},
+  {q:'El dinero que los emigrantes envían a su familia se llama…', op:['Remesas','Impuestos','Pensiones','Salario mínimo'], ok:0, ex:'Muy importante para la economía de muchos países.'},
+  {q:'Para el país de origen, la emigración suele provocar…', op:['Envejecimiento de la población','Más natalidad','Más población joven','Más inmigrantes'], ok:0, ex:'Se van sobre todo los jóvenes.'},
+  {q:'Para el país de destino, la inmigración suele provocar…', op:['Rejuvenecimiento de la población','Envejecimiento','Menos trabajadores','Menos natalidad'], ok:0, ex:'Llegan personas jóvenes.'},
+  {q:'En los años 60, muchos españoles emigraron a…', op:['Alemania, Francia y Suiza','China y Japón','Marruecos','Australia'], ok:0, ex:'Para trabajar en fábricas.'},
+  {q:'A principios del siglo XX, muchos españoles emigraron a…', op:['América','Asia','Oceanía','El Polo Norte'], ok:0, ex:'Sobre todo a Argentina, Cuba y otros países de América.'},
+  {q:'Desde finales de los años 90, España es sobre todo un país de…', op:['Inmigración','Emigración','Éxodo rural','Despoblación total'], ok:0, ex:'Llegan más personas de las que se van.'},
+  {q:'Hoy, de cada cinco personas que viven en España, más o menos cuántas han nacido en otro país?', op:['Una','Tres','Cuatro','Ninguna'], ok:0, ex:'Alrededor de una de cada cinco.'},
+  {q:'¿Qué mide el IDH?', op:['Esperanza de vida, educación e ingresos','Solo el dinero','Solo la población','El clima'], ok:0, ex:'Índice de Desarrollo Humano, de 0 a 1.'},
+  {q:'Un IDH de 0,95 indica un país…', op:['Muy desarrollado','Muy pobre','Sin datos','En guerra'], ok:0, ex:'Cuanto más cerca de 1, mejor nivel de vida.'},
+  {q:'El PIB por habitante es…', op:['La riqueza de un país dividida entre su población','El número de habitantes','La deuda del país','Los impuestos'], ok:0, ex:'Sirve para comparar la riqueza media.'},
+  {q:'Los países en desarrollo suelen tener una pirámide…', op:['Progresiva (base ancha)','Regresiva','Estancada','Invertida'], ok:0, ex:'Mucha natalidad, población joven.'},
+  {q:'Los países desarrollados suelen tener…', op:['Natalidad baja y población envejecida','Natalidad muy alta','Mucha mortalidad infantil','La mayoría trabajando en el campo'], ok:0, ex:'Como España.'},
+  {q:'¿Qué ayuda a reducir la desigualdad entre países?', op:['La cooperación al desarrollo y el comercio justo','Cerrar todas las fronteras','Subir los precios','Nada, es imposible'], ok:0, ex:'También los Objetivos de Desarrollo Sostenible (Agenda 2030).'},
+  {q:'Una sociedad con personas de muchas culturas es una sociedad…', op:['Multicultural','Rural','Envejecida','Regresiva'], ok:0, ex:'La diversidad es una de las consecuencias de la inmigración.'},
+  {q:'Pedir protección en otro país por persecución se llama pedir…', op:['Asilo','Remesa','Visado de turista','Pensión'], ok:0, ex:'Lo piden los refugiados.'},
+  VF('Una misma persona es emigrante para su país e inmigrante para el país al que llega.', true, 'Depende de desde dónde se mire.'),
+  VF('Las migraciones siempre son voluntarias.', false, 'Las de refugiados o por desastres son forzosas.'),
+  VF('Andalucía es una de las fronteras sur de Europa.', true, 'Por el Estrecho y las costas llegan migrantes.'),
+  VF('La inmigración no tiene ningún efecto en la población de España.', false, 'Es lo que más la hace crecer en los últimos años.')
+]};
 
 /* ===== DIBUJOS DE LAS DIAPOSITIVAS ===== */
 const FIGS = {

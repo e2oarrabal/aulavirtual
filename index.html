@@ -450,6 +450,10 @@ footer{margin-top:32px;color:var(--on-bg);font-size:13px;text-align:center}
   .tile .ic svg{width:46px;height:46px}
   .tile b{font-size:22px;margin-top:6px}.tile small{font-size:15px;color:var(--muted);opacity:1}
 }
+section.head{position:relative;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 82%,#fff) 0%,var(--c) 55%,color-mix(in srgb,var(--c) 78%,#000) 100%)}
+section.head::after{content:"";position:absolute;right:-46px;top:-46px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.14);pointer-events:none}
+section.head::before{content:"";position:absolute;right:70px;bottom:-60px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+section.head > *{position:relative;z-index:1}
 </style>
 </head>
 <body>

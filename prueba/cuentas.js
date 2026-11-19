@@ -497,7 +497,8 @@ window.AULA = {
     $('#cu-salir').onclick = () => { if (confirm('¿Cerrar la sesión? Tendrás que volver a escribir tu usuario y contraseña.')) { location.hash = ''; B.salir(); } };
   },
   async notaFicha(r){
-    if (!yo || yo.admin) return;
+    if (!yo) return;
+    if (yo.admin){ const el = document.querySelector('.cu-slot'); if (el) el.textContent = 'Has entrado como profe: tu nota no se guarda. Entra con un alumno para probarlo.'; return; }
     const T = TEMAS[r.tema];
     const o = { actividad:'ficha-'+r.tema, tipo:'ficha', titulo:'Ficha: '+T.titulo, ambito:T.ambito, tema:r.tema, temaTitulo:T.titulo, area:T.area, clase:T.clase,
       nota: Math.round(r.aciertos / r.total * 100)/10, aciertos:r.aciertos, total:r.total, conTiempo:true, puntos:0 };
@@ -507,7 +508,8 @@ window.AULA = {
     catch(e){ console.error(e); pinta('No se ha podido guardar la nota (sin conexión).'); }
   },
   async nota(r){
-    if (!yo || yo.admin) return;
+    if (!yo) return;
+    if (yo.admin){ setTimeout(() => { const s = document.querySelector('.score'); if (s) s.insertAdjacentHTML('beforeend', '<p class="cu-nota">Has entrado como profe: tu nota no se guarda.</p>'); }, 0); return; }
     const o = { ...infoActividad(r.id), nota: Math.round(r.aciertos / r.total * 100)/10, aciertos:r.aciertos, total:r.total, conTiempo:!!r.conTiempo, puntos:r.puntos||0 };
     const pinta = t => setTimeout(() => { const s = document.querySelector('.score'); if (!s) return; let p = s.querySelector('.cu-nota'); if (!p){ p = document.createElement('p'); p.className = 'cu-nota'; s.appendChild(p); } p.innerHTML = t; }, 0);
     pinta(`Tu nota: ${nota1(o.nota)} / 10 · guardando…`);

@@ -3783,6 +3783,7 @@ function juego(id){
       const t = preguntas.length, pct = aciertos / t;
       const medalla = pct >= .9 ? ['oro','Medalla de oro'] : pct >= .7 ? ['plata','Medalla de plata'] : pct >= .5 ? ['bronce','Medalla de bronce'] : ['nada','Sigue practicando'];
       let nuevo = false;
+      if (window.AULA) AULA.nota({id, aciertos, total:t, conTiempo, puntos});
       if (conTiempo && puntos > record){ nuevo = record > 0 || puntos > 0; record = puntos; try { localStorage.setItem('rec-'+id, String(puntos)); } catch(e){} }
       const msg = pct === 1 ? '¡Pleno! Lo dominas.' : pct >= .7 ? 'Muy bien. Repasa los fallos y a por el pleno.' : pct >= .5 ? 'Vas por buen camino. Mira los fallos y vuelve a intentarlo.' : 'Repasa el tema y vuelve a probar. ¡Tú puedes!';
       app.innerHTML = `${volver}
@@ -3809,6 +3810,7 @@ function juego(id){
 function route(){
   const h = (location.hash || '').slice(1);
   window.scrollTo(0,0);
+  if (window.AULA && AULA.ruta(h)) { document.body.dataset.amb = ''; tabbar('inicio'); return; }
   let sec = 'inicio';
   if (h.startsWith('guia-') && GUIAS[h.slice(5)]) { sec = 'orientacion'; guia(h.slice(5)); }
   else if (h.startsWith('retos-') && JUEGOS[h.slice(6)]) { sec = JUEGOS[h.slice(6)].ambito; elegirReto(h.slice(6)); }
@@ -3818,9 +3820,10 @@ function route(){
   else { const a = byId(h); if (a) { sec = a.id; ambito(a); } else home(); }
   document.body.dataset.amb = sec === 'inicio' ? '' : sec;
   tabbar(sec);
+  if (window.AULA) AULA.despues(sec);
 }
 window.addEventListener('hashchange', route);
-route();
+if (window.AULA) AULA.arranca(); else route();
 </script>
 <script>if("serviceWorker" in navigator){let r=0;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!r){r=1;location.reload()}});addEventListener("load",()=>navigator.serviceWorker.register("sw.js").then(g=>g.update()))}</script>
 </body>

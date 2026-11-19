@@ -176,6 +176,21 @@ details p{margin:0}
 .fo-banco{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}.fo-banco span{font-size:13.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)}
 .fo-lect{margin:22px 0 0;padding:14px 16px;border-radius:14px;background:#FFF3D6}.fo-lect p{margin:6px 0 0;font-style:italic}
 .fo-sol{margin-top:8px;font-size:14px}.fo-sol summary{cursor:pointer;color:var(--muted);font-weight:700}.fo-sol p{margin:6px 0 0;padding:10px 12px;border-radius:10px;background:#EEF7EF}
+.fa-q{margin:0 0 12px;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--c) 5%,transparent);border:2px solid transparent}
+.fa-q > span{display:block;font-size:15px;margin:0 0 7px}
+.fa-q input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:9px 12px;border:2px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink)}
+.fa-op{display:flex;flex-wrap:wrap;gap:6px}
+.fa-op button{font:inherit;font-size:14px;font-weight:600;padding:8px 13px;border-radius:999px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.fa-op button.on{border-color:var(--c);background:var(--c);color:#fff}
+.fa-q.bien{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,transparent)}
+.fa-q.mal{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent)}
+.fa-q .fa-c{display:block;margin-top:6px;font-size:13.5px;font-weight:700}
+.fa-q.bien .fa-c{color:var(--ok)}.fa-q.mal .fa-c{color:var(--bad)}
+.fa-clase{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:#FFF0CC;color:#7A5200;margin:0 0 8px}
+.fa-nota{font-size:13px;color:var(--muted);margin:-4px 0 10px}
+.fa-res{margin:0 0 14px;padding:16px;border-radius:16px;background:color-mix(in srgb,var(--c) 10%,transparent);text-align:center}
+.fa-res b{display:block;font-family:var(--titulo);font-weight:400;font-size:46px;line-height:1;color:var(--c)}
+.fa-res p{margin:6px 0 0}
 .fo-fin{margin-top:28px;padding-top:18px;border-top:2px dashed var(--line)}.fo-ok{margin:0;font-size:13px;color:var(--muted)}
 .fo-borrar{margin-top:16px;border:0;background:none;color:#B3261E;font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:8px 0}
 
@@ -3137,9 +3152,234 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && VISOR) history.back
 
 
 /* ===== FICHA PARA HACER EN EL MÓVIL ===== */
+/* ===== FICHAS AUTOCORREGIBLES =====
+   Por ficha y por número de ejercicio (índice en ficha.ejercicios):
+   r: respuestas en el orden de items · op: opciones para elegir · it: preguntas propias [texto, respuesta, opciones?]
+   Respuesta: 'a|b' (vale cualquiera) · 'n:50' (número) · null (pregunta abierta, no cuenta)
+   est: las tildes cuentan · may: las mayúsculas cuentan · ctx: muestra los items como texto de apoyo
+   Los ejercicios que no aparecen aquí son de respuesta abierta: «Actividad para clase». */
+const OP_VF = ['Verdadero','Falso'];
+const FICHAS_AUTO = {
+'lengua-comunicacion': {
+  1:{op:['No verbal','Verbal oral','Verbal escrita'], r:['No verbal','Verbal oral','No verbal','Verbal escrita','No verbal','Verbal oral']},
+  2:{op:['Informar','Expresar','Persuadir','Ordenar','Crear belleza'], r:['Informar','Expresar','Persuadir','Ordenar','Crear belleza','Informar']},
+  3:{op:['Representativa','Expresiva','Apelativa','Poética','Fática','Metalingüística'], r:['Fática','Metalingüística','Expresiva','Apelativa','Representativa','Poética']},
+  4:{op:['Emisor','Receptor','Mensaje','Código','Canal','Contexto'], r:['Código','Canal','Contexto']},
+  5:{ctx:1, it:[['a) ¿Qué intención tiene?','Persuadir',['Informar','Expresar','Persuadir','Ordenar']],['b) Copia dos palabras o expresiones que lo demuestren.',null],['c) ¿A quién se dirige?','A personas que buscan trabajo',['A personas que buscan trabajo','A empresas de transporte','A estudiantes de instituto']]]},
+  7:{op:OP_VF, r:['Falso','Verdadero','Falso','Verdadero']}
+},
+'ingles-to-be': {
+  0:{r:['am','is','are','is','are','is','are','are']},
+  1:{r:["I'm","He's","They're","You're","She's","We're"]},
+  2:{r:['She','It','We','They','He']},
+  3:{r:['Spanish','Morocco','Colombian','France','Romanian','English']},
+  4:{r:["I'm 19|I am 19|I'm 19 years old|I am 19 years old","I'm from Malaga|I am from Malaga","She's a nurse|She is a nurse","We're tired|We are tired","He's an engineer|He is an engineer","They're at home|They are at home|They're home|They are home"]},
+  5:{may:1, r:["I'm 20|I am 20|I'm 20 years old|I am 20 years old","I'm from Spain|I am from Spain","She's a nurse|She is a nurse","I am Spanish|I'm Spanish"]},
+  6:{it:[['a) What\'s your name?','My name is Sara.'],['b) How old are you?',"I'm 21."],['c) Where are you from?',"I'm from Peru."],['d) How are you?',"I'm fine, thanks."]], op:["I'm fine, thanks.","I'm from Peru.",'My name is Sara.',"I'm 21."]}
+},
+'lengua-comprension': {
+  1:{it:[['¿Cuál es el tema del texto?','El regreso de los jóvenes a los estudios',['El regreso de los jóvenes a los estudios','El paro juvenil en Málaga','Las notas del instituto','Los trabajos para jóvenes']]]},
+  4:{it:[['¿Deductiva o inductiva?','Inductiva',['Deductiva','Inductiva']],['¿Por qué?',null]]},
+  6:{r:['porque','por eso','además','sin embargo','por ejemplo']},
+  7:{op:['Añadir','Oponer','Causa','Consecuencia','Conclusión'], r:['Añadir','Oponer','Causa','Consecuencia','Conclusión','Añadir','Oponer','Consecuencia']}
+},
+'ingles-pronouns-have-got': {
+  0:{r:['she','it','we','they','you','he']},
+  1:{r:["I'm not from France|I am not from France","She isn't at work|She is not at work|She's not at work","They aren't my cousins|They are not my cousins|They're not my cousins","We haven't got a car|We have not got a car","He hasn't got a bike|He has not got a bike","You aren't late|You are not late|You're not late"]},
+  2:{r:["Are you tired? No, I'm not|Are you tired? No, I am not","Is she your sister? Yes, she is","Have they got a dog? Yes, they have","Has he got a job? No, he hasn't|Has he got a job? No, he has not"]},
+  3:{r:['has got','have got','has got','have got','have got','has got']},
+  4:{op:['IS','HAS'], r:['HAS','IS','IS','HAS']},
+  5:{r:['His','Her','Our','Their','my','Its']},
+  6:{r:["Ana's car","my grandmother's house|my grandma's house|my granny's house","Pedro's phone|Pedro's mobile|Pedro's mobile phone"]},
+  7:{r:['mother|mum|mom','father|dad','brother','sister','grandfather|grandpa','grandmother|grandma','uncle','aunt','cousin','son','daughter']}
+},
+'lengua-palabras-1': {
+  0:{ctx:1, op:['Común','Propio'], it:[['Laura','Propio'],['Málaga','Propio'],['perro','Común'],['tienda','Común'],['centro','Común'],['sábados','Común'],['Rincón de la Victoria','Propio'],['amigos','Común']]},
+  1:{op:['Abstracto','Concreto individual','Concreto colectivo'], r:['Abstracto','Concreto colectivo','Concreto individual','Abstracto','Concreto colectivo','Concreto individual','Abstracto','Concreto colectivo']},
+  2:{it:[['niño → femenino','niña'],['niño → plural','niños'],['actor → femenino','actriz'],['actor → plural','actores'],['león → femenino','leona'],['león → plural','leones'],['profesor → femenino','profesora'],['profesor → plural','profesores'],['rey → femenino','reina'],['rey → plural','reyes']]},
+  3:{est:1, r:['lápices','peces','papeles','sofás','exámenes','luces']},
+  5:{it:[['alto → comparativo','más alto|más alto que'],['alto → superlativo','altísimo|el más alto'],['bueno → comparativo','mejor|mejor que|más bueno|más bueno que'],['bueno → superlativo','buenísimo|bonísimo|óptimo|el mejor'],['rápido → comparativo','más rápido|más rápido que'],['rápido → superlativo','rapidísimo|el más rápido'],['malo → comparativo','peor|peor que|más malo|más malo que'],['malo → superlativo','malísimo|pésimo|el peor'],['grande → comparativo','mayor|mayor que|más grande|más grande que'],['grande → superlativo','grandísimo|máximo|el mayor|el más grande']]},
+  6:{op:['Positivo','Comparativo de superioridad','Comparativo de igualdad','Comparativo de inferioridad','Superlativo'], r:['Positivo','Comparativo de superioridad','Superlativo','Comparativo de igualdad','Superlativo']},
+  7:{ctx:1, op:['Artículo','Demostrativo','Posesivo','Numeral','Indefinido'], it:[['Esta','Demostrativo'],['mis','Posesivo'],['tres','Numeral'],['una','Artículo'],['algunos','Indefinido'],['primer','Numeral']]},
+  8:{op:['Determinante','Pronombre'], r:['Pronombre','Determinante','Determinante','Pronombre']}
+},
+'ingles-present-simple': {
+  0:{r:['works','watches','studies','goes','plays','has','washes','flies']},
+  1:{r:['works','live','watches','play','goes','have']},
+  2:{r:["I don't like coffee|I do not like coffee","She doesn't work on Sundays|She does not work on Sundays","They don't live in Madrid|They do not live in Madrid","He doesn't play the guitar|He does not play the guitar","We don't get up early|We do not get up early"]},
+  3:{r:["Do you play football? Yes, I do","Does he speak English? No, he doesn't|Does he speak English? No, he does not","Does she live near here? Yes, she does","Do they work at weekends? No, they don't|Do they work at weekends? No, they do not"]},
+  4:{r:['What time','Where','What']},
+  5:{r:['I always get up early','She is often tired|She\'s often tired','We sometimes go to the cinema','He is never late|He\'s never late','They usually eat fish']},
+  6:{r:["eight o'clock|eight|8 o'clock","half past eight|eight thirty","quarter past eight|a quarter past eight|eight fifteen","quarter to nine|a quarter to nine|eight forty-five|eight forty five","ten o'clock|ten|10 o'clock"]},
+  7:{r:["She doesn't like rap|She does not like rap","He doesn't work here|He does not work here","Does she live in Málaga","I go to school by bus"]}
+},
+'social-mapas': {
+  0:{it:[['Rotación: ¿cuánto dura?','24 horas',['24 horas','365 días y 6 horas']],['Rotación: ¿qué produce?','el día y la noche',['el día y la noche','las estaciones del año']],['Traslación: ¿cuánto dura?','365 días y 6 horas',['24 horas','365 días y 6 horas']],['Traslación: ¿qué produce?','las estaciones del año',['el día y la noche','las estaciones del año']]]},
+  2:{it:[['a) El paralelo principal es el…','Ecuador|el Ecuador'],['a) …y divide la Tierra en hemisferio… (1)','norte|sur'],['a) …y… (2)','sur|norte'],['b) El meridiano 0 se llama de…','Greenwich'],['b) …y pasa por…','Londres|London|Inglaterra'],['c) La latitud se mide de 0° a…','90|90°|90 grados'],['c) La longitud se mide de 0° a…','180|180°|180 grados'],['d) Al norte del Ecuador está el Trópico de…','Cáncer'],['d) Al sur, el Trópico de…','Capricornio']]},
+  3:{op:['Norte y este','Norte y oeste','Sur y este','Sur y oeste','Ni norte ni sur, ni este ni oeste'], r:['Norte y oeste','Sur y oeste','Norte y este','Ni norte ni sur, ni este ni oeste']},
+  4:{r:['5 km|5|5km|5 kilómetros','6 km|6|6km|6 kilómetros','4 km|4|4km|4 kilómetros','40 km|40|40km|40 kilómetros']},
+  5:{op:['Físico','Político','Temático'], r:['Físico','Político','Temático','Temático']},
+  7:{r:['17:00|17|17h|17 h|17.00|las 17|5 de la tarde|las 5 de la tarde','20:00|20|20h|20 h|20.00|las 20|8 de la tarde|las 8 de la tarde','15:00|15|15h|15 h|15.00|las 15|3 de la tarde|las 3 de la tarde']},
+  9:{op:OP_VF, r:['Falso','Falso','Verdadero','Verdadero']}
+},
+'social-relieve': {
+  2:{op:['Europa','Asia','América del Sur','América del Norte'], it:[['Himalaya','Asia'],['Andes','América del Sur'],['Alpes','Europa'],['Rocosas','América del Norte']]},
+  3:{it:[['a) La montaña más alta del mundo es el…','Everest'],['b) El pico más alto de España es el…','Teide'],['b) …y el de la península, el…','Mulhacén'],['c) La Meseta está dividida por el Sistema…','Central'],['d) Separan España de Francia:','Pirineos|los Pirineos'],['e) Al sur de la Meseta está…','Sierra Morena']]},
+  4:{op:['Interior de la Meseta','Reborde de la Meseta','Exterior a la Meseta','Depresión'], r:['Interior de la Meseta','Reborde de la Meseta','Exterior a la Meseta','Depresión','Reborde de la Meseta','Exterior a la Meseta','Interior de la Meseta','Depresión']},
+  5:{op:['Atlántica','Mediterránea','Cantábrica'], r:['Atlántica','Mediterránea','Atlántica','Cantábrica','Mediterránea','Atlántica','Atlántica','Mediterránea','Atlántica']},
+  7:{it:[['La unidad más al norte','Sierra Morena',['Sierra Morena','Depresión del Guadalquivir','Sistemas Béticos']],['La unidad del centro','Depresión del Guadalquivir',['Sierra Morena','Depresión del Guadalquivir','Sistemas Béticos']],['La unidad más al sur','Sistemas Béticos',['Sierra Morena','Depresión del Guadalquivir','Sistemas Béticos']],['Una ciudad del valle del Guadalquivir','Sevilla|Córdoba|Jaén|Andújar|Écija']]},
+  8:{it:[['a) Nace en:','Jaén|Cazorla|Sierra de Cazorla|la sierra de Cazorla|en Jaén'],['b) Pasa por: (1)','Córdoba|Sevilla'],['b) …y por: (2)','Sevilla|Córdoba'],['c) Desemboca en:','Sanlúcar de Barrameda|Sanlúcar|el Atlántico|Atlántico|el océano Atlántico|océano Atlántico'],['d) Es navegable hasta:','Sevilla'],['e) Afluente principal:','Genil|el Genil']]}
+},
+'social-clima': {
+  0:{op:['Tiempo','Clima'], r:['Tiempo','Clima','Tiempo','Clima','Tiempo','Clima']},
+  1:{op:['Elemento','Factor'], r:['Elemento','Factor','Elemento','Factor','Elemento','Factor','Elemento','Factor']},
+  3:{ctx:1, it:[['a) ¿Cuál es la amplitud térmica?','n:14'],['b) ¿Qué estación es seca?','Verano',['Primavera','Verano','Otoño','Invierno']],['c) ¿En la costa o en el interior?','En la costa',['En la costa','En el interior']],['c) ¿Por qué?',null],['d) ¿Qué clima es?','Mediterráneo costero',['Mediterráneo costero','Mediterráneo de interior','Oceánico','Árido','Subtropical','De montaña']]]},
+  4:{ctx:1, it:[['¿Qué clima es?','Mediterráneo de interior',['Mediterráneo costero','Mediterráneo de interior','Oceánico','Árido','Subtropical','De montaña']]]},
+  5:{op:['Canarias','Sierra Nevada','Galicia','Almería'], it:[['Oceánico','Galicia'],['Árido','Almería'],['Subtropical','Canarias'],['De montaña','Sierra Nevada']]},
+  7:{op:['tala e incendios','vertidos de fábricas y residuos','gases de quemar petróleo, carbón y gas','pérdida de fertilidad del suelo por sequía y mal uso'], it:[['Cambio climático','gases de quemar petróleo, carbón y gas'],['Deforestación','tala e incendios'],['Desertificación','pérdida de fertilidad del suelo por sequía y mal uso'],['Contaminación del agua','vertidos de fábricas y residuos']]},
+  9:{op:OP_VF, r:['Falso','Falso','Verdadero','Verdadero']}
+},
+'social-poblacion': {
+  1:{it:[['a) Pueblo A (hab/km²)','n:50'],['b) Ciudad B (hab/km²)','n:2000'],['c) Comarca C (hab/km²)','n:10'],['¿Cuál está menos poblada?','Comarca C',['Pueblo A','Ciudad B','Comarca C']]]},
+  2:{it:[['a) Crecimiento natural','n:-300'],['b) Saldo migratorio','n:600'],['c) Crecimiento real','n:300'],['d) ¿La población ha subido o bajado?','Ha subido',['Ha subido','Ha bajado']],['d) ¿Gracias a qué?','La inmigración',['La natalidad','La inmigración','La emigración']]]},
+  3:{op:['base estrecha, población envejecida','base ancha, población joven','forma de campana, casi no cambia'], it:[['Progresiva','base ancha, población joven'],['Regresiva','base estrecha, población envejecida'],['Estancada','forma de campana, casi no cambia']]},
+  4:{ctx:1, it:[['a) ¿Qué tipo de pirámide es?','Regresiva',['Progresiva','Regresiva','Estancada']],['b) ¿La natalidad es alta o baja?','Baja',['Alta','Baja']],['c) ¿La esperanza de vida es alta o baja?','Alta',['Alta','Baja']],['d) ¿A qué país del temario se parece?','España|la de España|a la de España']]},
+  5:{op:OP_VF, r:['Falso','Verdadero','Falso','Verdadero','Falso','Falso']}
+},
+'lengua-tilde': {
+  0:{it:[['ventana','ta'],['árbol','ár'],['camión','mión'],['música','mú'],['papel','pel'],['lápiz','lá'],['teléfono','lé'],['ciudad','dad']], nota:'Escribe solo la sílaba tónica.'},
+  1:{op:['Aguda','Llana','Esdrújula','Sobresdrújula'], r:['Aguda','Llana','Esdrújula','Aguda','Llana','Esdrújula','Aguda','Llana','Sobresdrújula','Aguda','Llana','Esdrújula']},
+  2:{est:1, r:['café','árbol','mesa','rápido','jamón','lunes','azúcar','pared','teléfono','lápiz','canción','joven']},
+  4:{est:1, r:['exámenes','jóvenes','camiones','canciones','imágenes']},
+  5:{it:[['a) ___ hermano dice que (tu / tú) no vienes.','Tu',['Tu','Tú']],['a) (Tu / Tú) hermano dice que ___ no vienes.','tú',['tu','tú']],['b) A ___ me gusta (mi / mí) barrio.','mí',['mi','mí']],['b) A (mi / mí) me gusta ___ barrio.','mi',['mi','mí']],['c) ___ trabaja en (el / él) centro.','Él',['El','Él']],['c) (El / Él) trabaja en ___ centro.','el',['el','él']],['d) ___ llueve, ¿vienes?','Si',['Si','Sí']],['d) —___, claro.','Sí',['Si','Sí']],['e) ¿Quieres ___ o café?','té',['te','té']],['f) No ___ si (el / él) vendrá.','sé',['se','sé']],['f) No (se / sé) si ___ vendrá.','él',['el','él']],['g) Quiero ___ pan.','más',['mas','más']],['h) ___ no he terminado.','Aún',['Aun','Aún']]]},
+  6:{est:1, r:['Qué','dónde','como','Cómo','donde','cuando']},
+  7:{op:['Diptongo','Hiato'], r:['Diptongo','Hiato','Diptongo','Hiato','Diptongo','Hiato','Diptongo','Hiato']},
+  8:{est:1, r:['día','río','país','maíz','baúl','oído','María','frío','Raúl','leído']},
+  9:{ctx:1, est:1, it:[['sabado','sábado'],['tio','tío'],['Raul','Raúl'],['Alli','Allí'],['platanos','plátanos'],['cafe','café'],['melon','melón'],['Despues','Después'],['te','té']], nota:'Escribe bien cada palabra.'}
+},
+'ingles-there-is': {
+  0:{r:["There is|There's","There are","There is|There's","There are","There is|There's","There are","There is|There's","There are"]},
+  1:{it:[['a) There is a cinema. → negative',"There isn't a cinema|There is not a cinema"],['a) → question','Is there a cinema'],['b) There are some shops. → negative',"There aren't any shops|There are not any shops|There are no shops"],['b) → question','Are there any shops'],['c) There is some milk. → negative',"There isn't any milk|There is not any milk|There is no milk"],['c) → question','Is there any milk'],['d) There are two hospitals. → negative',"There aren't two hospitals|There are not two hospitals"],['d) → question','Are there two hospitals']]},
+  2:{r:['Yes, there is',"No, there aren't|No, there are not","No, there isn't|No, there is not",'Yes, there are']},
+  3:{r:['some','any','any','an','some','a','any','some']},
+  4:{it:[['a) bedrooms / your flat','How many bedrooms are there in your flat'],['b) students / your class','How many students are there in your class'],['c) parks / your neighbourhood','How many parks are there in your neighbourhood|How many parks are there in your neighborhood']], nota:'Escribe solo la pregunta.'},
+  5:{it:[['a) The cat is ___ the bed. (debajo)','under',['in','under']],['b) The phone is ___ the table. (encima)','on',['on','in']],['c) The bank is ___ the bar and the school. (entre)','between',['between','next to']],['d) The park is ___ my house. (enfrente)','opposite',['opposite','behind']],['e) The car is ___ the house. (detrás)','behind',['in front of','behind']],['f) I live ___ the beach. (cerca)','near',['near','on']]]},
+  6:{r:['The phone is on the table|The mobile is on the table|The mobile phone is on the table',"The pharmacy is next to the bank|The chemist's is next to the bank|The chemist is next to the bank",'The park is opposite the school','The dog is under the bed','The keys are in the bag|The keys are in the backpack|The keys are inside the bag|The keys are inside the backpack|The keys are in the rucksack','The bus stop is in front of my house|The stop is in front of my house']},
+  7:{r:['kitchen','bedroom','bathroom|toilet','living room|lounge|sitting room',"pharmacy|chemist's|chemist",'library','bank','bus station','square','street']},
+  8:{r:["There are two parks","There is a cinema near my house|There's a cinema near my house","There aren't any shops|There are not any shops|There are no shops","Yes, there is","The book is on the table"]}
+},
+'lengua-narracion': {
+  1:{it:[['a) ¿Quién es el protagonista?','Samir'],['b) ¿Dónde ocurre la historia?','En un taller|un taller|el taller|taller|en el taller'],['c) ¿Qué tipo de narrador tiene?','En 3.ª persona',['En 1.ª persona','En 3.ª persona']],['c) Justifícalo.',null],['d) Copia dos marcadores de tiempo.',null]]},
+  4:{op:['1.ª persona protagonista','1.ª persona testigo','3.ª persona omnisciente','3.ª persona observador'], r:['1.ª persona protagonista','3.ª persona omnisciente','1.ª persona testigo','3.ª persona observador']},
+  5:{op:['Objetiva','Subjetiva'], r:['Objetiva','Subjetiva','Objetiva','Subjetiva']},
+  6:{op:['descripción del carácter','descripción de un lugar','descripción del físico','físico y carácter'], it:[['Prosopografía','descripción del físico'],['Etopeya','descripción del carácter'],['Retrato','físico y carácter'],['Topografía','descripción de un lugar']]},
+  7:{ctx:1, op:['a','b','c'], it:[['Primera frase','b'],['Segunda frase','c'],['Tercera frase','a']]}
+},
+'ingles-can': {
+  0:{r:['can',"can't|cannot|can not",'can',"can't|cannot|can not",'Can']},
+  1:{r:['She can dance very well','I can play the guitar','Can you swim','He can speak French']},
+  3:{r:['mechanic','nurse','waiter|waitress|barman|bartender','hairdresser','plumber','shop assistant|shopkeeper|salesperson|seller|sales assistant']},
+  4:{op:['a','an'], r:['a','an','a','an']},
+  5:{r:['Where','What','How old','Who','When','How many','Why']},
+  6:{r:['Where do you work','What languages can you speak','What time does she start','Where are you from']},
+  8:{r:["He is a cook|He's a cook|He is a chef|He's a chef|A cook|Cook|He works as a cook",'In a hotel in Marbella|In a hotel|In Marbella|He works in a hotel in Marbella|In a hotel in Marbella','Three|3|Three languages|He can speak three languages',"No, he can't|No, he cannot|No|He can't drive","By bus|He goes to work by bus|He goes by bus|Bus"]}
+},
+'social-migraciones': {
+  1:{it:[['a) Saldo migratorio del pueblo','n:-200'],['a) ¿Positivo o negativo?','Negativo',['Positivo','Negativo']],['b) Saldo migratorio de la ciudad','n:8000'],['b) ¿Positivo o negativo?','Positivo',['Positivo','Negativo']]]},
+  2:{op:['Económica','Política','Ambiental'], r:['Política','Económica','Ambiental','Política','Económica','Ambiental']},
+  6:{it:[['a) Antonio era…','Emigrante para España e inmigrante para Alemania',['Emigrante para España e inmigrante para Alemania','Inmigrante para España y emigrante para Alemania']],['b) ¿Qué causa crees que tuvo para irse?','Económica',['Económica','Política','Ambiental']],['c) ¿Cómo se llama el dinero que mandaba a casa?','remesas|las remesas|remesa'],['d) ¿Qué cambio ha vivido España desde entonces?',null]]},
+  8:{op:OP_VF, r:['Falso','Falso','Verdadero','Falso']}
+}
+};
+
+/* ===== Motor de fichas autocorregibles (solo con usuarios) ===== */
+function faNorm(t, sp){
+  let x = String(t||'').replace(/[’‘`´]/g,"'").replace(/[−–—]/g,'-').trim();
+  if (!sp.may) x = x.toLowerCase();
+  if (!sp.est) x = x.normalize('NFD').replace(/[̀-ͯ]/g,'');
+  return x.replace(/[.,;:!?¡¿«»"()°º²]/g,' ').replace(/\s+/g,' ').trim();
+}
+function faNum(t){ const m = String(t||'').replace(/[−–—]/g,'-').replace(/(\d)\.(?=\d{3}\b)/g,'$1').replace(',','.').match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : NaN; }
+function faItems(ej, sp){
+  if (sp.it) return sp.it.map(x => ({ p:x[0], r:x[1], op:x[2] || sp.op }));
+  return ej.items.map((p,k) => ({ p, r:sp.r[k], op:sp.op }));
+}
+function faBien(q, v, sp){
+  if (v == null || v === '') return false;
+  if (q.op) return v === q.r;
+  if (String(q.r).startsWith('n:')) return Math.abs(faNum(v) - parseFloat(q.r.slice(2))) < 1e-9;
+  const n = faNorm(v, sp);
+  return String(q.r).split('|').some(a => faNorm(a, sp) === n);
+}
+function fichaAuto(id){
+  const T = TEMAS[id], a = byId(T.ambito), SP = FICHAS_AUTO[id];
+  const R = fichaLeer(id); R.r = R.r || {}; R.a = R.a || {};
+  let num = 0;
+  const bloques = T.ficha.ejercicios.map((ej, ix) => {
+    if (ej.lectura) return `<div class="fo-lect"><b>${esc(ej.e)}</b><p>${esc(ej.items.join(' '))}</p></div>`;
+    num++;
+    const sp = SP[ix];
+    if (!sp){
+      const banco = ej.items.length ? `<p class="fo-banco">${ej.items.map(x=>`<span>${esc(x)}</span>`).join('')}</p>` : '';
+      return `<section class="fo-ej"><h3><i>${num}</i>${esc(ej.e)}</h3><span class="fa-clase">Actividad para clase · enséñasela a tu profe</span>${banco}
+        <textarea rows="${Math.max(2, Math.min(ej.lineas||3, 8))}" data-ix="${ix}" placeholder="Escribe aquí tu respuesta">${esc(typeof R.r[ix]==='string'?R.r[ix]:'')}</textarea></section>`;
+    }
+    const ctx = sp.ctx && ej.items.length ? (sp.it ? `<div class="fo-lect" style="margin:0 0 12px">${ej.items.map(x=>`<p style="margin:4px 0 0">${esc(x)}</p>`).join('')}</div>` : '') : '';
+    const qs = faItems(ej, sp).map((q,k) => {
+      const key = ix+'-'+k, v = R.a[key];
+      if (q.r == null) return `<label class="fa-q"><span>${esc(q.p)}</span><span class="fa-clase">Para clase</span><textarea rows="2" data-ix="${ix}" data-k="${k}" placeholder="Tu respuesta">${esc((Array.isArray(R.r[ix])?R.r[ix]:[])[k]||'')}</textarea></label>`;
+      const campo = q.op ? `<div class="fa-op">${q.op.map(o=>`<button type="button" data-q="${key}" data-v="${esc(o)}" class="${v===o?'on':''}">${esc(o)}</button>`).join('')}</div>`
+        : `<input data-q="${key}" value="${esc(v||'')}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Tu respuesta">`;
+      return `<div class="fa-q" data-box="${key}"><span>${esc(q.p)}</span>${campo}<i class="fa-c"></i></div>`;
+    }).join('');
+    return `<section class="fo-ej"><h3><i>${num}</i>${esc(ej.e)}</h3>${sp.nota?`<p class="fa-nota">${esc(sp.nota)}</p>`:''}${ctx}${qs}</section>`;
+  }).join('');
+  app.innerHTML = `<a class="back" href="#tema-${id}">${I.back} Volver al tema</a>
+    <article class="tema fo" style="--c:var(${a.c})">
+      <header class="head"><p class="kicker">Ficha de actividades · ${T.area} · Clase ${T.clase}</p><h1>${esc(T.titulo)}</h1>
+      <p>Responde y pulsa «Corregir» al final: verás tu nota al momento y se guardará. Puedes repetirla las veces que quieras. Las actividades marcadas «para clase» las vemos juntos.</p></header>
+      ${bloques}
+      <section class="fo-fin"><div id="fa-res"></div>
+        <button class="btn" id="fa-corr">Corregir</button>
+        <p class="fo-ok" id="fo-ok" aria-live="polite">Tus respuestas se guardan en este móvil mientras escribes.</p>
+      </section>
+    </article><footer>Aula Virtual E2O</footer>`;
+  let t;
+  const guarda = () => fichaGuardar(id, R);
+  const pausa = () => { clearTimeout(t); t = setTimeout(guarda, 300); };
+  const crece = el => { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; };
+  app.querySelectorAll('textarea').forEach(el => { crece(el); el.addEventListener('input', () => { crece(el);
+    const ix = el.dataset.ix; if (el.dataset.k !== undefined){ if (!Array.isArray(R.r[ix])) R.r[ix] = []; R.r[ix][+el.dataset.k] = el.value; } else R.r[ix] = el.value; pausa(); }); });
+  app.querySelectorAll('input[data-q]').forEach(el => el.addEventListener('input', () => { R.a[el.dataset.q] = el.value; pausa(); }));
+  app.querySelectorAll('.fa-op button').forEach(b => b.onclick = () => { if (R.hecha) return;
+    b.parentNode.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); R.a[b.dataset.q] = b.dataset.v; pausa(); });
+  const btn = document.getElementById('fa-corr');
+  function corrige(guardarNota){
+    let ok = 0, tot = 0;
+    T.ficha.ejercicios.forEach((ej, ix) => { const sp = SP[ix]; if (!sp || ej.lectura) return;
+      faItems(ej, sp).forEach((q,k) => { if (q.r == null) return; tot++;
+        const key = ix+'-'+k, bien = faBien(q, R.a[key], sp); if (bien) ok++;
+        const box = app.querySelector(`[data-box="${key}"]`); box.classList.add(bien?'bien':'mal');
+        box.querySelector('.fa-c').textContent = bien ? '✓ Bien' : '✗ Correcto: ' + (String(q.r).startsWith('n:') ? q.r.slice(2) : String(q.r).split('|')[0]);
+        box.querySelectorAll('input,button').forEach(x => x.disabled = true); }); });
+    const nota = Math.round(ok/tot*100)/10;
+    document.getElementById('fa-res').innerHTML = `<div class="fa-res"><b>${nota.toLocaleString('es-ES')}</b><p>${ok} de ${tot} respuestas bien</p><p class="cu-slot"></p></div>`;
+    btn.textContent = 'Volver a intentarlo';
+    if (guardarNota && window.AULA && AULA.notaFicha) AULA.notaFicha({ tema:id, aciertos:ok, total:tot });
+    else if (window.AULA && AULA.notaFicha) document.querySelector('.cu-slot').textContent = 'Esta nota ya está guardada en «Mis notas».';
+  }
+  btn.onclick = () => {
+    if (R.hecha){ R.a = {}; R.hecha = false; guarda(); fichaAuto(id); window.scrollTo(0,0); return; }
+    const faltan = app.querySelectorAll('.fa-q[data-box]').length - Object.keys(R.a).filter(k => R.a[k] !== '' && R.a[k] != null).length;
+    if (faltan > 0 && !confirm(`Te faltan ${faltan} respuestas. Si corriges ahora, contarán como fallos. ¿Corregir de todos modos?`)) return;
+    R.hecha = true; guarda(); corrige(true);
+  };
+  if (R.hecha) corrige(false);
+}
 function fichaLeer(id){ try{ return JSON.parse(localStorage.getItem('ficha-'+id)) || {r:{}}; }catch(e){ return {r:{}}; } }
 function fichaGuardar(id, R){ try{ localStorage.setItem('ficha-'+id, JSON.stringify(R)); }catch(e){} }
 function fichaOnline(id){
+  if (window.AULA && FICHAS_AUTO[id]) return fichaAuto(id);
   const T = TEMAS[id], a = byId(T.ambito); const R = fichaLeer(id); R.r = R.r || {};
   if (!R.fecha){ const h = new Date(); R.fecha = `${h.getDate()}/${h.getMonth()+1}/${h.getFullYear()}`; }
   let num = 0;

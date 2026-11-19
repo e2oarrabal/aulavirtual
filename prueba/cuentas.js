@@ -449,7 +449,7 @@ async function excel(solo, btn, msg){
         const acts = R.amb[x.id].acts.slice().sort((p,q)=>(p.tema?0:1)-(q.tema?0:1) || (p.clase||0)-(q.clase||0));
         let temaPrev = null;
         acts.forEach(ac => {
-          f.push([x.nombre, ac.tema ? `${ac.area} · ${ac.temaTitulo}` : 'Retos', ac.titulo, ac.tipo === 'reto' ? 'Reto' : 'Juego', num(ac.mejor), num(ac.ultima.nota), ac.lista.length, fd(ac.ultima.fecha), ac.lista.map(i=>nota1(i.nota)).join(' → ')]);
+          f.push([x.nombre, ac.tema ? `${ac.area} · ${ac.temaTitulo}` : 'Retos', ac.titulo, ({reto:'Reto', ficha:'Ficha'})[ac.tipo] || 'Juego', num(ac.mejor), num(ac.ultima.nota), ac.lista.length, fd(ac.ultima.fecha), ac.lista.map(i=>nota1(i.nota)).join(' → ')]);
         });
         const temas = [...new Set(acts.filter(z=>z.tema).map(z=>z.tema))];
         temas.forEach(t => { const g = acts.filter(z=>z.tema===t); f.push([x.nombre, `Media del tema: ${g[0].area} · ${g[0].temaTitulo}`, '', '', num(media(g.map(z=>z.mejor)))]); });
@@ -495,6 +495,16 @@ window.AULA = {
     const app = appEl(); if (app.querySelector('.cu-bar')) return;
     app.insertAdjacentHTML('afterbegin', `<div class="cu-bar"><b>Hola, ${h(yo.nombre.split(' ')[0])}</b>${yo.admin ? '<a href="#panel">Panel del profe</a>' : '<a href="#notas">Mis notas</a>'}<button id="cu-salir">Salir</button></div>`);
     $('#cu-salir').onclick = () => { if (confirm('¿Cerrar la sesión? Tendrás que volver a escribir tu usuario y contraseña.')) { location.hash = ''; B.salir(); } };
+  },
+  async notaFicha(r){
+    if (!yo || yo.admin) return;
+    const T = TEMAS[r.tema];
+    const o = { actividad:'ficha-'+r.tema, tipo:'ficha', titulo:'Ficha: '+T.titulo, ambito:T.ambito, tema:r.tema, temaTitulo:T.titulo, area:T.area, clase:T.clase,
+      nota: Math.round(r.aciertos / r.total * 100)/10, aciertos:r.aciertos, total:r.total, conTiempo:true, puntos:0 };
+    const pinta = t => { const el = document.querySelector('.cu-slot'); if (el) el.innerHTML = t; };
+    pinta('Guardando tu nota…');
+    try{ await B.guardarIntento(yo.usuario, o); pinta('Nota guardada en <a href="#notas">Mis notas</a>.'); }
+    catch(e){ console.error(e); pinta('No se ha podido guardar la nota (sin conexión).'); }
   },
   async nota(r){
     if (!yo || yo.admin) return;

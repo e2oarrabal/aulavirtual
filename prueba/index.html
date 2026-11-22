@@ -484,8 +484,8 @@ html{scrollbar-color:#1E3FA8 #FFE3C2}
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="config.js?v=202611191906"></script>
-<script src="cuentas.js?v=202611191906"></script>
+<script src="config.js?v=202611221936"></script>
+<script src="cuentas.js?v=202611221936"></script>
 <script>
 /* ===== ICONOS ===== */
 const I = {
@@ -588,6 +588,12 @@ const AGENDA = {
       1:[{h:'10:00', t:'Ámbito Científico', tipo:'clase'}],
       3:[{h:'10:00', t:'Ámbito de Comunicación', tipo:'clase'}],
       4:[{h:'10:00', t:'Ámbito Social', tipo:'clase'}]
+    }},
+    '2026-11-23': { dias:{
+      1:[{h:'10:00', t:'Ámbito Científico', tipo:'clase'}],
+      3:[{h:'10:00', t:'Ámbito de Comunicación', tipo:'clase'},
+         {h:'16:00', t:'Taller por la Igualdad: último ensayo (¡no faltes!)', tipo:'extra', ...LUGAR_TEATRO}],
+      4:[{h:'10:00', t:'Ámbito Social', tipo:'clase'}]
     }}
   }
 };
@@ -605,8 +611,8 @@ const AMBITOS = [
         {n:4, s:'2026-10-26', tb:'ingles-present-simple', a:'', b:'Present simple completo, adverbios de frecuencia; rutinas, días y horas'},
         {n:5, s:'2026-11-02', ta:'lengua-tilde', tb:'ingles-there-is', a:'Ortografía I: la tilde (agudas, llanas, esdrújulas, diptongos, hiatos, diacrítica)', b:'There is / there are, some / any; preposiciones de lugar; la casa y la ciudad'},
         {n:6, s:'2026-11-09', ta:'lengua-narracion', tb:'ingles-can', a:'Tipos de texto I: narración y descripción', b:'Can (habilidad); las profesiones; preguntas con wh- (what, where, when, who, how)'},
-        {n:7, s:'2026-11-16', a:'Clases de palabras II: pronombre, verbo, adverbio, preposición y conjunción', b:'Present continuous; la ropa y describir personas; pronombres objeto (me, him, them…) y genitivo ’s'},
-        {n:8, s:'2026-11-23', a:'Literatura I: géneros literarios y figuras retóricas; verso y rima', b:'Past simple de to be (was / were) y verbos regulares; preposiciones de tiempo (in, on, at)'},
+        {n:7, s:'2026-11-16', ta:'lengua-palabras-2', tb:'ingles-present-continuous', a:'Clases de palabras II: pronombre, verbo, adverbio, preposición y conjunción', b:'Present continuous; la ropa y describir personas; pronombres objeto (me, him, them…) y genitivo ’s'},
+        {n:8, s:'2026-11-23', ta:'lengua-literatura-1', tb:'ingles-past-simple', a:'Literatura I: géneros literarios y figuras retóricas; verso y rima', b:'Past simple de to be (was / were) y verbos regulares; preposiciones de tiempo (in, on, at)'},
         {n:9, s:'2026-11-30', a:'Textos de la vida práctica: oferta de empleo, CV, carta de presentación, correo formal, solicitud y reclamación', b:'Past simple: verbos irregulares; past continuous; expresiones de tiempo'},
         {n:10, s:'2026-12-07', a:'Léxico: formación de palabras; sinónimos, antónimos, polisemia, campo semántico', b:'El email informal de 50-70 palabras'},
         {n:11, s:'2026-12-14', a:'Ortografía II: b/v, g/j, h, ll/y y puntuación; repaso del trimestre', b:'Repaso del trimestre'},
@@ -641,8 +647,8 @@ const AMBITOS = [
         {n:3, s:'2026-10-26', tt:'social-clima', t:'Geografía', a:'Climas y paisajes; problemas medioambientales y desarrollo sostenible'},
         {n:4, s:'2026-11-02', tt:'social-poblacion', t:'Geografía', a:'Población: natalidad, mortalidad, densidad, envejecimiento'},
         {n:5, s:'2026-11-09', tt:'social-migraciones', t:'Geografía', a:'Migraciones: causas y consecuencias; desigualdad entre países'},
-        {n:6, s:'2026-11-16', t:'Geografía', a:'Organización territorial de España: comunidades, provincias, instituciones básicas'},
-        {n:7, s:'2026-11-23', t:'Geografía', a:'Sectores económicos; espacio rural y urbano; turismo en la costa andaluza'},
+        {n:6, s:'2026-11-16', tt:'social-territorio', t:'Geografía', a:'Organización territorial de España: comunidades, provincias, instituciones básicas'},
+        {n:7, s:'2026-11-23', tt:'social-economia', t:'Geografía', a:'Sectores económicos; espacio rural y urbano; turismo en la costa andaluza'},
         {n:8, s:'2026-11-30', t:'Repaso', a:'Repaso de Geografía jugado. Cómo escribir el texto de 150 palabras sobre un tema actual'},
         {n:9, s:'2026-12-07', t:'Historia', a:'Prehistoria: Paleolítico, Neolítico, Edad de los Metales; Andalucía prehistórica'},
         {n:10, s:'2026-12-14', t:'Historia', a:'Edad Antigua: Egipto, Grecia, Roma; Tartessos e Hispania romana; el arte griego y romano'},
@@ -3090,6 +3096,621 @@ JUEGOS['social-migraciones'] = { ambito:'social', titulo:'Migraciones y desigual
   VF('La inmigración no tiene ningún efecto en la población de España.', false, 'Es lo que más la hace crecer en los últimos años.')
 ]};
 
+/* ===== TEMAS DE LAS SEMANAS DEL 16 Y DEL 23 DE NOVIEMBRE · COMUNICACIÓN ===== */
+TEMAS['lengua-palabras-2'] = { ambito:'comunicacion', area:'Lengua', clase:7, titulo:'Clases de palabras II: pronombre, verbo, adverbio, preposición y conjunción',
+  intro:'Seguimos con las clases de palabras. En el examen te piden reconocerlas en un texto y decir de qué tipo son, y además te ayudan a escribir mejor.',
+  apartados:[
+    {h:'1. El pronombre', html:`
+      <p>El <b>pronombre</b> es una palabra que <b>sustituye a un sustantivo</b> para no repetirlo. <i>«Laura vino tarde. <b>Ella</b> siempre llega tarde.»</i></p>
+      <div class="tabla"><table>
+        <tr><th>Tipo</th><th>Ejemplos</th></tr>
+        <tr><td><b>Personales</b></td><td>yo, tú, él, ella, nosotros, vosotros, ellos · me, te, se, lo, la, le, nos, os, los, las, les · mí, ti, conmigo, contigo</td></tr>
+        <tr><td><b>Demostrativos</b></td><td>este, ese, aquel (y sus femeninos y plurales), esto, eso, aquello</td></tr>
+        <tr><td><b>Posesivos</b></td><td>mío, tuyo, suyo, nuestro, vuestro (y sus formas)</td></tr>
+        <tr><td><b>Numerales</b></td><td>uno, dos, el primero, el tercero…</td></tr>
+        <tr><td><b>Indefinidos</b></td><td>alguien, nadie, algo, nada, alguno, ninguno, muchos, pocos, varios, otro</td></tr>
+        <tr><td><b>Interrogativos y exclamativos</b></td><td>qué, quién, cuál, cuánto (¡llevan tilde!)</td></tr>
+        <tr><td><b>Relativos</b></td><td>que, quien, cual, cuyo, donde: <i>El chico <b>que</b> vino es mi primo.</i></td></tr>
+      </table></div>
+      <p class="ojo"><b>¿Determinante o pronombre?</b> Si va <b>delante de un sustantivo</b>, es determinante (<i><b>este</b> coche</i>). Si va <b>solo</b>, en lugar del sustantivo, es pronombre (<i>Quiero <b>este</b></i>).</p>`},
+    {h:'2. El verbo', html:`
+      <p>El <b>verbo</b> expresa <b>acciones, estados o procesos</b> y es el núcleo del predicado. Tiene <b>lexema</b> (la raíz: <i>cant-</i>) y <b>desinencias</b> (las terminaciones: <i>-amos</i>) que indican:</p>
+      <ul><li><b>Persona y número:</b> 1.ª, 2.ª, 3.ª, singular o plural (<i>canto</i> = 1.ª singular; <i>cantáis</i> = 2.ª plural).</li>
+      <li><b>Tiempo:</b> presente (<i>como</i>), pasado (<i>comí, comía</i>), futuro (<i>comeré</i>).</li>
+      <li><b>Modo:</b> <b>indicativo</b> (hechos reales: <i>vienes</i>), <b>subjuntivo</b> (deseos, dudas: <i>ojalá vengas</i>), <b>imperativo</b> (órdenes: <i>ven</i>).</li></ul>
+      <p>Hay <b>tres conjugaciones</b>: 1.ª en <b>-ar</b> (<i>cantar</i>), 2.ª en <b>-er</b> (<i>comer</i>), 3.ª en <b>-ir</b> (<i>vivir</i>).</p>
+      <div class="tabla"><table>
+        <tr><th>Formas no personales</th><th>Ejemplo</th></tr>
+        <tr><td><b>Infinitivo</b> (-ar, -er, -ir)</td><td>cantar, comer, vivir</td></tr>
+        <tr><td><b>Gerundio</b> (-ando, -iendo)</td><td>cantando, comiendo, viviendo</td></tr>
+        <tr><td><b>Participio</b> (-ado, -ido)</td><td>cantado, comido, vivido</td></tr>
+      </table></div>
+      <p>Los tiempos <b>simples</b> son de una palabra (<i>comí</i>); los <b>compuestos</b> llevan <i>haber</i> + participio (<i>he comido, había comido</i>).</p>`},
+    {h:'3. El adverbio', html:`
+      <p>El <b>adverbio</b> es una palabra <b>invariable</b> (no cambia de género ni de número) que indica circunstancias de la acción.</p>
+      <div class="tabla"><table>
+        <tr><th>Clase</th><th>Ejemplos</th></tr>
+        <tr><td><b>Lugar</b></td><td>aquí, ahí, allí, cerca, lejos, arriba, abajo, dentro, fuera</td></tr>
+        <tr><td><b>Tiempo</b></td><td>hoy, ayer, mañana, ahora, luego, pronto, tarde, siempre, nunca, ya</td></tr>
+        <tr><td><b>Modo</b></td><td>bien, mal, así, despacio, deprisa, y los acabados en <b>-mente</b> (rápidamente)</td></tr>
+        <tr><td><b>Cantidad</b></td><td>mucho, poco, bastante, demasiado, más, menos, muy, casi</td></tr>
+        <tr><td><b>Afirmación / negación / duda</b></td><td>sí, también, claro · no, tampoco, jamás · quizá, tal vez, acaso</td></tr>
+      </table></div>
+      <p class="ojo"><b>Truco:</b> <i>muy</i> y <i>mucho</i> no cambian nunca cuando son adverbios: <i>Ella es <b>muy</b> alta. Ellos trabajan <b>mucho</b>.</i></p>`},
+    {h:'4. Preposiciones y conjunciones (los enlaces)', html:`
+      <p>Son palabras <b>invariables</b> que sirven para <b>unir</b>.</p>
+      <p><b>Preposiciones</b>: unen una palabra con su complemento. Apréndetelas de memoria:</p>
+      <p class="ej">a, ante, bajo, cabe, con, contra, de, desde, durante, en, entre, hacia, hasta, mediante, para, por, según, sin, so, sobre, tras, versus, vía</p>
+      <p><i>Voy <b>a</b> Málaga <b>con</b> mi hermana <b>en</b> tren.</i> Cuidado con las contracciones: <b>al</b> = a + el; <b>del</b> = de + el.</p>
+      <p><b>Conjunciones</b>: unen palabras u oraciones.</p>
+      <div class="tabla"><table>
+        <tr><th>Clase</th><th>Ejemplos</th></tr>
+        <tr><td><b>Copulativas</b> (suman)</td><td>y, e, ni</td></tr>
+        <tr><td><b>Disyuntivas</b> (eligen)</td><td>o, u</td></tr>
+        <tr><td><b>Adversativas</b> (oponen)</td><td>pero, sino, aunque, sin embargo</td></tr>
+        <tr><td><b>Causales</b></td><td>porque, ya que, puesto que</td></tr>
+        <tr><td><b>Consecutivas</b></td><td>así que, por tanto, luego</td></tr>
+        <tr><td><b>Condicionales</b></td><td>si, siempre que, con tal de que</td></tr>
+      </table></div>
+      <p class="ojo"><b>Ojo:</b> delante de palabra que empieza por <i>i-</i> o <i>hi-</i>, <i>y</i> pasa a <b>e</b> (<i>padre <b>e</b> hijo</i>); delante de <i>o-</i> u <i>ho-</i>, <i>o</i> pasa a <b>u</b> (<i>siete <b>u</b> ocho</i>).</p>`},
+    {h:'5. Cómo analizar las palabras de una frase', html:`
+      <p>Ve palabra por palabra y pregúntate qué es:</p>
+      <p class="ej"><i>«Ayer mis amigos y yo comimos tranquilamente en la playa.»</i><br>
+      Ayer: adverbio de tiempo · mis: determinante posesivo · amigos: sustantivo común · y: conjunción copulativa · yo: pronombre personal · comimos: verbo (comer, 1.ª pers. plural, pasado, indicativo) · tranquilamente: adverbio de modo · en: preposición · la: determinante artículo · playa: sustantivo común</p>
+      <p class="ojo"><b>Pistas rápidas:</b> si puedes ponerlo en plural, no es adverbio, preposición ni conjunción. Si cambia con la persona (<i>como, comes, come</i>), es verbo.</p>`}
+  ],
+  juego:'lengua-palabras-2',
+  ficha:{ ejercicios:[
+    {e:'¿Qué tipo de pronombre es la palabra en mayúsculas?', items:['a) ELLA trabaja en un hotel.','b) Ese móvil es MÍO.','c) ¿QUIÉN ha llamado?','d) No ha venido NADIE.','e) Quiero AQUEL.','f) El libro QUE me dejaste es genial.'], lineas:0,
+      sol:'a) Personal · b) Posesivo · c) Interrogativo · d) Indefinido · e) Demostrativo · f) Relativo'},
+    {e:'¿Determinante o pronombre?', items:['a) Este coche es nuevo.','b) Me gusta este.','c) Algunos alumnos han aprobado.','d) Algunos no vinieron.'], lineas:0,
+      sol:'a) Determinante · b) Pronombre · c) Determinante · d) Pronombre'},
+    {e:'Di la persona, el número, el tiempo y el modo de cada verbo.', items:['a) cantamos','b) comiste','c) vivirán','d) ojalá vengas','e) come (tú)'], lineas:5,
+      sol:'a) 1.ª plural, presente (o pasado), indicativo · b) 2.ª singular, pasado, indicativo · c) 3.ª plural, futuro, indicativo · d) 2.ª singular, presente, subjuntivo · e) 2.ª singular, imperativo'},
+    {e:'Escribe el infinitivo, el gerundio y el participio.', items:['a) hablar','b) beber','c) salir'], lineas:0,
+      sol:'a) hablar, hablando, hablado · b) beber, bebiendo, bebido · c) salir, saliendo, salido'},
+    {e:'¿A qué conjugación pertenece cada verbo?', items:['a) trabajar','b) correr','c) escribir','d) estudiar','e) leer'], lineas:0,
+      sol:'a) 1.ª · b) 2.ª · c) 3.ª · d) 1.ª · e) 2.ª'},
+    {e:'Clasifica los adverbios: lugar, tiempo, modo, cantidad o negación.', items:['aquí','mañana','despacio','mucho','nunca','lejos','bien','tampoco'], lineas:3,
+      sol:'Lugar: aquí, lejos. Tiempo: mañana, nunca. Modo: despacio, bien. Cantidad: mucho. Negación: tampoco (nunca también puede verse como negación).'},
+    {e:'Completa con una preposición.', items:['a) Vengo ______ Granada.','b) El regalo es ______ ti.','c) Café ______ azúcar, por favor.','d) Trabajo ______ las nueve ______ las tres.'], lineas:0,
+      sol:'a) de · b) para · c) sin · d) desde / de, hasta / a'},
+    {e:'Completa con la conjunción y di de qué tipo es: y / e / o / u / pero / porque.', items:['a) Madre ______ hija.','b) No vino ______ estaba enfermo.','c) ¿Quieres té ______ café?','d) Es caro, ______ es muy bueno.','e) Siete ______ ocho personas.'], lineas:0,
+      sol:'a) e (copulativa) · b) porque (causal) · c) o (disyuntiva) · d) pero (adversativa) · e) u (disyuntiva)'},
+    {e:'Analiza cada palabra de la frase: «Mañana mi hermano y yo iremos rápidamente al centro».', items:[], lineas:5,
+      sol:'Mañana: adverbio de tiempo · mi: determinante posesivo · hermano: sustantivo común · y: conjunción copulativa · yo: pronombre personal · iremos: verbo ir, 1.ª plural, futuro, indicativo · rápidamente: adverbio de modo · al: preposición a + artículo el · centro: sustantivo común.'},
+    {e:'Escribe un texto de 5 líneas sobre lo que hiciste el fin de semana. Después subraya dos verbos, dos adverbios y dos preposiciones.', items:[], lineas:6,
+      sol:'Respuesta libre. Comprueba que los verbos cambian con la persona, que los adverbios no cambian de forma y que las preposiciones están en la lista (a, con, de, en, por, para…).'}
+  ]}
+};
+
+JUEGOS['lengua-palabras-2'] = { ambito:'comunicacion', titulo:'Clases de palabras II', preguntas:[
+  {q:'El pronombre sirve para…', op:['Sustituir a un sustantivo','Unir oraciones','Indicar el modo','Expresar una acción'], ok:0, ex:'Evita repetir el sustantivo.'},
+  {q:'«ELLA trabaja en Marbella». «Ella» es un pronombre…', op:['Personal','Posesivo','Demostrativo','Relativo'], ok:0, ex:'yo, tú, él, ella…'},
+  {q:'«Ese libro es MÍO». «Mío» es un pronombre…', op:['Posesivo','Personal','Indefinido','Numeral'], ok:0, ex:'Indica a quién pertenece.'},
+  {q:'«No ha venido NADIE». «Nadie» es un pronombre…', op:['Indefinido','Demostrativo','Interrogativo','Personal'], ok:0, ex:'alguien, nadie, algo, nada…'},
+  {q:'«El chico QUE vino es mi primo». «Que» es un pronombre…', op:['Relativo','Interrogativo','Personal','Exclamativo'], ok:0, ex:'Une y se refiere al sustantivo anterior (chico).'},
+  {q:'En «Quiero ESTE», «este» es…', op:['Pronombre','Determinante','Adverbio','Adjetivo'], ok:0, ex:'Va solo, sin sustantivo.'},
+  {q:'En «ESTE coche es rojo», «este» es…', op:['Determinante','Pronombre','Adverbio','Verbo'], ok:0, ex:'Va delante del sustantivo.'},
+  {q:'¿Qué palabra es un verbo?', op:['corremos','rápido','carrera','corredor'], ok:0, ex:'Cambia con la persona: corro, corres, corremos.'},
+  {q:'«Comimos» está en…', op:['1.ª persona del plural, pasado','3.ª persona del singular, presente','2.ª persona del plural, futuro','1.ª persona del singular, presente'], ok:0, ex:'Nosotros comimos (ayer).'},
+  {q:'«Ojalá vengas» está en modo…', op:['Subjuntivo','Indicativo','Imperativo','Infinitivo'], ok:0, ex:'Expresa un deseo.'},
+  {q:'«¡Ven aquí!» está en modo…', op:['Imperativo','Subjuntivo','Indicativo','Gerundio'], ok:0, ex:'Es una orden.'},
+  {q:'El gerundio de «escribir» es…', op:['escribiendo','escrito','escribir','escribido'], ok:0, ex:'Gerundio: -ando, -iendo.'},
+  {q:'El participio de «comer» es…', op:['comido','comiendo','comer','comía'], ok:0, ex:'Participio: -ado, -ido.'},
+  {q:'«Vivir» es de la…', op:['3.ª conjugación','1.ª conjugación','2.ª conjugación','4.ª conjugación'], ok:0, ex:'-ar 1.ª, -er 2.ª, -ir 3.ª.'},
+  {q:'«He comido» es un tiempo…', op:['Compuesto','Simple','Imperativo','No personal'], ok:0, ex:'haber + participio.'},
+  {q:'El adverbio es una palabra…', op:['Invariable','Que cambia de género','Que cambia de número','Que sustituye al sustantivo'], ok:0, ex:'No tiene masculino, femenino ni plural.'},
+  {q:'«Lejos» es un adverbio de…', op:['Lugar','Tiempo','Modo','Cantidad'], ok:0, ex:'aquí, allí, cerca, lejos…'},
+  {q:'«Mañana» en «Vendré mañana» es un adverbio de…', op:['Tiempo','Lugar','Modo','Duda'], ok:0, ex:'hoy, ayer, mañana…'},
+  {q:'«Rápidamente» es un adverbio de…', op:['Modo','Tiempo','Cantidad','Lugar'], ok:0, ex:'Los acabados en -mente suelen ser de modo.'},
+  {q:'«Quizá» es un adverbio de…', op:['Duda','Afirmación','Negación','Lugar'], ok:0, ex:'quizá, tal vez, acaso.'},
+  {q:'¿Cuál es una preposición?', op:['hacia','hacía','hacer','hecho'], ok:0, ex:'a, ante, bajo… hacia, hasta…'},
+  {q:'«Al» es la contracción de…', op:['a + el','a + la','a + lo','al + el'], ok:0, ex:'Del = de + el.'},
+  {q:'«Café ___ leche»: la preposición correcta es…', op:['con','y','pero','que'], ok:0, ex:'Con indica compañía.'},
+  {q:'«Pero» es una conjunción…', op:['Adversativa','Copulativa','Disyuntiva','Causal'], ok:0, ex:'Opone ideas.'},
+  {q:'«Porque» es una conjunción…', op:['Causal','Consecutiva','Copulativa','Adversativa'], ok:0, ex:'Indica la causa.'},
+  {q:'«Padre ___ hijo»: lo correcto es…', op:['e','y','u','o'], ok:0, ex:'Delante de i- o hi-, y pasa a e.'},
+  {q:'«Siete ___ ocho»: lo correcto es…', op:['u','o','e','y'], ok:0, ex:'Delante de o- u ho-, o pasa a u.'},
+  {q:'«¿Té o café?»: «o» es una conjunción…', op:['Disyuntiva','Copulativa','Causal','Condicional'], ok:0, ex:'Hay que elegir.'},
+  {q:'En «Mi hermano trabaja MUY bien», «muy» es…', op:['Adverbio de cantidad','Adjetivo','Determinante','Pronombre'], ok:0, ex:'Muy no cambia nunca.'},
+  {q:'«Si llueve, no salgo»: «si» es…', op:['Conjunción condicional','Adverbio de afirmación','Pronombre','Preposición'], ok:0, ex:'Sin tilde: condición. Con tilde (sí) es afirmación.'}
+]};
+
+TEMAS['ingles-present-continuous'] = { ambito:'comunicacion', area:'Inglés', clase:7, titulo:'Present continuous · clothes · describing people',
+  intro:'Say what is happening now, describe what people are wearing and what they look like, and use object pronouns (me, him, them…). Very common in the reading and the multiple choice.',
+  apartados:[
+    {h:'1. Present continuous: what is happening now', html:`
+      <p>Se forma con <b>am / is / are + verbo-ing</b>. Se usa para acciones que <b>están pasando ahora</b> o planes cercanos.</p>
+      <div class="tabla"><table>
+        <tr><th>Afirmativa</th><th>Negativa</th><th>Pregunta</th></tr>
+        <tr><td>I <b>am working</b> (I’m working)</td><td>I <b>’m not working</b></td><td><b>Am</b> I working?</td></tr>
+        <tr><td>He / She / It <b>is working</b></td><td>She <b>isn’t working</b></td><td><b>Is</b> she working?</td></tr>
+        <tr><td>You / We / They <b>are working</b></td><td>They <b>aren’t working</b></td><td><b>Are</b> they working?</td></tr>
+      </table></div>
+      <p>Respuestas cortas: <i>Yes, I am. / No, she isn’t. / Yes, they are.</i></p>
+      <p class="ojo"><b>Palabras pista:</b> <i>now, right now, at the moment, today, look!, listen!</i> → present continuous. <i>every day, always, usually</i> → present simple.</p>`},
+    {h:'2. Cómo se escribe el -ing', html:`
+      <div class="tabla"><table>
+        <tr><th>Regla</th><th>Ejemplos</th></tr>
+        <tr><td>La mayoría: + <b>-ing</b></td><td>work → working, play → playing, read → reading</td></tr>
+        <tr><td>Acaban en <b>-e</b>: quitan la e</td><td>write → writing, dance → dancing, make → making</td></tr>
+        <tr><td>Consonante-vocal-consonante: <b>doblan</b> la última</td><td>run → running, swim → swimming, sit → sitting, get → getting</td></tr>
+        <tr><td>Acaban en <b>-ie</b>: cambian a <b>-ying</b></td><td>lie → lying, die → dying</td></tr>
+      </table></div>`},
+    {h:'3. Present simple or present continuous?', html:`
+      <div class="tabla"><table>
+        <tr><th>Present simple</th><th>Present continuous</th></tr>
+        <tr><td>Rutinas y cosas que son siempre así</td><td>Lo que pasa ahora mismo</td></tr>
+        <tr><td><i>I <b>work</b> in a bar every weekend.</i></td><td><i>I<b>’m working</b> now, call me later.</i></td></tr>
+        <tr><td><i>She <b>wears</b> jeans every day.</i></td><td><i>Today she<b>’s wearing</b> a dress.</i></td></tr>
+      </table></div>
+      <p class="ojo"><b>Ojo:</b> algunos verbos casi nunca van en -ing: <b>like, love, hate, want, need, know, understand</b>. <i>I want a coffee</i> (no <s>I’m wanting</s>).</p>`},
+    {h:'4. Clothes and describing people', html:`
+      <div class="tabla"><table>
+        <tr><th>Clothes</th><th></th><th>Describing people</th></tr>
+        <tr><td>T-shirt · shirt · jumper / sweater · jacket · coat</td><td>camiseta · camisa · jersey · chaqueta · abrigo</td><td><b>tall / short</b> (alto / bajo) · <b>slim / thin / fat</b></td></tr>
+        <tr><td>trousers · jeans · shorts · skirt · dress</td><td>pantalones · vaqueros · pantalón corto · falda · vestido</td><td><b>long / short / curly / straight hair</b> · <b>blond / dark / red hair</b></td></tr>
+        <tr><td>shoes · trainers · boots · socks</td><td>zapatos · zapatillas · botas · calcetines</td><td><b>blue / brown / green eyes</b> · <b>a beard / a moustache / glasses</b></td></tr>
+        <tr><td>hat · cap · scarf · belt</td><td>sombrero · gorra · bufanda · cinturón</td><td><b>young / old / middle-aged</b> · <b>good-looking</b></td></tr>
+      </table></div>
+      <p class="ej"><i>My friend Sara is tall and slim. She has got long dark hair and brown eyes. Today she is wearing jeans, a white T-shirt and trainers.</i></p>
+      <p class="ojo"><b>Ojo con el orden:</b> en inglés el adjetivo va <b>delante</b>: <i>a <b>red</b> dress</i>, <i><b>long black</b> hair</i>. Y <i>hair</i> no lleva plural.</p>`},
+    {h:'5. Object pronouns and ’s', html:`
+      <div class="tabla"><table>
+        <tr><th>Sujeto</th><th>I</th><th>you</th><th>he</th><th>she</th><th>it</th><th>we</th><th>they</th></tr>
+        <tr><td><b>Objeto</b></td><td>me</td><td>you</td><td>him</td><td>her</td><td>it</td><td>us</td><td>them</td></tr>
+      </table></div>
+      <p>El pronombre objeto va <b>detrás del verbo o de una preposición</b>: <i>I love <b>her</b>. Call <b>me</b>. This is for <b>them</b>.</i></p>
+      <p><b>’s</b> (genitivo sajón) = «de»: <i><b>Ana’s</b> jacket</i> = la chaqueta de Ana. En plural acabado en -s, solo apóstrofo: <i>my parents’ house</i>.</p>`}
+  ],
+  juego:'ingles-present-continuous',
+  ficha:{ ejercicios:[
+    {e:'Write the -ing form.', items:['a) work →','b) write →','c) run →','d) play →','e) swim →','f) make →','g) sit →','h) read →'], lineas:0,
+      sol:'a) working · b) writing · c) running · d) playing · e) swimming · f) making · g) sitting · h) reading'},
+    {e:'Complete with the present continuous.', items:['a) I ______ (study) English now.','b) She ______ (cook) dinner.','c) They ______ (watch) TV.','d) We ______ (wait) for the bus.','e) He ______ (not / work) today.','f) ______ you ______ (listen) to me?'], lineas:0,
+      sol:'a) am studying (I’m studying) · b) is cooking · c) are watching · d) are waiting · e) isn’t working · f) Are, listening'},
+    {e:'Present simple or present continuous? Choose.', items:['a) I (work / am working) every day from 9 to 3.','b) Look! It (rains / is raining).','c) She usually (wears / is wearing) jeans.','d) Be quiet, the baby (sleeps / is sleeping).','e) We (go / are going) to the beach every summer.'], lineas:0,
+      sol:'a) work · b) is raining · c) wears · d) is sleeping · e) go'},
+    {e:'Write the object pronoun.', items:['a) I love Ana. I love ______.','b) Call Pedro. Call ______.','c) Look at the dogs. Look at ______.','d) Help Luis and me. Help ______.','e) Where is my phone? I can’t find ______.'], lineas:0,
+      sol:'a) her · b) him · c) them · d) us · e) it'},
+    {e:'Clothes: write the words in English.', items:['camiseta','pantalones','falda','zapatillas','chaqueta','vestido','gorra','abrigo'], lineas:3,
+      sol:'T-shirt · trousers · skirt · trainers · jacket · dress · cap · coat'},
+    {e:'Translate into English.', items:['a) Ella tiene el pelo largo y rizado.','b) Él es alto y lleva gafas.','c) Hoy llevo una camiseta negra.','d) La chaqueta de Ana es roja.'], lineas:0,
+      sol:'a) She has got long curly hair. · b) He is tall and he wears glasses. · c) Today I’m wearing a black T-shirt. · d) Ana’s jacket is red.'},
+    {e:'Correct the mistakes.', items:['a) She is work now.','b) I am wanting a coffee.','c) They is playing football.','d) He has got hairs long.'], lineas:0,
+      sol:'a) She is working now. · b) I want a coffee. · c) They are playing football. · d) He has got long hair.'},
+    {e:'Writing (50-70 words): describe a friend or a family member. Say what he/she looks like and what he/she is wearing today.', items:[], lineas:8,
+      sol:'Respuesta libre. Modelo: My cousin Adam is 20. He is tall and thin. He has got short black hair, brown eyes and a beard. Today he is wearing blue jeans, a grey jumper and white trainers. He is very funny and he always helps me.'}
+  ]}
+};
+
+JUEGOS['ingles-present-continuous'] = { ambito:'comunicacion', titulo:'Present continuous and clothes', preguntas:[
+  {q:'She ___ working now.', op:['is','are','am','does'], ok:0, ex:'She → is + -ing.'},
+  {q:'They ___ playing football.', op:['are','is','am','do'], ok:0, ex:'They → are.'},
+  {q:'I ___ watching TV.', op:['am','is','are','be'], ok:0, ex:'I → am.'},
+  {q:'The -ing form of «write» is…', op:['writing','writting','writeing','wrote'], ok:0, ex:'Acaba en -e: se quita la e.'},
+  {q:'The -ing form of «run» is…', op:['running','runing','runeing','ran'], ok:0, ex:'Consonante-vocal-consonante: se dobla.'},
+  {q:'The -ing form of «swim» is…', op:['swimming','swiming','swimeing','swam'], ok:0, ex:'Se dobla la m.'},
+  {q:'The -ing form of «play» is…', op:['playing','plaing','playying','played'], ok:0, ex:'Solo se añade -ing.'},
+  {q:'Negative: «He is cooking» →', op:['He isn’t cooking','He doesn’t cooking','He not cooking','He don’t cook'], ok:0, ex:'is not = isn’t.'},
+  {q:'Question: «They are sleeping» →', op:['Are they sleeping?','Do they sleeping?','They are sleeping?','Is they sleeping?'], ok:0, ex:'Se invierte: Are + sujeto + -ing.'},
+  {q:'«Is she studying?» — «Yes, …»', op:['she is','she does','she studying','she are'], ok:0, ex:'Respuesta corta con is.'},
+  {q:'Look! It ___.', op:['is raining','rains','rain','raining'], ok:0, ex:'Look! = ahora mismo.'},
+  {q:'I ___ in a shop every Saturday.', op:['work','am working','working','works'], ok:0, ex:'Every Saturday = rutina: present simple.'},
+  {q:'«I ___ a coffee, please.»', op:['want','am wanting','wanting','wants'], ok:0, ex:'Want casi nunca va en -ing.'},
+  {q:'Which word goes with the present continuous?', op:['now','every day','usually','always'], ok:0, ex:'now, at the moment, today…'},
+  {q:'«Pantalones» in English is…', op:['trousers','skirt','shirt','shoes'], ok:0, ex:'trousers (siempre en plural).'},
+  {q:'«Falda» in English is…', op:['skirt','dress','scarf','shirt'], ok:0, ex:'dress = vestido.'},
+  {q:'«Zapatillas de deporte» in English are…', op:['trainers','boots','socks','slippers'], ok:0, ex:'trainers (UK) o sneakers (US).'},
+  {q:'«Abrigo» in English is…', op:['coat','cap','jacket','jumper'], ok:0, ex:'jacket = chaqueta.'},
+  {q:'«Gafas» in English are…', op:['glasses','eyes','gloves','beard'], ok:0, ex:'He wears glasses.'},
+  {q:'Correct order:', op:['She has got long black hair','She has got hair long black','She has got black long hairs','She has got long black hairs'], ok:0, ex:'Adjetivos delante y hair sin plural.'},
+  {q:'«Barba» in English is…', op:['beard','moustache','hair','chin'], ok:0, ex:'moustache = bigote.'},
+  {q:'Opposite of «tall»:', op:['short','long','slim','old'], ok:0, ex:'tall / short (personas).'},
+  {q:'I love Ana. I love ___.', op:['her','she','him','hers'], ok:0, ex:'she → her (objeto).'},
+  {q:'Call Pedro. Call ___.', op:['him','he','his','them'], ok:0, ex:'he → him.'},
+  {q:'This is for my parents. This is for ___.', op:['them','they','their','us'], ok:0, ex:'they → them.'},
+  {q:'Can you help ___? (a nosotros)', op:['us','we','our','them'], ok:0, ex:'we → us.'},
+  {q:'«La chaqueta de Ana» is…', op:['Ana’s jacket','The jacket Ana','Ana jacket’s','The Ana’s jacket'], ok:0, ex:'Genitivo sajón: nombre + ’s.'},
+  {q:'«La casa de mis padres» is…', op:['my parents’ house','my parent’s house','my parents house’s','the house my parents'], ok:0, ex:'Plural en -s: solo apóstrofo.'},
+  {q:'What is she wearing?', op:['A red dress and boots','She is tall','Yes, she is','She wears every day'], ok:0, ex:'Se pregunta por la ropa.'},
+  {q:'«Today I ___ a black T-shirt.»', op:['’m wearing','wearing','wear always','am wear'], ok:0, ex:'Today = hoy, en este momento.'}
+]};
+
+TEMAS['lengua-literatura-1'] = { ambito:'comunicacion', area:'Lengua', clase:8, titulo:'Literatura I: géneros literarios, figuras retóricas y métrica',
+  intro:'En el examen puede salir un poema o un fragmento literario: tendrás que decir a qué género pertenece, encontrar alguna figura retórica y medir versos. Aquí tienes todo lo básico.',
+  apartados:[
+    {h:'1. ¿Qué es la literatura?', html:`
+      <p>Un texto literario usa el lenguaje de forma <b>artística</b>, para crear belleza y emocionar, no solo para informar. Predomina la <b>función poética</b>. Puede estar escrito en <b>verso</b> (líneas cortas con ritmo, como los poemas) o en <b>prosa</b> (líneas seguidas, como las novelas).</p>`},
+    {h:'2. Los géneros literarios', html:`
+      <div class="tabla"><table>
+        <tr><th>Género</th><th>Qué hace</th><th>Subgéneros</th></tr>
+        <tr><td><b>Lírico</b> (lírica)</td><td>Expresa <b>sentimientos</b> y emociones del poeta. Casi siempre en verso.</td><td>Canción, oda, elegía (tristeza por una muerte), égloga, sátira, soneto</td></tr>
+        <tr><td><b>Narrativo</b> (narrativa)</td><td><b>Cuenta una historia</b> con un narrador, personajes, tiempo y lugar.</td><td>Novela, cuento, leyenda, fábula, epopeya, romance</td></tr>
+        <tr><td><b>Dramático</b> (teatro)</td><td>Se escribe para ser <b>representado</b>. Los personajes hablan en diálogo, con acotaciones.</td><td>Tragedia, comedia, drama</td></tr>
+      </table></div>
+      <p class="ojo"><b>Truco:</b> lírica = <b>sentir</b>; narrativa = <b>contar</b>; teatro = <b>representar</b>.</p>`},
+    {h:'3. Las figuras retóricas', html:`
+      <p>Son formas especiales de usar el lenguaje para embellecerlo. Las que más caen:</p>
+      <div class="tabla"><table>
+        <tr><th>Figura</th><th>Qué es</th><th>Ejemplo</th></tr>
+        <tr><td><b>Comparación o símil</b></td><td>Compara dos cosas con <i>como, igual que, parece</i></td><td><i>Tus ojos son <b>como</b> el mar.</i></td></tr>
+        <tr><td><b>Metáfora</b></td><td>Identifica una cosa con otra <b>sin</b> «como»</td><td><i>Tus ojos son dos luceros.</i></td></tr>
+        <tr><td><b>Personificación</b></td><td>Da cualidades humanas a cosas o animales</td><td><i>El viento llora en la ventana.</i></td></tr>
+        <tr><td><b>Hipérbole</b></td><td>Exageración</td><td><i>Te lo he dicho un millón de veces.</i></td></tr>
+        <tr><td><b>Anáfora</b></td><td>Repetir palabras al principio de varios versos</td><td><i><b>Por</b> una mirada, un mundo; / <b>por</b> una sonrisa, un cielo</i> (Bécquer)</td></tr>
+        <tr><td><b>Aliteración</b></td><td>Repetir un sonido</td><td><i>En el silencio sólo se escuchaba / un susurro de abejas que sonaba</i> (Garcilaso)</td></tr>
+        <tr><td><b>Antítesis</b></td><td>Unir ideas opuestas</td><td><i>Es tan corto el amor y tan largo el olvido.</i></td></tr>
+        <tr><td><b>Epíteto</b></td><td>Adjetivo que dice algo que ya se sabe</td><td><i>la blanca nieve</i>, <i>la verde hierba</i></td></tr>
+        <tr><td><b>Hipérbaton</b></td><td>Cambiar el orden normal de la frase</td><td><i>Volverán las oscuras golondrinas / en tu balcón sus nidos a colgar</i> (Bécquer)</td></tr>
+        <tr><td><b>Paralelismo</b></td><td>Repetir la misma estructura</td><td><i>Tus ojos me miran, tus manos me buscan.</i></td></tr>
+      </table></div>`},
+    {h:'4. El verso: cómo se cuentan las sílabas', html:`
+      <p>Para medir un verso se cuentan sus <b>sílabas métricas</b>, con tres reglas:</p>
+      <ul><li><b>Sinalefa:</b> si una palabra acaba en vocal y la siguiente empieza por vocal (o h + vocal), se cuentan juntas: <i>to-da_u-na</i>.</li>
+      <li><b>Final agudo:</b> si el verso acaba en palabra aguda, se suma <b>+1</b>.</li>
+      <li><b>Final esdrújulo:</b> si acaba en palabra esdrújula, se resta <b>−1</b>. Si acaba en llana, se queda igual.</li></ul>
+      <p class="ej"><i>Ver-de-que-te-quie-ro-ver-de</i> → 8 sílabas (acaba en llana). <i>Que es-mi-Dios-la-li-ber-tad</i> → 7 + 1 = 8 (acaba en aguda).</p>
+      <p>Versos de <b>arte menor</b>: hasta 8 sílabas (el más usado, el <b>octosílabo</b>). De <b>arte mayor</b>: 9 o más (el más famoso, el <b>endecasílabo</b>, de 11).</p>`},
+    {h:'5. La rima y las estrofas', html:`
+      <p>La <b>rima</b> es la repetición de sonidos al final de los versos, desde la última vocal acentuada.</p>
+      <ul><li><b>Consonante:</b> se repiten vocales y consonantes: <i>can<b>ción</b> / cora<b>zón</b></i>.</li>
+      <li><b>Asonante:</b> solo se repiten las vocales: <i>l<b>u</b>n<b>a</b> / c<b>u</b>n<b>a</b></i> y <i>s<b>u</b>p<b>a</b></i>.</li></ul>
+      <p>Se marca con <b>letras</b>: minúscula si es de arte menor y mayúscula si es de arte mayor. Los versos sin rima se marcan con un guion. Ejemplo: <b>8a 8b 8a 8b</b>.</p>
+      <div class="tabla"><table>
+        <tr><th>Estrofa</th><th>Cómo es</th></tr>
+        <tr><td><b>Pareado</b></td><td>2 versos que riman entre sí (aa)</td></tr>
+        <tr><td><b>Cuarteto</b></td><td>4 versos de arte mayor, ABBA</td></tr>
+        <tr><td><b>Redondilla</b></td><td>4 versos de arte menor, abba</td></tr>
+        <tr><td><b>Romance</b></td><td>Serie de octosílabos con rima asonante en los pares (-a-a-a…)</td></tr>
+        <tr><td><b>Soneto</b></td><td>14 endecasílabos: dos cuartetos y dos tercetos</td></tr>
+      </table></div>`}
+  ],
+  juego:'lengua-literatura-1',
+  ficha:{ ejercicios:[
+    {e:'¿A qué género pertenece cada texto: lírico, narrativo o dramático?', items:['a) Una novela sobre un detective','b) Un poema sobre la tristeza de una despedida','c) Una obra con diálogos y acotaciones para representar','d) Un cuento infantil','e) Una canción de amor','f) Una comedia'], lineas:0,
+      sol:'a) Narrativo · b) Lírico · c) Dramático · d) Narrativo · e) Lírico · f) Dramático'},
+    {e:'¿Qué figura retórica hay en cada frase?', items:['a) Tus dientes son perlas.','b) Es fuerte como un toro.','c) La luna nos miraba en silencio.','d) Me muero de hambre, me comería una vaca.','e) La blanca nieve cubría el monte.','f) Por ti lloro, por ti canto, por ti vivo.'], lineas:0,
+      sol:'a) Metáfora · b) Comparación o símil · c) Personificación · d) Hipérbole · e) Epíteto · f) Anáfora'},
+    {e:'Explica la diferencia entre comparación y metáfora con un ejemplo tuyo de cada una.', items:[], lineas:3,
+      sol:'La comparación usa «como» (Tu pelo es como el oro); la metáfora identifica sin «como» (Tu pelo es oro).'},
+    {e:'Cuenta las sílabas métricas de estos versos.', items:['a) «Ver-de que te quie-ro ver-de»','b) «Que es mi Dios la li-ber-tad»','c) «Can-ta-ba la ma-ña-na»'], lineas:3,
+      sol:'a) 8 sílabas · b) 7 + 1 (final agudo) = 8 sílabas · c) 7 sílabas'},
+    {e:'¿Arte mayor o arte menor?', items:['a) Un verso de 8 sílabas','b) Un verso de 11 sílabas','c) Un verso de 6 sílabas','d) Un verso de 14 sílabas'], lineas:0,
+      sol:'a) Menor · b) Mayor · c) Menor · d) Mayor'},
+    {e:'¿Rima consonante o asonante?', items:['a) canción / corazón','b) luna / cuna','c) mesa / fresa','d) casa / playa'], lineas:0,
+      sol:'a) Consonante · b) Consonante · c) Consonante · d) Asonante (solo a-a)'},
+    {e:'Une cada estrofa con su descripción.', items:['Pareado','Cuarteto','Redondilla','Soneto','→ 14 versos endecasílabos','→ 2 versos que riman','→ 4 versos de arte menor, abba','→ 4 versos de arte mayor, ABBA'], lineas:0,
+      sol:'Pareado → 2 versos que riman · Cuarteto → 4 de arte mayor ABBA · Redondilla → 4 de arte menor abba · Soneto → 14 endecasílabos.'},
+    {lectura:true, e:'Lee estos versos de Antonio Machado.', items:['«Caminante, son tus huellas / el camino y nada más; / caminante, no hay camino, / se hace camino al andar.»'], lineas:0},
+    {e:'Responde sobre los versos de Machado.', items:['a) ¿A qué género pertenecen?','b) ¿Qué palabra se repite al principio de dos versos? ¿Cómo se llama esa figura?','c) ¿Qué crees que quiere decir el poeta?'], lineas:5,
+      sol:'a) Lírico. · b) «Caminante»: anáfora. · c) Que la vida no está hecha de antemano: cada persona construye su camino con lo que hace.'},
+    {e:'Escribe un poema de cuatro versos sobre tu barrio. Usa al menos una metáfora o una comparación.', items:[], lineas:5,
+      sol:'Respuesta libre. Comprueba que hay cuatro versos, alguna rima y al menos una figura (por ejemplo: «Mi barrio es un abrazo», «las calles suenan como una canción»).'}
+  ]}
+};
+
+JUEGOS['lengua-literatura-1'] = { ambito:'comunicacion', titulo:'Géneros, figuras y métrica', preguntas:[
+  {q:'El género que expresa sentimientos es el…', op:['Lírico','Narrativo','Dramático','Periodístico'], ok:0, ex:'Lírica = sentir.'},
+  {q:'El género que cuenta una historia es el…', op:['Narrativo','Lírico','Dramático','Expositivo'], ok:0, ex:'Novela, cuento, leyenda…'},
+  {q:'El teatro pertenece al género…', op:['Dramático','Lírico','Narrativo','Didáctico'], ok:0, ex:'Se escribe para representarse.'},
+  {q:'¿Qué es una novela?', op:['Un subgénero narrativo','Un subgénero lírico','Una estrofa','Una figura retórica'], ok:0, ex:'Narración larga en prosa.'},
+  {q:'La comedia y la tragedia son subgéneros…', op:['Dramáticos','Líricos','Narrativos','Periodísticos'], ok:0, ex:'Teatro.'},
+  {q:'Las indicaciones del autor en el teatro (gestos, decorado) se llaman…', op:['Acotaciones','Estrofas','Rimas','Diálogos'], ok:0, ex:'Suelen ir entre paréntesis.'},
+  {q:'«Tus ojos son como el mar» es una…', op:['Comparación','Metáfora','Hipérbole','Anáfora'], ok:0, ex:'Lleva «como».'},
+  {q:'«Tus ojos son dos luceros» es una…', op:['Metáfora','Comparación','Personificación','Epíteto'], ok:0, ex:'Identifica sin «como».'},
+  {q:'«El viento llora en la ventana» es una…', op:['Personificación','Hipérbole','Antítesis','Aliteración'], ok:0, ex:'El viento no llora: es algo humano.'},
+  {q:'«Te he llamado mil veces» es una…', op:['Hipérbole','Metáfora','Epíteto','Anáfora'], ok:0, ex:'Exageración.'},
+  {q:'«La blanca nieve» es un…', op:['Epíteto','Hipérbaton','Símil','Paralelismo'], ok:0, ex:'La nieve ya es blanca.'},
+  {q:'Repetir la misma palabra al principio de varios versos es una…', op:['Anáfora','Aliteración','Antítesis','Hipérbole'], ok:0, ex:'Por ti… por ti… por ti…'},
+  {q:'Repetir un mismo sonido es una…', op:['Aliteración','Anáfora','Metáfora','Epíteto'], ok:0, ex:'Un susurro de abejas que sonaba.'},
+  {q:'«Es tan corto el amor y tan largo el olvido» contiene una…', op:['Antítesis','Personificación','Epíteto','Comparación'], ok:0, ex:'Opone corto/largo, amor/olvido.'},
+  {q:'Cambiar el orden normal de la frase es un…', op:['Hipérbaton','Paralelismo','Pareado','Epíteto'], ok:0, ex:'«Del salón en el ángulo oscuro».'},
+  {q:'Cuando una palabra acaba en vocal y la siguiente empieza por vocal, se unen. Es la…', op:['Sinalefa','Rima','Anáfora','Estrofa'], ok:0, ex:'to-da_u-na.'},
+  {q:'Si el verso acaba en palabra aguda…', op:['Se suma una sílaba','Se resta una sílaba','Se queda igual','Se suman dos'], ok:0, ex:'Aguda +1, esdrújula −1.'},
+  {q:'Si el verso acaba en palabra esdrújula…', op:['Se resta una sílaba','Se suma una sílaba','Se queda igual','No se cuenta'], ok:0, ex:'−1.'},
+  {q:'«Ver-de-que-te-quie-ro-ver-de» tiene…', op:['8 sílabas','7 sílabas','9 sílabas','11 sílabas'], ok:0, ex:'Acaba en llana: 8.'},
+  {q:'Un verso de 8 sílabas se llama…', op:['Octosílabo','Endecasílabo','Heptasílabo','Alejandrino'], ok:0, ex:'Es de arte menor.'},
+  {q:'Un verso de 11 sílabas se llama…', op:['Endecasílabo','Octosílabo','Decasílabo','Alejandrino'], ok:0, ex:'El más usado en el soneto.'},
+  {q:'Los versos de arte mayor tienen…', op:['9 sílabas o más','8 sílabas o menos','Exactamente 8','Solo 11'], ok:0, ex:'Arte menor: hasta 8.'},
+  {q:'«Canción / corazón» tienen rima…', op:['Consonante','Asonante','Libre','No riman'], ok:0, ex:'Se repiten vocales y consonantes: -ón.'},
+  {q:'«Casa / playa» tienen rima…', op:['Asonante','Consonante','Libre','Pareada'], ok:0, ex:'Solo se repiten las vocales a-a.'},
+  {q:'Un soneto tiene…', op:['14 versos','4 versos','8 versos','2 versos'], ok:0, ex:'Dos cuartetos y dos tercetos.'},
+  {q:'Dos versos que riman entre sí forman un…', op:['Pareado','Cuarteto','Terceto','Romance'], ok:0, ex:'aa.'},
+  {q:'La redondilla tiene 4 versos de arte menor con rima…', op:['abba','ABBA','abab','aabb'], ok:0, ex:'Minúsculas = arte menor.'},
+  {q:'El romance es una serie de octosílabos con rima…', op:['Asonante en los pares','Consonante en todos','Sin rima','En los impares'], ok:0, ex:'-a-a-a…'},
+  {q:'En la métrica, la letra mayúscula (A, B) indica…', op:['Verso de arte mayor','Verso de arte menor','Verso sin rima','Verso agudo'], ok:0, ex:'Minúscula = arte menor.'},
+  {q:'«Caminante, no hay camino, se hace camino al andar» es de…', op:['Antonio Machado','Miguel de Cervantes','Lope de Vega','Benito Pérez Galdós'], ok:0, ex:'Poeta sevillano.'}
+]};
+
+TEMAS['ingles-past-simple'] = { ambito:'comunicacion', area:'Inglés', clase:8, titulo:'Past simple: was / were and regular verbs',
+  intro:'Talk about the past: where you were yesterday and what you did. With prepositions of time (in, on, at). Essential for the exam’s reading and writing.',
+  apartados:[
+    {h:'1. Was / were (pasado de to be)', html:`
+      <div class="tabla"><table>
+        <tr><th>Afirmativa</th><th>Negativa</th><th>Pregunta</th></tr>
+        <tr><td>I / He / She / It <b>was</b></td><td>I <b>wasn’t</b> (was not)</td><td><b>Was</b> she at home?</td></tr>
+        <tr><td>You / We / They <b>were</b></td><td>They <b>weren’t</b> (were not)</td><td><b>Were</b> you tired?</td></tr>
+      </table></div>
+      <p class="ej"><i>I <b>was</b> at work yesterday. We <b>were</b> in Granada last weekend. <b>Was</b> the film good? — Yes, it <b>was</b>.</i></p>
+      <p><b>There was / there were</b> = había: <i>There <b>was</b> a party. There <b>were</b> a lot of people.</i></p>`},
+    {h:'2. Regular verbs: -ed', html:`
+      <p>En el pasado, <b>todas las personas</b> usan la misma forma: <i>I worked, she worked, they worked.</i></p>
+      <div class="tabla"><table>
+        <tr><th>Regla</th><th>Ejemplos</th></tr>
+        <tr><td>La mayoría: + <b>-ed</b></td><td>work → worked, play → played, watch → watched</td></tr>
+        <tr><td>Acaban en <b>-e</b>: + <b>-d</b></td><td>live → lived, dance → danced, like → liked</td></tr>
+        <tr><td>Consonante + <b>-y</b>: <b>-ied</b></td><td>study → studied, try → tried (pero play → played)</td></tr>
+        <tr><td>Consonante-vocal-consonante: doblan</td><td>stop → stopped, plan → planned</td></tr>
+      </table></div>
+      <p class="ojo"><b>Pronunciación:</b> la -ed suena /t/ (<i>worked</i>), /d/ (<i>played</i>) o /id/ solo detrás de t o d (<i>wanted, needed</i>).</p>`},
+    {h:'3. Negative and questions: did', html:`
+      <div class="tabla"><table>
+        <tr><th>Negativa</th><th>Pregunta</th><th>Respuesta corta</th></tr>
+        <tr><td>I <b>didn’t</b> work yesterday.</td><td><b>Did</b> you work yesterday?</td><td>Yes, I did. / No, I didn’t.</td></tr>
+        <tr><td>She <b>didn’t</b> play.</td><td><b>Did</b> she play?</td><td>Yes, she did. / No, she didn’t.</td></tr>
+      </table></div>
+      <p class="ojo"><b>Muy importante:</b> después de <b>did / didn’t</b> el verbo va en <b>infinitivo</b>, sin -ed: <i>I didn’t <b>work</b></i> (no <s>didn’t worked</s>). <i>Did you <b>watch</b> the match?</i></p>`},
+    {h:'4. Time expressions', html:`
+      <p>Palabras que indican pasado: <b>yesterday</b> (ayer), <b>yesterday morning</b>, <b>last</b> night / week / year (la noche / semana / el año pasado), <b>two days ago</b> (hace dos días), <b>in 2020</b>, <b>when I was a child</b>.</p>
+      <p class="ej"><i>I <b>visited</b> my grandmother <b>last</b> Sunday. We <b>moved</b> to Málaga three years <b>ago</b>.</i></p>`},
+    {h:'5. Prepositions of time: in, on, at', html:`
+      <div class="tabla"><table>
+        <tr><th>in</th><th>on</th><th>at</th></tr>
+        <tr><td>meses, años, estaciones, partes del día</td><td>días y fechas</td><td>horas y momentos concretos</td></tr>
+        <tr><td><i>in May, in 2025, in summer, in the morning</i></td><td><i>on Monday, on 5th May, on my birthday</i></td><td><i>at 9 o’clock, at night, at the weekend, at Christmas</i></td></tr>
+      </table></div>
+      <p class="ojo"><b>Truco:</b> de lo más grande a lo más pequeño: <b>in</b> (meses, años) → <b>on</b> (días) → <b>at</b> (horas).</p>`}
+  ],
+  juego:'ingles-past-simple',
+  ficha:{ ejercicios:[
+    {e:'Complete with was or were.', items:['a) I ______ at home last night.','b) They ______ in Sevilla.','c) She ______ very tired.','d) We ______ at the beach.','e) The film ______ boring.','f) ______ you at school yesterday?'], lineas:0,
+      sol:'a) was · b) were · c) was · d) were · e) was · f) Were'},
+    {e:'Write the past simple.', items:['a) work →','b) live →','c) study →','d) play →','e) stop →','f) watch →','g) like →','h) try →'], lineas:0,
+      sol:'a) worked · b) lived · c) studied · d) played · e) stopped · f) watched · g) liked · h) tried'},
+    {e:'Complete with the past simple of the verb.', items:['a) I ______ (visit) my aunt yesterday.','b) She ______ (cook) a paella last Sunday.','c) We ______ (watch) a film last night.','d) They ______ (move) to Málaga in 2020.'], lineas:0,
+      sol:'a) visited · b) cooked · c) watched · d) moved'},
+    {e:'Make the sentences negative.', items:['a) I worked yesterday.','b) She played tennis.','c) They were at home.','d) He was happy.'], lineas:0,
+      sol:'a) I didn’t work yesterday. · b) She didn’t play tennis. · c) They weren’t at home. · d) He wasn’t happy.'},
+    {e:'Make questions.', items:['a) you / watch the match?','b) she / study last night?','c) they / be / at the party?'], lineas:0,
+      sol:'a) Did you watch the match? · b) Did she study last night? · c) Were they at the party?'},
+    {e:'Complete with in, on or at.', items:['a) ______ Monday','b) ______ 8 o’clock','c) ______ July','d) ______ 2024','e) ______ the morning','f) ______ night','g) ______ my birthday','h) ______ summer'], lineas:0,
+      sol:'a) on · b) at · c) in · d) in · e) in · f) at · g) on · h) in'},
+    {e:'Correct the mistakes.', items:['a) I didn’t worked yesterday.','b) She were at home.','c) Did you played football?','d) We studyed English.'], lineas:0,
+      sol:'a) I didn’t work yesterday. · b) She was at home. · c) Did you play football? · d) We studied English.'},
+    {e:'Writing (50-70 words): write about last weekend. Where were you? What did you do? Use at least five verbs in the past.', items:[], lineas:8,
+      sol:'Respuesta libre. Modelo: Last weekend I was in Málaga with my family. On Saturday morning I cleaned my room and then I played football with my friends. In the evening we watched a film at home. On Sunday I visited my grandmother and we cooked lunch together. It was a very nice weekend.'}
+  ]}
+};
+
+JUEGOS['ingles-past-simple'] = { ambito:'comunicacion', titulo:'Past simple: was, were, -ed', preguntas:[
+  {q:'I ___ at home yesterday.', op:['was','were','am','did'], ok:0, ex:'I → was.'},
+  {q:'They ___ in Granada last week.', op:['were','was','are','did'], ok:0, ex:'They → were.'},
+  {q:'She ___ tired last night.', op:['was','were','is','did'], ok:0, ex:'She → was.'},
+  {q:'Negative: «We were happy» →', op:['We weren’t happy','We didn’t happy','We wasn’t happy','We not were happy'], ok:0, ex:'were not = weren’t.'},
+  {q:'___ you at the party?', op:['Were','Was','Did','Are'], ok:0, ex:'You → were.'},
+  {q:'«Había mucha gente» in English:', op:['There were a lot of people','There was a lot of people','It had a lot of people','There are a lot of people'], ok:0, ex:'People es plural: there were.'},
+  {q:'Past simple of «work»:', op:['worked','workt','worken','works'], ok:0, ex:'+ -ed.'},
+  {q:'Past simple of «live»:', op:['lived','liveed','livd','living'], ok:0, ex:'Acaba en -e: solo -d.'},
+  {q:'Past simple of «study»:', op:['studied','studyed','studed','studing'], ok:0, ex:'Consonante + y → -ied.'},
+  {q:'Past simple of «play»:', op:['played','plaied','plaid','plays'], ok:0, ex:'Vocal + y: solo -ed.'},
+  {q:'Past simple of «stop»:', op:['stopped','stoped','stopt','stopping'], ok:0, ex:'Se dobla la p.'},
+  {q:'In «wanted», -ed sounds…', op:['/id/','/t/','/d/','No suena'], ok:0, ex:'Detrás de t o d suena /id/.'},
+  {q:'She ___ to Málaga in 2020.', op:['moved','move','moves','is moving'], ok:0, ex:'In 2020 = pasado.'},
+  {q:'I ___ work yesterday.', op:['didn’t','don’t','wasn’t','weren’t'], ok:0, ex:'Negativa del pasado: didn’t + infinitivo.'},
+  {q:'Correct sentence:', op:['I didn’t watch the match','I didn’t watched the match','I not watched the match','I don’t watched the match'], ok:0, ex:'Después de didn’t, infinitivo.'},
+  {q:'___ you call your mother?', op:['Did','Were','Was','Do'], ok:0, ex:'Pregunta en pasado con did.'},
+  {q:'«Did she study?» — «Yes, she ___.»', op:['did','was','studied','does'], ok:0, ex:'Respuesta corta con did.'},
+  {q:'Correct question:', op:['Did you play football?','Did you played football?','You did play football?','Played you football?'], ok:0, ex:'Did + sujeto + infinitivo.'},
+  {q:'«Ayer» in English:', op:['yesterday','tomorrow','today','ago'], ok:0, ex:'tomorrow = mañana.'},
+  {q:'«Hace dos días»:', op:['two days ago','ago two days','before two days','two days last'], ok:0, ex:'ago va detrás.'},
+  {q:'«La semana pasada»:', op:['last week','past week','the week last','next week'], ok:0, ex:'last night, last year…'},
+  {q:'___ Monday', op:['on','in','at','to'], ok:0, ex:'Días: on.'},
+  {q:'___ 9 o’clock', op:['at','in','on','to'], ok:0, ex:'Horas: at.'},
+  {q:'___ July', op:['in','on','at','to'], ok:0, ex:'Meses: in.'},
+  {q:'___ 2025', op:['in','on','at','for'], ok:0, ex:'Años: in.'},
+  {q:'___ the morning', op:['in','on','at','for'], ok:0, ex:'Partes del día: in (pero at night).'},
+  {q:'___ night', op:['at','in','on','to'], ok:0, ex:'Excepción: at night.'},
+  {q:'___ my birthday', op:['on','in','at','to'], ok:0, ex:'Un día concreto: on.'},
+  {q:'We ___ a film last night.', op:['watched','watch','watches','are watching'], ok:0, ex:'Last night = pasado.'},
+  {q:'The party ___ great!', op:['was','were','did','is being'], ok:0, ex:'The party = it → was.'}
+]};
+
+/* ===== TEMAS DE LAS SEMANAS DEL 16 Y DEL 23 DE NOVIEMBRE · SOCIAL ===== */
+TEMAS['social-territorio'] = { ambito:'social', area:'Geografía', clase:6, titulo:'La organización territorial de España',
+  intro:'Cómo se organiza España: comunidades autónomas, provincias y municipios, y quién gobierna en cada nivel. Te servirá para el examen y para saber a qué administración acudir en cada trámite.',
+  apartados:[
+    {h:'1. La Constitución y el Estado de las autonomías', html:`
+      <p>La <b>Constitución de 1978</b> es la ley más importante de España. Dice que España es una <b>monarquía parlamentaria</b> y un <b>Estado social y democrático de derecho</b>, y organiza el territorio en tres niveles:</p>
+      <div class="tabla"><table>
+        <tr><th>Nivel</th><th>Cuántos</th><th>Quién gobierna</th></tr>
+        <tr><td><b>Comunidades autónomas</b></td><td>17 comunidades + 2 ciudades autónomas (Ceuta y Melilla)</td><td>Gobierno y parlamento autonómicos</td></tr>
+        <tr><td><b>Provincias</b></td><td>50</td><td>Diputación provincial</td></tr>
+        <tr><td><b>Municipios</b></td><td>Más de 8.100</td><td>Ayuntamiento</td></tr>
+      </table></div>
+      <p class="ojo"><b>Recuerda:</b> 17 + 2 + 50. Cada comunidad tiene su <b>Estatuto de Autonomía</b>, que es su norma básica.</p>`},
+    {h:'2. Las comunidades autónomas', html:`
+      <p>Andalucía, Aragón, Asturias, Islas Baleares, Canarias, Cantabria, Castilla-La Mancha, Castilla y León, Cataluña, Comunidad Valenciana, Extremadura, Galicia, La Rioja, Comunidad de Madrid, Región de Murcia, Navarra y País Vasco. Además, las ciudades autónomas de <b>Ceuta</b> y <b>Melilla</b>.</p>
+      <p>Las comunidades se encargan de muchos servicios del día a día: <b>sanidad</b>, <b>educación</b>, servicios sociales, transporte, empleo…</p>
+      <p class="ojo"><b>Uniprovinciales:</b> algunas comunidades tienen una sola provincia, como Madrid, Murcia, Asturias, Cantabria, La Rioja, Navarra o Baleares.</p>`},
+    {h:'3. Andalucía', html:`
+      <p>Es la comunidad <b>con más habitantes</b> (unos 8,6 millones) y la segunda más grande. Su capital es <b>Sevilla</b>. Tiene <b>8 provincias</b>:</p>
+      <p class="ej"><b>Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.</b></p>
+      <p>Su gobierno es la <b>Junta de Andalucía</b>, formada por:</p>
+      <ul><li><b>Parlamento de Andalucía:</b> lo elegimos los andaluces y hace las leyes de la comunidad.</li>
+      <li><b>Presidente o presidenta de la Junta:</b> elegido por el Parlamento.</li>
+      <li><b>Consejo de Gobierno:</b> el presidente y sus consejeros (de Salud, de Educación…).</li>
+      <li><b>Tribunal Superior de Justicia de Andalucía</b>, con sede en Granada.</li></ul>
+      <p>La norma básica es el <b>Estatuto de Autonomía de Andalucía</b>. El <b>28 de febrero</b> es el Día de Andalucía.</p>`},
+    {h:'4. Las instituciones del Estado', html:`
+      <p>En democracia, el poder se reparte en tres para que nadie lo tenga todo (<b>división de poderes</b>):</p>
+      <div class="tabla"><table>
+        <tr><th>Poder</th><th>Qué hace</th><th>Quién lo tiene</th></tr>
+        <tr><td><b>Legislativo</b></td><td>Hace las leyes</td><td><b>Cortes Generales</b>: Congreso de los Diputados y Senado</td></tr>
+        <tr><td><b>Ejecutivo</b></td><td>Gobierna y hace cumplir las leyes</td><td><b>Gobierno</b>: presidente y ministros</td></tr>
+        <tr><td><b>Judicial</b></td><td>Juzga</td><td><b>Jueces y tribunales</b></td></tr>
+      </table></div>
+      <p>El <b>Rey</b> es el jefe del Estado: representa a España, pero no gobierna. Los ciudadanos elegimos a los diputados y senadores en las <b>elecciones generales</b>, cada cuatro años como máximo.</p>`},
+    {h:'5. Provincias y municipios', html:`
+      <ul><li><b>La provincia</b> está gobernada por la <b>Diputación provincial</b>, que ayuda sobre todo a los pueblos pequeños (carreteras, agua, cultura).</li>
+      <li><b>El municipio</b> está gobernado por el <b>Ayuntamiento</b>: el <b>alcalde o alcaldesa</b> y los <b>concejales</b>, que se reúnen en el <b>pleno</b>. Se eligen en las <b>elecciones municipales</b>.</li></ul>
+      <p>El ayuntamiento se ocupa de lo más cercano: recogida de basura, limpieza, alumbrado, parques, autobuses urbanos, policía local, <b>empadronamiento</b>…</p>
+      <p class="ojo"><b>España en Europa:</b> además, España forma parte de la <b>Unión Europea</b> (desde 1986), con 27 países, el euro y libertad para vivir y trabajar en otros países miembros.</p>`}
+  ],
+  juego:'social-territorio',
+  ficha:{ ejercicios:[
+    {e:'Completa.', items:['a) España se divide en ______ comunidades autónomas y ______ ciudades autónomas.','b) Hay ______ provincias.','c) El municipio está gobernado por el ______.','d) La norma básica de cada comunidad es su ______ de Autonomía.','e) La ley más importante de España es la ______ de 1978.'], lineas:0,
+      sol:'a) 17, 2 · b) 50 · c) Ayuntamiento · d) Estatuto · e) Constitución'},
+    {e:'Escribe las ocho provincias de Andalucía.', items:[], lineas:2,
+      sol:'Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.'},
+    {e:'¿Qué poder es? Legislativo, ejecutivo o judicial.', items:['a) Hace las leyes','b) Juzga','c) Gobierna','d) El Congreso y el Senado','e) Los jueces','f) El presidente y los ministros'], lineas:0,
+      sol:'a) Legislativo · b) Judicial · c) Ejecutivo · d) Legislativo · e) Judicial · f) Ejecutivo'},
+    {e:'¿Qué administración se encarga? Ayuntamiento, Junta de Andalucía o Estado.', items:['a) Recoger la basura de tu calle','b) Los centros de salud','c) El empadronamiento','d) Los institutos','e) El ejército','f) La policía local'], lineas:0,
+      sol:'a) Ayuntamiento · b) Junta de Andalucía · c) Ayuntamiento · d) Junta de Andalucía · e) Estado · f) Ayuntamiento'},
+    {e:'Explica qué es la división de poderes y por qué es importante.', items:[], lineas:3,
+      sol:'Repartir el poder en legislativo, ejecutivo y judicial para que ninguna persona o institución lo tenga todo y se controlen entre sí.'},
+    {e:'Verdadero o falso. Corrige las falsas.', items:['a) El Rey gobierna España.','b) Andalucía es la comunidad con más habitantes.','c) La capital de Andalucía es Málaga.','d) El alcalde lo eligen los vecinos en las elecciones municipales.','e) España entró en la Unión Europea en 1986.'], lineas:4,
+      sol:'a) F: es el jefe del Estado, pero gobierna el Gobierno. · b) V · c) F: es Sevilla. · d) V (a través de los concejales elegidos). · e) V'},
+    {e:'Une cada institución con su nivel.', items:['Parlamento de Andalucía','Congreso de los Diputados','Diputación de Málaga','Ayuntamiento de Málaga','→ Municipio','→ Provincia','→ Comunidad autónoma','→ Estado'], lineas:0,
+      sol:'Parlamento de Andalucía → Comunidad · Congreso → Estado · Diputación → Provincia · Ayuntamiento → Municipio.'},
+    {e:'Texto de opinión (unas 150 palabras): si fueras alcalde o alcaldesa de tu municipio, ¿qué tres cosas cambiarías y por qué?', items:[], lineas:12,
+      sol:'Respuesta libre. Introducción con tu opinión, tres propuestas explicadas (por ejemplo, más zonas verdes, transporte, empleo juvenil, limpieza) y conclusión. Cuida la ortografía.'}
+  ]}
+};
+
+JUEGOS['social-territorio'] = { ambito:'social', titulo:'La organización territorial', preguntas:[
+  {q:'¿Cuántas comunidades autónomas hay en España?', op:['17','15','19','50'], ok:0, ex:'17 comunidades + 2 ciudades autónomas.'},
+  {q:'Las dos ciudades autónomas son…', op:['Ceuta y Melilla','Cádiz y Málaga','Madrid y Barcelona','Ceuta y Tarifa'], ok:0, ex:'En el norte de África.'},
+  {q:'¿Cuántas provincias tiene España?', op:['50','17','52','8'], ok:0, ex:'50 provincias.'},
+  {q:'¿Cuántas provincias tiene Andalucía?', op:['8','6','9','17'], ok:0, ex:'Almería, Cádiz, Córdoba, Granada, Huelva, Jaén, Málaga y Sevilla.'},
+  {q:'La capital de Andalucía es…', op:['Sevilla','Málaga','Granada','Córdoba'], ok:0, ex:'Allí está el Parlamento andaluz.'},
+  {q:'¿Cuál NO es una provincia andaluza?', op:['Murcia','Huelva','Jaén','Almería'], ok:0, ex:'Murcia es otra comunidad.'},
+  {q:'La comunidad con más habitantes es…', op:['Andalucía','Madrid','Cataluña','Castilla y León'], ok:0, ex:'Unos 8,6 millones.'},
+  {q:'La ley más importante de España es…', op:['La Constitución de 1978','El Estatuto de Andalucía','El Código Penal','La ley de la Junta'], ok:0, ex:'Todas las demás leyes deben respetarla.'},
+  {q:'La norma básica de una comunidad autónoma es…', op:['Su Estatuto de Autonomía','La Constitución europea','Una ordenanza','Un decreto municipal'], ok:0, ex:'Andalucía tiene su Estatuto.'},
+  {q:'España es una…', op:['Monarquía parlamentaria','República presidencial','Dictadura','Monarquía absoluta'], ok:0, ex:'Lo dice la Constitución.'},
+  {q:'El gobierno de Andalucía se llama…', op:['Junta de Andalucía','Generalitat','Xunta','Diputación'], ok:0, ex:'Generalitat es Cataluña; Xunta, Galicia.'},
+  {q:'Las leyes de Andalucía las hace…', op:['El Parlamento de Andalucía','El Ayuntamiento','El Senado','El Rey'], ok:0, ex:'Lo elegimos los andaluces.'},
+  {q:'El Día de Andalucía es el…', op:['28 de febrero','12 de octubre','6 de diciembre','1 de mayo'], ok:0, ex:'6 de diciembre es el Día de la Constitución.'},
+  {q:'El municipio está gobernado por…', op:['El Ayuntamiento','La Diputación','La Junta','El Senado'], ok:0, ex:'Alcalde y concejales.'},
+  {q:'La provincia está gobernada por…', op:['La Diputación provincial','El Ayuntamiento','El Congreso','La Unión Europea'], ok:0, ex:'Ayuda sobre todo a los pueblos pequeños.'},
+  {q:'El poder que hace las leyes es el…', op:['Legislativo','Ejecutivo','Judicial','Municipal'], ok:0, ex:'Cortes Generales.'},
+  {q:'El poder que gobierna es el…', op:['Ejecutivo','Legislativo','Judicial','Militar'], ok:0, ex:'El Gobierno: presidente y ministros.'},
+  {q:'El poder que juzga es el…', op:['Judicial','Ejecutivo','Legislativo','Autonómico'], ok:0, ex:'Jueces y tribunales.'},
+  {q:'Las Cortes Generales están formadas por…', op:['Congreso y Senado','Gobierno y Rey','Jueces y fiscales','Ayuntamientos y diputaciones'], ok:0, ex:'Tienen el poder legislativo.'},
+  {q:'El jefe del Estado en España es…', op:['El Rey','El presidente del Gobierno','El alcalde de Madrid','El presidente del Congreso'], ok:0, ex:'Representa a España pero no gobierna.'},
+  {q:'Repartir el poder en tres se llama…', op:['División de poderes','Estado autonómico','Monarquía','Saldo político'], ok:0, ex:'Así se controlan entre sí.'},
+  {q:'¿Quién recoge la basura de tu calle?', op:['El Ayuntamiento','La Junta de Andalucía','El Gobierno de España','La Unión Europea'], ok:0, ex:'Servicios más cercanos: ayuntamiento.'},
+  {q:'Los centros de salud en Andalucía los gestiona…', op:['La Junta de Andalucía','El Ayuntamiento','La Diputación','El Senado'], ok:0, ex:'La sanidad es competencia autonómica.'},
+  {q:'El padrón (empadronarse) se hace en…', op:['El Ayuntamiento','La Junta','El Congreso','Hacienda'], ok:0, ex:'Te inscribes como vecino.'},
+  {q:'Al alcalde lo eligen…', op:['Los concejales elegidos por los vecinos','El Rey','La Junta','El Senado'], ok:0, ex:'Elecciones municipales.'},
+  {q:'España entró en la Unión Europea en…', op:['1986','1978','2002','1992'], ok:0, ex:'En 2002 llegó el euro.'},
+  {q:'¿Cuántos países forman hoy la Unión Europea?', op:['27','17','50','12'], ok:0, ex:'Tras la salida del Reino Unido.'},
+  {q:'¿Qué comunidad tiene una sola provincia?', op:['Comunidad de Madrid','Andalucía','Galicia','Cataluña'], ok:0, ex:'Es uniprovincial.'},
+  {q:'Las elecciones generales sirven para elegir…', op:['Diputados y senadores','Al alcalde','Al Rey','A los jueces'], ok:0, ex:'Cada cuatro años como máximo.'},
+  {q:'El Tribunal Superior de Justicia de Andalucía está en…', op:['Granada','Sevilla','Málaga','Córdoba'], ok:0, ex:'Granada es la sede judicial.'}
+]};
+
+TEMAS['social-economia'] = { ambito:'social', area:'Geografía', clase:7, titulo:'Sectores económicos, campo, ciudad y turismo',
+  intro:'En qué trabajamos, cómo son el campo y la ciudad, y por qué el turismo es tan importante en la costa andaluza. Muy útil también para el texto de opinión del examen.',
+  apartados:[
+    {h:'1. Los sectores económicos', html:`
+      <div class="tabla"><table>
+        <tr><th>Sector</th><th>Qué hace</th><th>Ejemplos</th></tr>
+        <tr><td><b>Primario</b></td><td>Obtiene recursos de la naturaleza</td><td>Agricultura, ganadería, pesca, explotación forestal, minería</td></tr>
+        <tr><td><b>Secundario</b></td><td>Transforma materias primas en productos</td><td>Industria, construcción, energía</td></tr>
+        <tr><td><b>Terciario</b> (servicios)</td><td>Ofrece servicios a las personas</td><td>Comercio, turismo, hostelería, transporte, sanidad, educación</td></tr>
+      </table></div>
+      <p>En España, el sector <b>terciario</b> da trabajo a más de 3 de cada 4 personas. El primario es cada vez más pequeño, aunque sigue siendo importante en Andalucía.</p>
+      <p class="ojo"><b>Truco:</b> 1.º <b>sacar</b> de la naturaleza, 2.º <b>fabricar</b>, 3.º <b>servir</b>. Un camarero, una enfermera o un dependiente están en el terciario.</p>`},
+    {h:'2. El trabajo: población activa y paro', html:`
+      <ul><li><b>Población activa:</b> personas en edad de trabajar que trabajan o buscan empleo.</li>
+      <li><b>Población ocupada:</b> las que tienen trabajo.</li>
+      <li><b>Población parada:</b> las que buscan trabajo y no lo encuentran.</li>
+      <li><b>Población inactiva:</b> no trabajan ni buscan empleo (estudiantes, jubilados…).</li></ul>
+      <p>La <b>tasa de paro</b> es el porcentaje de parados entre la población activa. En Andalucía es más alta que la media de España, sobre todo entre los jóvenes.</p>`},
+    {h:'3. El espacio rural', html:`
+      <p>Es el campo y los pueblos pequeños. Allí predominan las actividades del sector primario, aunque cada vez hay más turismo rural y servicios.</p>
+      <ul><li><b>Paisaje agrario:</b> parcelas, cultivos de <b>secano</b> (solo con la lluvia: cereal, olivo, vid) y de <b>regadío</b> (con riego: frutas, hortalizas).</li>
+      <li><b>En Andalucía:</b> el <b>olivar</b> (Jaén es la primera productora de aceite del mundo), los <b>invernaderos</b> de Almería y Huelva (frutos rojos), la vid y el cereal.</li>
+      <li><b>Problemas:</b> despoblación y envejecimiento (la «España vaciada»), pocos servicios, falta de trabajo para los jóvenes.</li></ul>`},
+    {h:'4. El espacio urbano: la ciudad', html:`
+      <p>Más del 80 % de los españoles vive en ciudades. Una ciudad suele tener:</p>
+      <ul><li><b>Casco histórico o antiguo:</b> el centro, con calles estrechas y monumentos.</li>
+      <li><b>Ensanche:</b> barrios del siglo XIX y XX con calles más anchas y rectas.</li>
+      <li><b>Periferia:</b> barrios residenciales, polígonos industriales, centros comerciales.</li></ul>
+      <div class="tabla"><table>
+        <tr><th>Tipo de plano</th><th>Cómo es</th></tr>
+        <tr><td><b>Irregular</b></td><td>Calles estrechas y desordenadas (centros históricos de origen árabe o medieval)</td></tr>
+        <tr><td><b>Ortogonal o en cuadrícula</b></td><td>Calles rectas que se cruzan en ángulo recto (ensanches)</td></tr>
+        <tr><td><b>Radiocéntrico</b></td><td>Calles que salen de un centro como los radios de una rueda</td></tr>
+      </table></div>
+      <p><b>Problemas urbanos:</b> precio de la vivienda, tráfico y contaminación, ruido, barrios desfavorecidos, falta de zonas verdes.</p>`},
+    {h:'5. El turismo en la costa andaluza', html:`
+      <p>España es uno de los países <b>más visitados del mundo</b>, y el turismo es clave en la economía andaluza, sobre todo en la <b>Costa del Sol</b> (Málaga).</p>
+      <div class="tabla"><table>
+        <tr><th>Ventajas</th><th>Problemas</th></tr>
+        <tr><td>Crea mucho empleo (hostelería, comercio, transporte)</td><td>Empleo <b>estacional</b> y a menudo precario</td></tr>
+        <tr><td>Trae dinero y mejora infraestructuras (aeropuerto, carreteras)</td><td>Sube el precio de la vivienda y el alquiler (pisos turísticos)</td></tr>
+        <tr><td>Da a conocer la cultura y el patrimonio</td><td>Construcción excesiva en la costa, gasto de agua, masificación</td></tr>
+      </table></div>
+      <p class="ojo"><b>Para el texto de opinión:</b> el <b>turismo sostenible</b> busca que el turismo beneficie a la gente del lugar sin dañar el medio ambiente: repartir los visitantes durante el año, limitar los pisos turísticos, cuidar las playas y el agua.</p>`}
+  ],
+  juego:'social-economia',
+  ficha:{ ejercicios:[
+    {e:'¿A qué sector pertenece cada trabajo: primario, secundario o terciario?', items:['a) Pescador','b) Camarera','c) Obrero de la construcción','d) Agricultora','e) Enfermero','f) Trabajadora de una fábrica de coches','g) Conductor de autobús','h) Ganadero'], lineas:0,
+      sol:'a) Primario · b) Terciario · c) Secundario · d) Primario · e) Terciario · f) Secundario · g) Terciario · h) Primario'},
+    {e:'Completa.', items:['a) El sector que da más trabajo en España es el ______.','b) Los cultivos que solo reciben agua de lluvia son de ______.','c) Los cultivos con riego son de ______.','d) La provincia que más aceite de oliva produce es ______.','e) Los invernaderos son muy importantes en ______.'], lineas:0,
+      sol:'a) terciario · b) secano · c) regadío · d) Jaén · e) Almería (y Huelva)'},
+    {e:'Clasifica a estas personas: ocupada, parada o inactiva.', items:['a) Ana trabaja en una tienda.','b) Luis busca trabajo desde hace 6 meses.','c) Carmen está jubilada.','d) Omar estudia y no busca trabajo.','e) Sara es cocinera en un hotel.'], lineas:0,
+      sol:'a) Ocupada · b) Parada · c) Inactiva · d) Inactiva · e) Ocupada'},
+    {e:'¿Qué tipo de plano urbano es?', items:['a) Calles rectas que se cruzan como un tablero de ajedrez','b) Calles estrechas y desordenadas','c) Calles que salen de una plaza central como radios'], lineas:0,
+      sol:'a) Ortogonal o en cuadrícula · b) Irregular · c) Radiocéntrico'},
+    {e:'Escribe dos problemas del espacio rural y dos del espacio urbano.', items:[], lineas:4,
+      sol:'Rural: despoblación, envejecimiento, pocos servicios, falta de trabajo. Urbano: vivienda cara, tráfico, contaminación, ruido, falta de zonas verdes.'},
+    {e:'Turismo en la Costa del Sol: escribe dos ventajas y dos problemas.', items:[], lineas:4,
+      sol:'Ventajas: empleo, dinero, mejores infraestructuras, se da a conocer la cultura. Problemas: empleo estacional y precario, vivienda cara por los pisos turísticos, masificación, construcción excesiva, gasto de agua.'},
+    {e:'Verdadero o falso. Corrige las falsas.', items:['a) La industria es del sector primario.','b) La mayoría de los españoles vive en ciudades.','c) El casco histórico suele tener calles anchas y rectas.','d) El empleo en turismo suele ser estacional.','e) Un estudiante que no busca trabajo es un parado.'], lineas:4,
+      sol:'a) F: es del secundario. · b) V · c) F: suelen ser estrechas e irregulares. · d) V · e) F: es población inactiva.'},
+    {e:'Texto de opinión (unas 150 palabras): ¿El turismo es bueno o malo para Málaga? Da tu opinión con argumentos a favor y en contra y propón una solución.', items:[], lineas:12,
+      sol:'Respuesta libre. Introducción con tu opinión; argumentos (empleo y dinero frente a vivienda cara y masificación); una propuesta de turismo sostenible; conclusión. Usa conectores: además, sin embargo, por eso, en conclusión.'}
+  ]}
+};
+
+JUEGOS['social-economia'] = { ambito:'social', titulo:'Sectores, campo, ciudad y turismo', preguntas:[
+  {q:'La agricultura pertenece al sector…', op:['Primario','Secundario','Terciario','Cuaternario'], ok:0, ex:'Obtiene recursos de la naturaleza.'},
+  {q:'La industria pertenece al sector…', op:['Secundario','Primario','Terciario','Rural'], ok:0, ex:'Transforma materias primas.'},
+  {q:'El turismo pertenece al sector…', op:['Terciario','Primario','Secundario','Industrial'], ok:0, ex:'Es un servicio.'},
+  {q:'Una camarera trabaja en el sector…', op:['Terciario','Primario','Secundario','Ninguno'], ok:0, ex:'Hostelería = servicios.'},
+  {q:'Un pescador trabaja en el sector…', op:['Primario','Secundario','Terciario','Industrial'], ok:0, ex:'La pesca saca recursos del mar.'},
+  {q:'La construcción pertenece al sector…', op:['Secundario','Primario','Terciario','Rural'], ok:0, ex:'Junto a la industria y la energía.'},
+  {q:'¿Qué sector da más empleo en España?', op:['Terciario','Primario','Secundario','Todos igual'], ok:0, ex:'Más de 3 de cada 4 trabajadores.'},
+  {q:'Las personas que trabajan o buscan trabajo forman la población…', op:['Activa','Inactiva','Jubilada','Rural'], ok:0, ex:'Ocupados + parados.'},
+  {q:'Un jubilado forma parte de la población…', op:['Inactiva','Activa','Parada','Ocupada'], ok:0, ex:'No trabaja ni busca trabajo.'},
+  {q:'La tasa de paro mide…', op:['El porcentaje de parados entre la población activa','El número de jubilados','Los habitantes por km²','El dinero de un país'], ok:0, ex:'Parados ÷ activos × 100.'},
+  {q:'Un cultivo de secano…', op:['Solo recibe el agua de la lluvia','Se riega todo el año','Está en invernadero','Es siempre de frutas'], ok:0, ex:'Cereal, olivo, vid.'},
+  {q:'Un cultivo de regadío…', op:['Recibe riego','Solo recibe lluvia','No necesita agua','Es solo cereal'], ok:0, ex:'Frutas y hortalizas.'},
+  {q:'La provincia que más aceite de oliva produce es…', op:['Jaén','Málaga','Cádiz','Huelva'], ok:0, ex:'Es la primera productora del mundo.'},
+  {q:'Los grandes invernaderos de Andalucía están sobre todo en…', op:['Almería','Córdoba','Jaén','Sevilla'], ok:0, ex:'También Huelva (frutos rojos).'},
+  {q:'Un problema del espacio rural es…', op:['La despoblación','El exceso de tráfico','Los rascacielos','El metro'], ok:0, ex:'La «España vaciada».'},
+  {q:'¿Qué porcentaje aproximado de españoles vive en ciudades?', op:['Más del 80 %','Un 20 %','Un 50 %','Menos del 10 %'], ok:0, ex:'España es muy urbana.'},
+  {q:'La parte más antigua de una ciudad es el…', op:['Casco histórico','Ensanche','Polígono','Extrarradio'], ok:0, ex:'Calles estrechas y monumentos.'},
+  {q:'El ensanche es…', op:['Un barrio con calles anchas y rectas de los siglos XIX-XX','El centro medieval','Un polígono industrial','Un pueblo cercano'], ok:0, ex:'Ensancha la ciudad antigua.'},
+  {q:'Un plano con calles rectas que se cruzan en ángulo recto es…', op:['Ortogonal','Irregular','Radiocéntrico','Lineal'], ok:0, ex:'También llamado en cuadrícula.'},
+  {q:'Un plano con calles estrechas y desordenadas es…', op:['Irregular','Ortogonal','Radiocéntrico','Moderno'], ok:0, ex:'Típico de los centros de origen árabe.'},
+  {q:'Un plano con calles que salen de un centro como radios es…', op:['Radiocéntrico','Ortogonal','Irregular','En cuadrícula'], ok:0, ex:'Como una rueda.'},
+  {q:'Un problema urbano es…', op:['El precio de la vivienda','La despoblación','La falta de cobertura','La sequía del campo'], ok:0, ex:'También tráfico, ruido y contaminación.'},
+  {q:'La Costa del Sol está en la provincia de…', op:['Málaga','Almería','Huelva','Cádiz'], ok:0, ex:'Torremolinos, Marbella, Fuengirola…'},
+  {q:'Una ventaja del turismo es…', op:['Crea muchos empleos','Baja el precio de los alquileres','Reduce el gasto de agua','Elimina el paro estacional'], ok:0, ex:'Hostelería, comercio, transporte.'},
+  {q:'Un problema del turismo es…', op:['El empleo estacional y precario','La despoblación','La falta de bares','El exceso de industria'], ok:0, ex:'Mucho trabajo en verano y poco en invierno.'},
+  {q:'Los pisos turísticos pueden provocar…', op:['Que suba el precio del alquiler','Que bajen los precios','Más zonas verdes','Menos visitantes'], ok:0, ex:'Hay menos pisos para los vecinos.'},
+  {q:'El turismo sostenible busca…', op:['Beneficiar a la gente del lugar sin dañar el medio ambiente','Construir más hoteles en la playa','Que venga todo el mundo en agosto','Eliminar el turismo'], ok:0, ex:'Repartir visitas y cuidar los recursos.'},
+  {q:'España es uno de los países…', op:['Más visitados del mundo','Menos visitados de Europa','Sin turismo','Con solo turismo rural'], ok:0, ex:'Decenas de millones de turistas al año.'},
+  {q:'Un dependiente de una tienda trabaja en el sector…', op:['Terciario','Secundario','Primario','Industrial'], ok:0, ex:'El comercio es un servicio.'},
+  {q:'La minería pertenece al sector…', op:['Primario','Secundario','Terciario','Ninguno'], ok:0, ex:'Extrae recursos de la naturaleza.'}
+]};
+
 /* ===== DIBUJOS DE LAS DIAPOSITIVAS ===== */
 const FIGS = {
   'social-mapas':{1:[['soc-lineas','Paralelos y meridianos']],2:[['soc-coordenadas','Latitud y longitud']],3:[['soc-tipos-mapa','Los tres tipos de mapa'],['soc-escala','La escala numérica y la gráfica']],4:[['soc-husos','Los husos horarios']]},
@@ -3292,6 +3913,58 @@ const FICHAS_AUTO = {
 }
 };
 
+Object.assign(FICHAS_AUTO, {
+'lengua-palabras-2': {
+  0:{op:['Personal','Demostrativo','Posesivo','Numeral','Indefinido','Interrogativo','Relativo'], r:['Personal','Posesivo','Interrogativo','Indefinido','Demostrativo','Relativo']},
+  1:{op:['Determinante','Pronombre'], r:['Determinante','Pronombre','Determinante','Pronombre']},
+  3:{it:[['hablar → gerundio','hablando'],['hablar → participio','hablado'],['beber → gerundio','bebiendo'],['beber → participio','bebido'],['salir → gerundio','saliendo'],['salir → participio','salido']]},
+  4:{op:['1.ª','2.ª','3.ª'], r:['1.ª','2.ª','3.ª','1.ª','2.ª']},
+  5:{op:['Lugar','Tiempo','Modo','Cantidad','Negación'], it:[['aquí','Lugar'],['mañana','Tiempo'],['despacio','Modo'],['mucho','Cantidad'],['lejos','Lugar'],['bien','Modo'],['tampoco','Negación']]},
+  6:{it:[['a) Vengo ___ Granada.','de|desde'],['b) El regalo es ___ ti.','para'],['c) Café ___ azúcar, por favor.','sin|con'],['d) Trabajo ___ las nueve…','desde|de'],['d) …___ las tres.','hasta|a']]},
+  7:{op:['e','y','o','u','pero','porque'], it:[['a) Madre ___ hija.','e'],['b) No vino ___ estaba enfermo.','porque'],['c) ¿Quieres té ___ café?','o'],['d) Es caro, ___ es muy bueno.','pero'],['e) Siete ___ ocho personas.','u']]}
+},
+'ingles-present-continuous': {
+  0:{r:['working','writing','running','playing','swimming','making','sitting','reading']},
+  1:{nota:'Escribe solo las palabras que faltan.', it:[['a) I ___ (study) English now.',"am studying|'m studying"],['b) She ___ (cook) dinner.',"is cooking|'s cooking"],['c) They ___ (watch) TV.',"are watching|'re watching"],['d) We ___ (wait) for the bus.',"are waiting|'re waiting"],['e) He ___ (not / work) today.',"isn't working|is not working|'s not working"],['f) ___ you … (listen) to me? (1)','Are'],['f) … you ___ (listen) to me? (2)','listening']]},
+  2:{it:[['a) I ___ every day from 9 to 3.','work',['work','am working']],['b) Look! It ___.','is raining',['rains','is raining']],['c) She usually ___ jeans.','wears',['wears','is wearing']],['d) Be quiet, the baby ___.','is sleeping',['sleeps','is sleeping']],['e) We ___ to the beach every summer.','go',['go','are going']]]},
+  3:{r:['her','him','them','us','it']},
+  4:{r:['T-shirt|tshirt|t shirt|tee shirt','trousers|pants','skirt','trainers|sneakers','jacket','dress','cap','coat']},
+  5:{r:["She has got long curly hair|She's got long curly hair|She has long curly hair","He is tall and he wears glasses|He's tall and he wears glasses|He is tall and wears glasses|He's tall and wears glasses|He is tall and has got glasses|He is tall and has glasses|He's tall and has glasses","Today I'm wearing a black T-shirt|Today I am wearing a black T-shirt|I'm wearing a black T-shirt today|I am wearing a black T-shirt today|Today I'm wearing a black tshirt","Ana's jacket is red"]},
+  6:{r:["She is working now|She's working now","I want a coffee","They are playing football|They're playing football","He has got long hair|He's got long hair|He has long hair"]}
+},
+'lengua-literatura-1': {
+  0:{op:['Lírico','Narrativo','Dramático'], r:['Narrativo','Lírico','Dramático','Narrativo','Lírico','Dramático']},
+  1:{op:['Metáfora','Comparación','Personificación','Hipérbole','Epíteto','Anáfora'], r:['Metáfora','Comparación','Personificación','Hipérbole','Epíteto','Anáfora']},
+  3:{nota:'Escribe solo el número de sílabas.', it:[['a) «Ver-de que te quie-ro ver-de»','n:8'],['b) «Que es mi Dios la li-ber-tad»','n:8'],['c) «Can-ta-ba la ma-ña-na»','n:7']]},
+  4:{op:['Arte mayor','Arte menor'], r:['Arte menor','Arte mayor','Arte menor','Arte mayor']},
+  5:{op:['Consonante','Asonante'], r:['Consonante','Consonante','Consonante','Asonante']},
+  6:{op:['2 versos que riman','4 versos de arte mayor, ABBA','4 versos de arte menor, abba','14 versos endecasílabos'], it:[['Pareado','2 versos que riman'],['Cuarteto','4 versos de arte mayor, ABBA'],['Redondilla','4 versos de arte menor, abba'],['Soneto','14 versos endecasílabos']]},
+  8:{it:[['a) ¿A qué género pertenecen?','Lírico',['Lírico','Narrativo','Dramático']],['b) ¿Qué palabra se repite al principio de dos versos?','caminante'],['b) ¿Cómo se llama esa figura?','Anáfora',['Anáfora','Metáfora','Hipérbole','Epíteto']],['c) ¿Qué crees que quiere decir el poeta?',null]]}
+},
+'ingles-past-simple': {
+  0:{r:['was','were','was','were','was','Were']},
+  1:{r:['worked','lived','studied','played','stopped','watched','liked','tried']},
+  2:{r:['visited','cooked','watched','moved']},
+  3:{r:["I didn't work yesterday|I did not work yesterday","She didn't play tennis|She did not play tennis","They weren't at home|They were not at home","He wasn't happy|He was not happy"]},
+  4:{r:['Did you watch the match','Did she study last night','Were they at the party']},
+  5:{op:['in','on','at'], r:['on','at','in','in','in','at','on','in']},
+  6:{r:["I didn't work yesterday|I did not work yesterday",'She was at home','Did you play football','We studied English']}
+},
+'social-territorio': {
+  0:{it:[['a) Comunidades autónomas','n:17'],['a) Ciudades autónomas','n:2'],['b) Provincias','n:50'],['c) El municipio está gobernado por el…','Ayuntamiento|el Ayuntamiento'],['d) La norma básica de cada comunidad es su… de Autonomía','Estatuto|el Estatuto'],['e) La ley más importante de España es la… de 1978','Constitución|la Constitución']]},
+  2:{op:['Legislativo','Ejecutivo','Judicial'], r:['Legislativo','Judicial','Ejecutivo','Legislativo','Judicial','Ejecutivo']},
+  3:{op:['Ayuntamiento','Junta de Andalucía','Estado'], r:['Ayuntamiento','Junta de Andalucía','Ayuntamiento','Junta de Andalucía','Estado','Ayuntamiento']},
+  5:{op:OP_VF, r:['Falso','Verdadero','Falso','Verdadero','Verdadero']},
+  6:{op:['Municipio','Provincia','Comunidad autónoma','Estado'], it:[['Parlamento de Andalucía','Comunidad autónoma'],['Congreso de los Diputados','Estado'],['Diputación de Málaga','Provincia'],['Ayuntamiento de Málaga','Municipio']]}
+},
+'social-economia': {
+  0:{op:['Primario','Secundario','Terciario'], r:['Primario','Terciario','Secundario','Primario','Terciario','Secundario','Terciario','Primario']},
+  1:{r:['terciario|el terciario|sector terciario|el sector terciario|servicios','secano','regadío','Jaén','Almería|Huelva']},
+  2:{op:['Ocupada','Parada','Inactiva'], r:['Ocupada','Parada','Inactiva','Inactiva','Ocupada']},
+  3:{op:['Ortogonal','Irregular','Radiocéntrico'], r:['Ortogonal','Irregular','Radiocéntrico']},
+  6:{op:OP_VF, r:['Falso','Verdadero','Falso','Verdadero','Falso']}
+}
+});
 /* ===== Motor de fichas autocorregibles (solo con usuarios) ===== */
 function faNorm(t, sp){
   let x = String(t||'').replace(/[’‘`´]/g,"'").replace(/[−–—]/g,'-').trim();
@@ -3706,7 +4379,7 @@ function ambito(a, sec=0){
 }
 
 
-function lunesHoy(){ const d=new Date(); d.setHours(0,0,0,0); const w=(d.getDay()+6)%7; d.setDate(d.getDate()-w); return d; }
+function lunesHoy(){ const d=new Date(); d.setHours(0,0,0,0); const w=(d.getDay()+6)%7; d.setDate(d.getDate()-w + (w>=5 ? 7 : 0)); return d; } /* sábado y domingo: ya se muestra la semana siguiente */
 function fecha(iso){ const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d); }
 const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 const lk = id => id && TEMAS[id] ? ` <a class="leer" href="#tema-${id}">Estudiar el tema →</a>` : '';

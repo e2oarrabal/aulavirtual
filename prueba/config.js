@@ -7,3 +7,5 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "948626198231",
   appId: "1:948626198231:web:e6ed81c75a5a472f542a92"
 };
+// Clave pública para los avisos al móvil (Web Push)
+const FIREBASE_VAPID = "BBuoyMFCP2aVHRUjIs3hO4oIwAZq8zMEFHD-wF8_7nhRbMxEBOYmL5w0vcWXlDYF2hup1YZGJmcdjdsZ8fPiQMc";

@@ -71,6 +71,17 @@ function backendFirebase(){
     },
     latido(min){ if (visita) return visita.update({ ultimo: TS(), min }); },
     guardarIntento(u, o){ return col(u).collection('intentos').add({ ...o, fecha: TS() }); },
+    async activarAvisos(u){
+      const reg = await navigator.serviceWorker.register(window.AULA_SW_AVISOS || 'sw-avisos.js', { scope: './' });
+      await navigator.serviceWorker.ready;
+      const token = await firebase.messaging().getToken({ vapidKey: FIREBASE_VAPID, serviceWorkerRegistration: reg });
+      if (!token) throw new Error('sin-token');
+      const b = db.batch();
+      b.set(col(u).collection('avisos').doc(token), { token, fecha: TS(), movil: navigator.userAgent.slice(0, 200) });
+      b.update(col(u), { avisos: true });
+      await b.commit();
+      return token;
+    },
     async intentos(u){ const q = await col(u).collection('intentos').orderBy('fecha').get(); return q.docs.map(d => ({ ...d.data(), fecha: fecha(d.data().fecha) || new Date() })); },
     async visitas(u){ const q = await col(u).collection('visitas').orderBy('inicio','desc').limit(300).get(); return q.docs.map(d => ({ ...d.data(), inicio: fecha(d.data().inicio), ultimo: fecha(d.data().ultimo) })); },
     async alumnos(){ const q = await db.collection('alumnos').get(); return q.docs.map(d => ({ usuario:d.id, ...d.data(), ultimoAcceso: fecha(d.data().ultimoAcceso), creado: fecha(d.data().creado) })); },
@@ -122,6 +133,7 @@ function backendSimulado(){
     async salir(){ S.sesion = null; guarda(); avisa(); },
     async visitaInicio(u){ const a = S.alumnos[u]; a.accesos = (a.accesos||0)+1; a.ultimoAcceso = new Date(); a.visitas = a.visitas || []; visita = { inicio:new Date(), ultimo:new Date(), min:0 }; a.visitas.push(visita); guarda(); },
     async latido(min){ if (visita){ visita.ultimo = new Date(); visita.min = min; guarda(); } },
+    async activarAvisos(u){ await espera(); S.alumnos[u].avisos = true; guarda(); return 'token-simulado'; },
     async guardarIntento(u, o){ await espera(); const a = S.alumnos[u]; (a.intentos = a.intentos || []).push({ ...o, fecha:new Date() }); guarda(); },
     async intentos(u){ await espera(); S = lee(); return (S.alumnos[u].intentos || []).map(fix); },
     async visitas(u){ await espera(); S = lee(); return (S.alumnos[u].visitas || []).map(fix).reverse(); },
@@ -164,6 +176,13 @@ const CSS = `
 .cu-bar a,.cu-bar button{border:0;border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer}
 .cu-bar a{background:#16357F;color:#fff}
 .cu-bar button{background:transparent;color:var(--muted);padding:8px 6px}
+.cu-av{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#16357F;color:#fff;border-radius:18px;padding:12px 14px;margin:0 0 14px;font-size:14px;font-weight:500}
+.cu-av span{flex:1;min-width:180px}
+.cu-av .cu-btn{background:#EF7D00}
+p.cu-av{display:block}
+.cu-aviso{position:relative;background:var(--surface);color:var(--ink);border-left:6px solid #EF7D00;border-radius:18px;padding:12px 16px;margin:0 0 14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.cu-aviso p{margin:0;font-size:14.5px}
+.cu-nuevo{float:right;margin-left:8px;font-size:11px;letter-spacing:.5px;text-transform:uppercase;background:#EF7D00;color:#fff;border-radius:999px;padding:3px 9px}
 .cu-nota{margin:14px auto 0;padding:10px 14px;border-radius:14px;background:color-mix(in srgb,var(--c) 10%,transparent);font-weight:600}
 .cu-nota a{color:inherit}
 .cu-sec{background:var(--surface);color:var(--ink);border-radius:20px;padding:16px;margin:0 0 14px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
@@ -303,6 +322,51 @@ function notasHTML(intentos, vacio){
   return medias + bloques;
 }
 
+
+/* ---------- avisos al móvil ---------- */
+const RAIZ = () => location.href.split('#')[0].split('?')[0].replace(/prueba\/(index\.html)?$/, '').replace(/index\.html$/, '');
+function estadoAvisos(){
+  if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) return 'no';
+  if (Notification.permission === 'denied') return 'bloqueado';
+  if (Notification.permission === 'granted' && localStorage.getItem('aula-avisos')) return 'si';
+  return 'pendiente';
+}
+function bloqueAvisos(){
+  const e = estadoAvisos();
+  if (!yo || yo.admin || e === 'si') return '';
+  if (e === 'no') return /iphone|ipad/i.test(navigator.userAgent) ? `<p class="cu-av">🔔 Para recibir avisos en el iPhone, primero instala el aula en tu pantalla de inicio (Compartir → Añadir a pantalla de inicio) y ábrela desde ahí.</p>` : '';
+  if (e === 'bloqueado') return `<p class="cu-av">🔕 Tienes los avisos bloqueados. Actívalos en los ajustes del navegador (permisos de notificaciones de esta web).</p>`;
+  return `<div class="cu-av"><span>🔔 Activa los avisos para enterarte de los cambios de calendario y las novedades.</span><button class="cu-btn" id="cu-av-on">Activar avisos</button></div>`;
+}
+async function activarAvisos(btn){
+  btn.disabled = true; btn.textContent = 'Activando…';
+  try{
+    const p = await Notification.requestPermission();
+    if (p !== 'granted') throw new Error('permiso');
+    const t = await B.activarAvisos(yo.usuario);
+    localStorage.setItem('aula-avisos', t);
+    btn.closest('.cu-av').innerHTML = '✅ ¡Listo! Te llegarán los avisos del aula a este móvil.';
+  }catch(e){
+    console.error(e);
+    btn.closest('.cu-av').innerHTML = e.message === 'permiso' ? '🔕 No has dado permiso. Si cambias de idea, actívalo en los ajustes del navegador.' : 'No se han podido activar los avisos. Inténtalo más tarde.';
+  }
+}
+let avisoCache = null;
+async function avisoActual(){
+  if (avisoCache) return avisoCache;
+  try{ const r = await fetch(RAIZ() + 'avisos/aviso.json?t=' + Date.now(), { cache:'no-store' }); avisoCache = await r.json(); }catch(e){ avisoCache = {}; }
+  return avisoCache;
+}
+async function pintaAviso(){
+  const a = await avisoActual();
+  if (!a || !a.texto || !a.mostrar) return;
+  if (a.hasta && new Date() > new Date(a.hasta + 'T23:59:59')) return;
+  const app = appEl(); if (!app || app.querySelector('.cu-aviso') || !app.querySelector('.cu-bar')) return;
+  const visto = localStorage.getItem('aula-aviso-visto') === a.id;
+  app.querySelector('.cu-bar').insertAdjacentHTML('afterend', `<div class="cu-aviso">${visto ? '' : '<b class="cu-nuevo">Nuevo</b>'}<p><b>${h(a.titulo)}</b><br>${h(a.texto)}</p></div>`);
+  if (!visto) localStorage.setItem('aula-aviso-visto', a.id);
+}
+
 /* ---------- vistas ---------- */
 const appEl = () => document.getElementById('app');
 const cabecera = (t, sub) => `<a class="back" href="#inicio">${I.back} Inicio</a><section class="head" style="--c:#16357F"><p class="kicker">${sub}</p><h1>${t}</h1></section>`;
@@ -335,9 +399,9 @@ async function cargaLista(){
   try{
     const al = (await B.alumnos()).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
     const l = $('#cu-lista'); if (location.hash !== '#panel' || !l) return;
-    l.innerHTML = `<h2>Alumnado (${al.filter(a=>a.activo).length} activos)</h2>` + (al.length ? al.map(a => `
+    l.innerHTML = `<h2>Alumnado (${al.filter(a=>a.activo).length} activos)</h2><p class="cu-msg">🔔 = tiene los avisos al móvil activados (${al.filter(a=>a.activo&&a.avisos).length} de ${al.filter(a=>a.activo).length}).</p>` + (al.length ? al.map(a => `
       <a class="cu-alu ${a.activo?'':'baja'}" href="#panel-${encodeURIComponent(a.usuario)}"><b class="av">${h((a.nombre||'?')[0].toUpperCase())}</b>
-        <span><b>${h(a.nombre)}</b>${a.activo?'':' · de baja'}<small>${h(a.usuario)} · ${a.accesos===1?'1 acceso':(a.accesos||0)+' accesos'} · último ${hace(a.ultimoAcceso)}</small></span><span style="flex:none">›</span></a>`).join('')
+        <span><b>${h(a.nombre)}</b>${a.avisos?' 🔔':''}${a.activo?'':' · de baja'}<small>${h(a.usuario)} · ${a.accesos===1?'1 acceso':(a.accesos||0)+' accesos'} · último ${hace(a.ultimoAcceso)}</small></span><span style="flex:none">›</span></a>`).join('')
       : '<p class="cu-vacio">Todavía no hay alumnos. Pulsa «Nuevo alumno» para dar de alta al primero.</p>');
   }catch(e){ console.error(e); const l = $('#cu-lista'); if (l) l.innerHTML = '<p class="cu-msg err">No se ha podido cargar el alumnado. Comprueba la conexión.</p>'; }
 }
@@ -436,8 +500,8 @@ async function excel(solo, btn, msg){
     const amb = AMBITOS.slice(0,3);
     const num = n => n == null ? '' : Math.round(n*10)/10;
     const fd = d => d ? `${fFecha(d)} ${fHora(d)}` : '';
-    const res = [['Alumno','Usuario','Estado','Accesos','Último acceso','Minutos en el aula','Actividades hechas', ...amb.map(x=>'Media '+x.nombre), 'Media general']];
-    datos.forEach(({a,R,vis}) => res.push([a.nombre, a.usuario, a.activo?'Activo':'De baja', a.accesos||0, fd(a.ultimoAcceso), vis.reduce((s,v)=>s+(v.min||0),0), R.acts.length, ...amb.map(x=>num(R.amb[x.id].media)), num(R.general)]));
+    const res = [['Alumno','Usuario','Estado','Avisos','Accesos','Último acceso','Minutos en el aula','Actividades hechas', ...amb.map(x=>'Media '+x.nombre), 'Media general']];
+    datos.forEach(({a,R,vis}) => res.push([a.nombre, a.usuario, a.activo?'Activo':'De baja', a.avisos?'Sí':'No', a.accesos||0, fd(a.ultimoAcceso), vis.reduce((s,v)=>s+(v.min||0),0), R.acts.length, ...amb.map(x=>num(R.amb[x.id].media)), num(R.general)]));
     const hr = XLSX.utils.aoa_to_sheet(res); hr['!cols'] = res[0].map((t,i)=>({ wch: i===0 ? 28 : Math.max(12, t.length+2) }));
     XLSX.utils.book_append_sheet(wb, hr, 'Resumen');
     const usados = new Set(['Resumen']);
@@ -495,6 +559,9 @@ window.AULA = {
     const app = appEl(); if (app.querySelector('.cu-bar')) return;
     app.insertAdjacentHTML('afterbegin', `<div class="cu-bar"><b>Hola, ${h(yo.nombre.split(' ')[0])}</b>${yo.admin ? '<a href="#panel">Panel del profe</a>' : '<a href="#notas">Mis notas</a>'}<button id="cu-salir">Salir</button></div>`);
     $('#cu-salir').onclick = () => { if (confirm('¿Cerrar la sesión? Tendrás que volver a escribir tu usuario y contraseña.')) { location.hash = ''; B.salir(); } };
+    const av = bloqueAvisos(); if (av) app.querySelector('.cu-bar').insertAdjacentHTML('afterend', av);
+    const bo = $('#cu-av-on'); if (bo) bo.onclick = () => activarAvisos(bo);
+    pintaAviso();
   },
   async notaFicha(r){
     if (!yo) return;

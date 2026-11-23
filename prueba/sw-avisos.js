@@ -6,7 +6,7 @@ self.addEventListener('push', e => {
   let d = {};
   try { const j = e.data.json(); d = j.data || j; if (j.notification) d = { ...d, titulo: d.titulo || j.notification.title, texto: d.texto || j.notification.body }; } catch (x) { d = { texto: e.data ? e.data.text() : '' }; }
   e.waitUntil(self.registration.showNotification(d.titulo || 'Aula Virtual', {
-    body: d.texto || '', icon: RAIZ() + 'icons/icon-192.png', badge: RAIZ() + 'icons/icon-192.png', tag: d.id || 'aula', data: { url: d.url || './' }
+    body: d.texto || '', icon: RAIZ() + 'icons/icon-192.png', badge: RAIZ() + 'icons/badge-96.png', tag: d.id || 'aula', data: { url: d.url || './' }
   }));
 });
 self.addEventListener('notificationclick', e => {

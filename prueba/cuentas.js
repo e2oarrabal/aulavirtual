@@ -561,7 +561,6 @@ window.AULA = {
     $('#cu-salir').onclick = () => { if (confirm('¿Cerrar la sesión? Tendrás que volver a escribir tu usuario y contraseña.')) { location.hash = ''; B.salir(); } };
     const av = bloqueAvisos(); if (av) app.querySelector('.cu-bar').insertAdjacentHTML('afterend', av);
     const bo = $('#cu-av-on'); if (bo) bo.onclick = () => activarAvisos(bo);
-    pintaAviso();
   },
   async notaFicha(r){
     if (!yo) return;
